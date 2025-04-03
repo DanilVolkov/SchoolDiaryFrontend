@@ -1,0 +1,10 @@
+C:\Users\Глеб\source\repos\MenuTest\MenuTest\bin\Debug\MenuTest.exe.config
+C:\Users\Глеб\source\repos\MenuTest\MenuTest\bin\Debug\MenuTest.exe
+C:\Users\Глеб\source\repos\MenuTest\MenuTest\bin\Debug\MenuTest.pdb
+C:\Users\Глеб\source\repos\MenuTest\MenuTest\obj\Debug\MenuTest.csproj.AssemblyReference.cache
+C:\Users\Глеб\source\repos\MenuTest\MenuTest\obj\Debug\MenuTest.Form1.resources
+C:\Users\Глеб\source\repos\MenuTest\MenuTest\obj\Debug\MenuTest.Properties.Resources.resources
+C:\Users\Глеб\source\repos\MenuTest\MenuTest\obj\Debug\MenuTest.csproj.GenerateResource.cache
+C:\Users\Глеб\source\repos\MenuTest\MenuTest\obj\Debug\MenuTest.csproj.CoreCompileInputs.cache
+C:\Users\Глеб\source\repos\MenuTest\MenuTest\obj\Debug\MenuTest.exe
+C:\Users\Глеб\source\repos\MenuTest\MenuTest\obj\Debug\MenuTest.pdb
