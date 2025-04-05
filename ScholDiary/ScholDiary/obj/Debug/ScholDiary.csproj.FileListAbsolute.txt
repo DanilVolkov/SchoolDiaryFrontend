@@ -1,0 +1,10 @@
+C:\Users\Юрий\source\repos\ScholDiary\ScholDiary\obj\Debug\ScholDiary.csproj.AssemblyReference.cache
+C:\Users\Юрий\source\repos\ScholDiary\ScholDiary\obj\Debug\ScholDiary.Properties.Resources.resources
+C:\Users\Юрий\source\repos\ScholDiary\ScholDiary\obj\Debug\ScholDiary.csproj.GenerateResource.cache
+C:\Users\Юрий\source\repos\ScholDiary\ScholDiary\obj\Debug\ScholDiary.csproj.CoreCompileInputs.cache
+C:\Users\Юрий\source\repos\ScholDiary\ScholDiary\obj\Debug\ScholDiary.Grade.resources
+C:\Users\Юрий\source\repos\ScholDiary\ScholDiary\bin\Debug\ScholDiary.exe.config
+C:\Users\Юрий\source\repos\ScholDiary\ScholDiary\bin\Debug\ScholDiary.exe
+C:\Users\Юрий\source\repos\ScholDiary\ScholDiary\bin\Debug\ScholDiary.pdb
+C:\Users\Юрий\source\repos\ScholDiary\ScholDiary\obj\Debug\ScholDiary.exe
+C:\Users\Юрий\source\repos\ScholDiary\ScholDiary\obj\Debug\ScholDiary.pdb
