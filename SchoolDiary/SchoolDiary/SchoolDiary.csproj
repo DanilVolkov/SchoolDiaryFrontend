@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D4ADCD89-617E-4EB4-86F8-9AD481849EB5}</ProjectGuid>
+    <ProjectGuid>{65416A36-804B-4BD1-A3DC-707EBC83576E}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>SchoolDiary</RootNamespace>
     <AssemblyName>SchoolDiary</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
@@ -46,14 +46,87 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ButonEdit.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ButtonBack.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ButtonGrade.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ButtonImages.cs" />
+    <Compile Include="ButtonNext.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ButtonPrevius.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ButtonProfile.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ButtonMenu.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ButtonNotifications.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ButtonShedule.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ButtonStateManager.cs" />
+    <Compile Include="Colors.cs" />
+    <Compile Include="CustomGroupBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CustomVScrollBar.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Drawer.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="ButtonDarkLightMode.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ButtonDay.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ImageInButtonRoundeds.cs" />
+    <Compile Include="MenuSettings.cs" />
+    <Compile Include="Profile.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Profile.Designer.cs">
+      <DependentUpon>Profile.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ButtonRounded.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="TimeCalculator.cs" />
+    <Compile Include="Uspevaemost.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Uspevaemost.Designer.cs">
+      <DependentUpon>Uspevaemost.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WeeklySchedule.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WeeklySchedule.Designer.cs">
+      <DependentUpon>WeeklySchedule.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Profile.resx">
+      <DependentUpon>Profile.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -63,6 +136,12 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Uspevaemost.resx">
+      <DependentUpon>Uspevaemost.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WeeklySchedule.resx">
+      <DependentUpon>WeeklySchedule.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -76,5 +155,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
