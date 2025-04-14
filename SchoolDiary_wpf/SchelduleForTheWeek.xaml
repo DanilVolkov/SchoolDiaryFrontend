@@ -1,0 +1,552 @@
+﻿<Window x:Class="SchoolDiary_wpf.SchelduleForTheWeek"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SchoolDiary_wpf"
+        mc:Ignorable="d"
+        Title="SchelduleForTheWeek" Height="450" Width="800" >
+
+    <Window.Resources>
+
+        <Style x:Key="RobotoTextStyleTimeText" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="/Fonts/Roboto-Medium.ttf#Roboto" />
+            <Setter Property="FontSize" Value="28" />
+            <Setter Property="FontWeight" Value="Medium" />
+            <Setter Property="Foreground" Value="Black" />
+        </Style>
+        <Style x:Key="Montestrat-Bold" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="/Fonts/Montestrat-Bold.ttf#Montestrat" />
+            <Setter Property="FontSize" Value="30" />
+            <Setter Property="Foreground" Value="Black" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <!--<Setter Property="Bold" Value="true"/>-->
+        </Style>
+        <local:ScheduleViewModel x:Key="ScheduleViewModel" />
+        <local:GradeToColorConverter x:Key="GradeToColorConverter" />
+        <local:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </Window.Resources>
+    <Grid>
+        <!-- Верхняя панель -->
+        <DockPanel  LastChildFill="False" Background="#4EB4D0" Margin="0,0,0,2" VerticalAlignment="Top" HorizontalAlignment="Stretch" Height="64">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" DockPanel.Dock="Left">
+                <Button  Foreground="Black" FontSize="14" Padding="5" Margin="8,5,10,5" Height="48" Width="48" Click="Button_Click" BorderThickness="0,0,0,0">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/button_openmenu_default.png" Stretch="UniformToFill" />
+                    </Button.Background>
+                </Button>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" DockPanel.Dock="Right">
+                <Button x:Name="DarkLightMode" Width="48" RenderTransformOrigin="0.535,0.507" Height="48" Margin="0,0,5,0" BorderThickness="0,0,0,0">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/Button - icon_daynight.png" Stretch="UniformToFill" />
+                    </Button.Background>
+                </Button>
+                <Button Foreground="Black" FontSize="14" Padding="5" Margin="0,5,10,5" Height="48" Width="48" BorderThickness="0,0,0,0">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/Button - icon_ring.png" Stretch="UniformToFill" />
+                    </Button.Background>
+                </Button>
+                <Border x:Name="ButtonProfile" Width="272" Height="56" Margin="0,0,5,0" Background="#BAEAFD" MouseLeftButtonDown="OpenProfile" CornerRadius="7">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <!-- Для текста -->
+                            <ColumnDefinition Width="Auto" />
+                            <!-- Для изображения -->
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Текст с фамилией и инициалами -->
+                        <TextBlock Grid.Column="0" Text="Шальнов Ю.Д." Style="{StaticResource RobotoTextStyleTimeText }" 
+          
+           Foreground="Black" 
+           VerticalAlignment="Center" 
+           HorizontalAlignment="Left" 
+           Margin="0,0,50,0" Width="208" />
+
+                        <!-- Изображение пользователя -->
+                        <Border Grid.Column="1" BorderBrush="Black" 
+        BorderThickness="1" 
+        Height="44" 
+        Width="44" 
+        CornerRadius="50" 
+        Margin="50,0,0,0">
+                            <Border.Background>
+                                <ImageBrush ImageSource="/Shalnov.jpg" Stretch="UniformToFill" />
+                            </Border.Background>
+                        </Border>
+                    </Grid>
+                </Border>
+            </StackPanel>
+            <Border  Width="48" Height="48" CornerRadius="50">
+                <Border.Background>
+                    <ImageBrush ImageSource="/logo-nn.png" Stretch="UniformToFill" />
+                </Border.Background>
+            </Border>
+
+        </DockPanel>
+
+        <!-- Левая панель режимов -->
+        <DockPanel x:Name="Menu" Background="#7DCCDE" HorizontalAlignment="Left" Margin="0,64,0,0" Width="216" LastChildFill="False" Panel.ZIndex="1">
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Width="216">
+                <!-- Кнопка "Расписание" -->
+                <Button x:Name="Schedule" Padding="5" Margin="5,16,5,16" Width="184" Height="48" HorizontalAlignment="Stretch" BorderThickness="0,0,0,0">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/button_menu_schedule_default.png" Stretch="Fill" />
+                    </Button.Background>
+                </Button>
+                <!-- Кнопка "Дневник" -->
+                <Button x:Name="Grade" Padding="5" Margin="5,5,5,0" Width="184" Height="48" HorizontalAlignment="Stretch" BorderThickness="0,0,0,0">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/button_menu_mark_default.png" Stretch="Fill" />
+                    </Button.Background>
+                </Button>
+            </StackPanel>
+        </DockPanel>
+        <DockPanel x:Name="WeekPanel" LastChildFill="False" VerticalAlignment="Top" HorizontalAlignment="Stretch" Background="#BAEAFD" Margin="0,64,0,0" Height="64">
+            <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" HorizontalAlignment="Center" Margin="161,0,161,3" Height="63">
+                <!-- Кнопка "Назад" -->
+                <Button x:Name="LeftArrowWeek" Command="{Binding PreviousWeekCommand}" 
+                Foreground="Black" Width="48" Height="48" FontSize="14" Padding="5" Margin="10,5,10,5" 
+                VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/button_back_defaoult.png" Stretch="UniformToFill" />
+                    </Button.Background>
+                </Button>
+
+                <!-- Текст с диапазоном дат -->
+                <TextBlock Text="{Binding WeekRangeDisplay}" 
+                   FontWeight="Bold" Foreground="Black" FontSize="28" 
+                   VerticalAlignment="Center" HorizontalAlignment="Center" 
+                   Margin="10,5,10,5" />
+
+                <!-- Кнопка "Вперед" -->
+                <Button x:Name="RightArrowWeek" Command="{Binding NextWeekCommand}" 
+                Foreground="Black" Width="48" Height="48" FontSize="14" Padding="5" Margin="10,5,10,5" 
+                VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/button_back_active.png" Stretch="UniformToFill" />
+                    </Button.Background>
+                </Button>
+            </StackPanel>
+        </DockPanel>
+
+        <!-- Новое поле для содержимого -->
+        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Margin="88,137,0,0">
+            <Grid>
+
+                <Border>
+                    <Grid >
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="112" />
+                            <!-- Время -->
+                            <ColumnDefinition Width="24" />
+                            <!-- Отступ -->
+                            <ColumnDefinition MaxWidth="248" Width="248"/>
+                            <!-- Понедельник -->
+                            <ColumnDefinition Width="24" />
+                            <!-- Отступ -->
+                            <ColumnDefinition Width="248" MaxWidth="248"/>
+                            <!-- Вторник -->
+                            <ColumnDefinition Width="24" />
+                            <!-- Отступ -->
+                            <ColumnDefinition Width="248" MaxWidth="248"/>
+                            <!-- Среда -->
+                            <ColumnDefinition Width="24" />
+                            <!-- Отступ -->
+                            <ColumnDefinition Width="248" MaxWidth="248"/>
+                            <!-- Четверг -->
+                            <ColumnDefinition Width="24" />
+                            <!-- Отступ -->
+                            <ColumnDefinition Width="248" MaxWidth="248"/>
+                            <!-- Пятница -->
+                            <ColumnDefinition Width="24" />
+                            <!-- Отступ -->
+                            <ColumnDefinition Width="248" MaxWidth="248" />
+                            <!-- Суббота -->
+                            <ColumnDefinition Width="24" />
+                            <!-- Отступ -->
+                            <ColumnDefinition Width="0*" MaxWidth="248"/>
+                            <!-- Воскресенье -->
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Определение строк -->
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="112" MaxHeight="112" />
+                            <!-- 8:00 - 8:45 -->
+                            <RowDefinition Height="24" />
+                            <!-- Отступ -->
+                            <RowDefinition Height="248" />
+                            <!-- 9:00 - 9:45 -->
+                            <RowDefinition Height="24" />
+                            <!-- Отступ -->
+                            <RowDefinition Height="248" />
+                            <!-- 10:00 - 10:45 -->
+                            <RowDefinition Height="24" />
+                            <!-- Отступ -->
+                            <RowDefinition Height="248" />
+                            <!-- 11:00 - 11:45 -->
+                            <RowDefinition Height="24" />
+                            <!-- Отступ -->
+                            <RowDefinition Height="248" />
+                            <!-- 12:00 - 12:45 -->
+                            <RowDefinition Height="24" />
+                            <!-- Отступ -->
+                            <RowDefinition Height="248" />
+                            <!-- 13:00 - 13:45 -->
+                            <RowDefinition Height="24" />
+                            <!-- Отступ -->
+                            <RowDefinition Height="248" />
+                            <!-- -->
+                            <RowDefinition Height="24" />
+                            <!-- 14:00 - 14:45 -->
+                            <RowDefinition Height="248" />
+                            <!-- -->
+                            <RowDefinition Height="24" />
+                            <!-- -->
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+
+                        <Button Grid.Row="0" Grid.Column="2" Width="248" Height="112.12" Background="#E6D3C7" BorderBrush="#AC7356">
+                            <TextBlock  Text="{Binding CurrentDateDisplay_ForTheWeek}" Style="{StaticResource RobotoTextStyleTimeText}" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                            <Button.Resources>
+                                <Style TargetType="Border">
+                                    <Setter Property="CornerRadius" Value="10"/>
+                                </Style>
+                            </Button.Resources>
+                        </Button>
+                        <Button Grid.Row="0" Grid.Column="4" Width="248" Height="112.12" Background="#E6D3C7" BorderBrush="#AC7356">
+                            <TextBlock Text="{Binding CurrentDateDisplay_ForTheWeek}" Style="{StaticResource RobotoTextStyleTimeText}" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                            <Button.Resources>
+                                <Style TargetType="Border">
+                                    <Setter Property="CornerRadius" Value="10"/>
+                                </Style>
+                            </Button.Resources>
+                        </Button>
+                        <Button Grid.Row="0" Grid.Column="6" Width="248" Height="112.12" Background="#E6D3C7" BorderBrush="#AC7356" Margin="0,0,0,0">
+                            <TextBlock Text="{Binding CurrentDateDisplay_ForTheWeek}" Style="{StaticResource RobotoTextStyleTimeText}" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                            <Button.Resources>
+                                <Style TargetType="Border">
+                                    <Setter Property="CornerRadius" Value="10"/>
+                                </Style>
+                            </Button.Resources>
+                        </Button>
+                        <Button Grid.Row="0" Grid.Column="8" Width="248" Height="112.12" Background="#E6D3C7" BorderBrush="#AC7356" Margin="0,0,0,0">
+                            <TextBlock Text="{Binding CurrentDateDisplay_ForTheWeek}" Style="{StaticResource RobotoTextStyleTimeText}" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                            <Button.Resources>
+                                <Style TargetType="Border">
+                                    <Setter Property="CornerRadius" Value="10"/>
+                                </Style>
+                            </Button.Resources>
+                        </Button>
+                        <Button Grid.Row="0" Grid.Column="10" Width="248" Height="112.12" Background="#E6D3C7" BorderBrush="#AC7356" Margin="0,0,0,0">
+                            <TextBlock Text="{Binding CurrentDateDisplay_ForTheWeek}" Style="{StaticResource RobotoTextStyleTimeText}" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                            <Button.Resources>
+                                <Style TargetType="Border">
+                                    <Setter Property="CornerRadius" Value="10"/>
+                                </Style>
+                            </Button.Resources>
+                        </Button>
+                        <Button Grid.Row="0" Grid.Column="12" Width="248" Height="112.12" Background="#E6D3C7" BorderBrush="#AC7356" Margin="0,0,0,0">
+                            <TextBlock Text="{Binding CurrentDateDisplay_ForTheWeek}" Style="{StaticResource RobotoTextStyleTimeText}" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                            <Button.Resources>
+                                <Style TargetType="Border">
+                                    <Setter Property="CornerRadius" Value="10"/>
+                                </Style>
+                            </Button.Resources>
+                        </Button>
+
+                        <!-- Первая строка: 8:00 - 8:45 -->
+
+                        <!-- Первая строка: 8:00 - 8:45 -->
+                        <Border Grid.Row="2" Grid.Column="0" Background="#E6D3C7" CornerRadius="10" Height="248" Width="112" BorderBrush="#AC7356" BorderThickness="1,1,1,1" VerticalAlignment="Top">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <TextBlock Text="8:00" Style="{StaticResource RobotoTextStyleTimeText}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="0" />
+                                <Rectangle Height="3" Fill="Black" VerticalAlignment="Center" HorizontalAlignment="Stretch" Grid.Row="1" Margin="10,0,10,0" />
+                                <TextBlock Text="8:45" Style="{StaticResource RobotoTextStyleTimeText}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="2" />
+                            </Grid>
+                        </Border>
+
+                        <!-- Вторая строка: 9:00 - 9:45 -->
+                        <Border Grid.Row="4" Grid.Column="0" Background="#E6D3C7" CornerRadius="10" Height="248" Width="112" BorderBrush="#AC7356" BorderThickness="1,1,1,1">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <TextBlock Text="9:00" Style="{StaticResource RobotoTextStyleTimeText}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="0" />
+                                <Rectangle Height="3" Fill="Black" VerticalAlignment="Center" HorizontalAlignment="Stretch" Grid.Row="1" Margin="10,0,10,0" />
+                                <TextBlock Text="9:45" Style="{StaticResource RobotoTextStyleTimeText}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="2" />
+                            </Grid>
+                        </Border>
+
+                        <!-- Третья строка: 10:00 - 10:45 -->
+                        <Border Grid.Row="6" Grid.Column="0" Background="#E6D3C7" CornerRadius="10" Height="248" Width="112" BorderBrush="#AC7356" BorderThickness="1,1,1,1">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <TextBlock Text="10:00" Style="{StaticResource RobotoTextStyleTimeText}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="0" />
+                                <Rectangle Height="3" Fill="Black" VerticalAlignment="Center" HorizontalAlignment="Stretch" Grid.Row="1" Margin="10,0,10,0" />
+                                <TextBlock Text="10:45" Style="{StaticResource RobotoTextStyleTimeText}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="2" />
+                            </Grid>
+                        </Border>
+
+                        <!-- Четвертая строка: 11:00 - 11:45 -->
+                        <Border Grid.Row="8" Grid.Column="0" Background="#E6D3C7" CornerRadius="10" Height="248" Width="112" BorderBrush="#AC7356" BorderThickness="1,1,1,1">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <TextBlock Text="11:00" Style="{StaticResource RobotoTextStyleTimeText}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="0" />
+                                <Rectangle Height="3" Fill="Black" VerticalAlignment="Center" HorizontalAlignment="Stretch" Grid.Row="1" Margin="10,0,10,0" />
+                                <TextBlock Text="11:45" Style="{StaticResource RobotoTextStyleTimeText}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="2" />
+                            </Grid>
+                        </Border>
+
+                        <!-- Пятая строка: 12:00 - 12:45 -->
+                        <Border Grid.Row="10" Grid.Column="0" Background="#E6D3C7" CornerRadius="10" Height="248" Width="112" BorderBrush="#AC7356" BorderThickness="1,1,1,1">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <TextBlock Text="12:00" Style="{StaticResource RobotoTextStyleTimeText}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="0" />
+                                <Rectangle Height="3" Fill="Black" VerticalAlignment="Center" HorizontalAlignment="Stretch" Grid.Row="1" Margin="10,0,10,0" />
+                                <TextBlock Text="12:45" Style="{StaticResource RobotoTextStyleTimeText}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="2" />
+                            </Grid>
+                        </Border>
+
+                        <!-- Шестая строка: 13:00 - 13:45 -->
+                        <Border Grid.Row="12" Grid.Column="0" Background="#E6D3C7" CornerRadius="10" Height="248" Width="112" BorderBrush="#AC7356" BorderThickness="1,1,1,1">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <TextBlock Text="13:00" Style="{StaticResource RobotoTextStyleTimeText}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="0" />
+                                <Rectangle Height="3" Fill="Black" VerticalAlignment="Center" HorizontalAlignment="Stretch" Grid.Row="1" Margin="10,0,10,0" />
+                                <TextBlock Text="13:45" Style="{StaticResource RobotoTextStyleTimeText}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="2" />
+                            </Grid>
+                        </Border>
+
+                        <!-- Седьмая строка: 14:00 - 14:45 -->
+                        <Border Grid.Row="14" Grid.Column="0" Background="#E6D3C7" CornerRadius="10" Height="248" Width="112" BorderBrush="#AC7356" BorderThickness="1,1,1,1">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <TextBlock Text="14:00" Style="{StaticResource RobotoTextStyleTimeText}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="0" />
+                                <Rectangle Height="3" Fill="Black" VerticalAlignment="Center" HorizontalAlignment="Stretch" Grid.Row="1" Margin="10,0,10,0" />
+                                <TextBlock Text="14:45" Style="{StaticResource RobotoTextStyleTimeText}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="2" />
+                            </Grid>
+                        </Border>
+                        <!-- Продолжайте добавлять строки для других временных интервалов -->
+
+
+                        <!-- Продолжайте добавлять строки для других временных интервалов -->
+
+
+                    </Grid>
+                </Border>
+
+                <ItemsControl  ItemsSource="{Binding WeekSchedule}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+
+                            <!-- Верхняя панель с днями недели -->
+
+                            <!-- Таблица с расписанием -->
+                            <Grid x:Name="SheduleGrid">
+                                <!-- Определение столбцов -->
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="112" />
+                                    <!-- Время -->
+                                    <ColumnDefinition Width="24" />
+                                    <!-- Отступ -->
+                                    <ColumnDefinition MaxWidth="248" Width="248"/>
+                                    <!-- Понедельник -->
+                                    <ColumnDefinition Width="24" />
+                                    <!-- Отступ -->
+                                    <ColumnDefinition Width="248" MaxWidth="248"/>
+                                    <!-- Вторник -->
+                                    <ColumnDefinition Width="24" />
+                                    <!-- Отступ -->
+                                    <ColumnDefinition Width="248" MaxWidth="248"/>
+                                    <!-- Среда -->
+                                    <ColumnDefinition Width="24" />
+                                    <!-- Отступ -->
+                                    <ColumnDefinition Width="248" MaxWidth="248"/>
+                                    <!-- Четверг -->
+                                    <ColumnDefinition Width="24" />
+                                    <!-- Отступ -->
+                                    <ColumnDefinition Width="248" MaxWidth="248"/>
+                                    <!-- Пятница -->
+                                    <ColumnDefinition Width="24" />
+                                    <!-- Отступ -->
+                                    <ColumnDefinition Width="248" MaxWidth="248" />
+                                    <!-- Суббота -->
+                                    <ColumnDefinition Width="24" />
+                                    <!-- Отступ -->
+                                    <ColumnDefinition Width="0*" MaxWidth="248"/>
+                                    <!-- Воскресенье -->
+                                </Grid.ColumnDefinitions>
+
+                                <!-- Определение строк -->
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="112" MaxHeight="112" />
+                                    <!-- 8:00 - 8:45 -->
+                                    <RowDefinition Height="24" />
+                                    <!-- Отступ -->
+                                    <RowDefinition Height="248" />
+                                    <!-- 9:00 - 9:45 -->
+                                    <RowDefinition Height="24" />
+                                    <!-- Отступ -->
+                                    <RowDefinition Height="248" />
+                                    <!-- 10:00 - 10:45 -->
+                                    <RowDefinition Height="24" />
+                                    <!-- Отступ -->
+                                    <RowDefinition Height="248" />
+                                    <!-- 11:00 - 11:45 -->
+                                    <RowDefinition Height="24" />
+                                    <!-- Отступ -->
+                                    <RowDefinition Height="248" />
+                                    <!-- 12:00 - 12:45 -->
+                                    <RowDefinition Height="24" />
+                                    <!-- Отступ -->
+                                    <RowDefinition Height="248" />
+                                    <!-- 13:00 - 13:45 -->
+                                    <RowDefinition Height="24" />
+                                    <!-- Отступ -->
+                                    <RowDefinition Height="Auto" />
+                                    <!-- 14:00 - 14:45 -->
+                                </Grid.RowDefinitions>
+
+
+
+
+                            </Grid>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+
+
+                    <!-- ItemContainerStyle -->
+                    <ItemsControl.ItemContainerStyle>
+                        <Style>
+                            <Setter Property="Grid.Column"
+                    Value="{Binding ColumnIndex}" />
+                            <Setter Property="Grid.Row"
+                    Value="{Binding RowIndex}" />
+                        </Style>
+                    </ItemsControl.ItemContainerStyle>
+
+                    <!-- Единый контейнер -->
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Background="#FBF2EB" Width="248" Height="248"  BorderThickness="1"  BorderBrush="#E6D3C7" CornerRadius="10">
+                                <Grid>
+
+                                    <!-- Название предмета -->
+                                    <TextBlock Text="{Binding Subject}" 
+                           Style="{StaticResource RobotoTextStyleTimeText}" 
+                           VerticalAlignment="Center" 
+                           HorizontalAlignment="Center" Margin="0,0,0,44" />
+                                    <Border Background="#E6D3C7"   BorderBrush="#C28D71" Visibility="{Binding HasHomework, Converter={StaticResource BooleanToVisibilityConverter}}"
+                            CornerRadius="10" 
+                            Width="48" 
+                            Height="48" 
+                            Margin="16,184,0,0" 
+                            BorderThickness="1,1,1,1" HorizontalAlignment="Left">
+                                        <TextBlock Text="{Binding Homework_Marking}"  Style="{StaticResource Montestrat-Bold}" 
+                               
+                               VerticalAlignment="Center" 
+                               HorizontalAlignment="Center" />
+                                    </Border>
+                                    <!-- Оценка -->
+                                    <ItemsControl ItemsSource="{Binding Grades}">
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel Orientation="Horizontal" Margin="148,184,16,0" FlowDirection="RightToLeft" HorizontalAlignment="Right" />
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Border Background="{Binding Converter={StaticResource GradeToColorConverter}}" BorderBrush="{Binding Converter={StaticResource GradeToColorConverter}, ConverterParameter=BorderBrush}"  CornerRadius="10" Width="48" Height="48" BorderThickness="1,1,1,1" Margin="0,0,-30,0"  >
+                                                    <TextBlock Text="{Binding}" Style="{StaticResource Montestrat-Bold}" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                                </Border>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                    <!--<Border Background="{Binding Converter={StaticResource GradeToColorConverter}}" 
+                            BorderBrush="{Binding Converter={StaticResource GradeToColorConverter}, ConverterParameter=BorderBrush}"
+                CornerRadius="10" 
+                Width="48" 
+                Height="48" 
+                Margin="148,184,0,0" 
+                BorderThickness="1,1,1,1">
+                                        <TextBlock Text="3" 
+                       Style="{StaticResource Montestrat-Bold}"
+                       VerticalAlignment="Center" 
+                       HorizontalAlignment="Center" />
+                                    </Border>
+
+                                    --><!-- Средняя оценка --><!--
+                                    <Border Background="{Binding Converter={StaticResource GradeToColorConverter}}" 
+                            BorderBrush="{Binding Converter={StaticResource GradeToColorConverter}, ConverterParameter=BorderBrush}" 
+                CornerRadius="10" 
+                Width="48" 
+                Height="48" 
+                Margin="166,184,0,0" 
+                BorderThickness="1,1,1,1">
+                                        <TextBlock Text="4" 
+                        Style="{StaticResource Montestrat-Bold}"
+                       VerticalAlignment="Center" 
+                       HorizontalAlignment="Center" />
+                                    </Border>-->
+
+                                    <!-- Правая оценка -->
+                                    <!--<Border Background="{Binding Converter={StaticResource GradeToColorConverter}}" 
+                            BorderBrush="{Binding Converter={StaticResource GradeToColorConverter}, ConverterParameter=BorderBrush}" 
+                CornerRadius="10" 
+                Width="48" 
+                Height="48" 
+                Margin="184,184,0,0" 
+                BorderThickness="1,1,1,1">
+                                        <TextBlock Text="5" 
+                        Style="{StaticResource Montestrat-Bold}" 
+                       VerticalAlignment="Center" 
+                       HorizontalAlignment="Center" />-->
+                                    <!--</Border>-->
+
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+
+
+                </ItemsControl>
+            </Grid>
+        </ScrollViewer>
+
+
+
+    </Grid>
+
+
+</Window>
