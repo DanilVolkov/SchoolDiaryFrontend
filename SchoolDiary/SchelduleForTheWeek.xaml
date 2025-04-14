@@ -87,28 +87,28 @@
         </DockPanel>
 
         <!-- Левая панель режимов -->
-        <DockPanel x:Name="Menu" Background="#7DCCDE" HorizontalAlignment="Left" Margin="0,64,0,0" Width="216" LastChildFill="False" Panel.ZIndex="1">
+        <DockPanel x:Name="Menu" Background="#7DCCDE" HorizontalAlignment="Left" Margin="0,64,0,0" Width="216" LastChildFill="False" Panel.ZIndex="1" Opacity="0.6">
             <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Width="216">
                 <!-- Кнопка "Расписание" -->
-                <Button x:Name="Schedule" Padding="5" Margin="5,16,5,16" Width="184" Height="48" HorizontalAlignment="Stretch" BorderThickness="0,0,0,0">
+                <Button x:Name="Schedule" Padding="5" Margin="5,16,5,16" Width="184" Height="48" HorizontalAlignment="Stretch" BorderThickness="0,0,0,0" Opacity="1">
                     <Button.Background>
                         <ImageBrush ImageSource="/button_menu_schedule_default.png" Stretch="Fill" />
                     </Button.Background>
                 </Button>
                 <!-- Кнопка "Дневник" -->
-                <Button x:Name="Grade" Padding="5" Margin="5,5,5,0" Width="184" Height="48" HorizontalAlignment="Stretch" BorderThickness="0,0,0,0">
+                <Button x:Name="Grade" Padding="5" Margin="5,5,5,0" Width="184" Height="48" HorizontalAlignment="Stretch" BorderThickness="0,0,0,0" Opacity="1">
                     <Button.Background>
                         <ImageBrush ImageSource="/button_menu_mark_default.png" Stretch="Fill" />
                     </Button.Background>
                 </Button>
             </StackPanel>
         </DockPanel>
-        <DockPanel x:Name="WeekPanel" LastChildFill="False" VerticalAlignment="Top" HorizontalAlignment="Stretch" Background="#BAEAFD" Margin="0,64,0,0" Height="64">
+        <DockPanel x:Name="WeekPanel" LastChildFill="False" VerticalAlignment="Top" HorizontalAlignment="Stretch" Background="#BAEAFD" Margin="0,64,0,0" Height="64" >
             <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" HorizontalAlignment="Center" Margin="161,0,161,3" Height="63">
                 <!-- Кнопка "Назад" -->
                 <Button x:Name="LeftArrowWeek" Command="{Binding PreviousWeekCommand}" 
                 Foreground="Black" Width="48" Height="48" FontSize="14" Padding="5" Margin="10,5,10,5" 
-                VerticalAlignment="Center" HorizontalAlignment="Center">
+                VerticalAlignment="Center" HorizontalAlignment="Center" >
                     <Button.Background>
                         <ImageBrush ImageSource="/button_back_defaoult.png" Stretch="UniformToFill" />
                     </Button.Background>
@@ -487,7 +487,7 @@
                                         </ItemsControl.ItemsPanel>
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate>
-                                                <Border Background="{Binding Converter={StaticResource GradeToColorConverter}}" BorderBrush="{Binding Converter={StaticResource GradeToColorConverter}, ConverterParameter=BorderBrush}"  CornerRadius="10" Width="48" Height="48" BorderThickness="1,1,1,1" Margin="0,0,-30,0"  >
+                                                <Border Background="{Binding Converter={StaticResource GradeToColorConverter}}" BorderBrush="{Binding Converter={StaticResource GradeToColorConverter}, ConverterParameter=BorderBrush}"  CornerRadius="10" Width="48" Height="48" BorderThickness="1,1,1,1" Margin="0,0,-33,0"  >
                                                     <TextBlock Text="{Binding}" Style="{StaticResource Montestrat-Bold}" VerticalAlignment="Center" HorizontalAlignment="Center" />
                                                 </Border>
                                             </DataTemplate>
