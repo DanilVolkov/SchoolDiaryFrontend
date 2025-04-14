@@ -1,0 +1,12 @@
+﻿<Application x:Class="SchoolDiary_wpf.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:SchoolDiary_wpf"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <BitmapImage x:Key="ScheduleDefaultImage" UriSource="/Resources/Images/button_menu_schedule_default.png" />
+        <BitmapImage x:Key="MarkDefaultImage" UriSource="/Resources/Images/button_menu_mark_default.png" />
+        <BitmapImage x:Key="ScheduleCloseImage" UriSource="/Resources/Images/button_menu_close_schedule_default.png" />
+        <BitmapImage x:Key="MarkCloseImage" UriSource="/Resources/Images/button_menu_close_mark_defoult.png" />
+    </Application.Resources>
+</Application>

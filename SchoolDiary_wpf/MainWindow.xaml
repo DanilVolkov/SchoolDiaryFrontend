@@ -1,0 +1,230 @@
+﻿<Window x:Class="SchoolDiary_wpf.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SchoolDiary_wpf"
+        
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Window.Resources>
+        <!-- Стиль для текста с шрифтом Roboto -->
+        <Style x:Key="RobotoTextStyle" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="/Fonts/Roboto-Regular.ttf#Roboto" />
+            <Setter Property="FontSize" Value="28" />
+            <Setter Property="Foreground" Value="Black" />
+        </Style>
+        <Style x:Key="RobotoTextStyleTeacheAruditorium" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="/Fonts/Roboto-Regular.ttf#Roboto" />
+            <Setter Property="FontSize" Value="18" />
+            <Setter Property="Foreground" Value="Black" />
+        </Style>
+        <Style x:Key="RobotoTextStyleTimeText" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="/Fonts/Roboto-Medium.ttf#Roboto" />
+            <Setter Property="FontSize" Value="28" />
+            <Setter Property="Foreground" Value="Black" />
+        </Style>
+        <Style x:Key="GradeTextStyle" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="/Fonts/Montserrat-SemiBold.ttf#Montserrat" />
+            <Setter Property="FontSize" Value="46" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Foreground" Value="Black" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="HorizontalAlignment" Value="Center" />
+        </Style>
+        <local:IndexToOffsetConverter x:Key="IndexToOffsetConverter" />
+        <local:GradeToColorConverter x:Key="GradeToColorConverter" />
+        
+    </Window.Resources>
+
+    <Grid>
+        <!-- Верхняя панель -->
+        <DockPanel  LastChildFill="False" Background="#4EB4D0" Margin="0,0,0,2" VerticalAlignment="Top" HorizontalAlignment="Stretch" Height="64">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" DockPanel.Dock="Left">
+                <Button  Foreground="Black" FontSize="14" Padding="5" Margin="8,5,10,5" Height="48" Width="48" Click="Button_Click" BorderThickness="0,0,0,0">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/button_openmenu_default.png" Stretch="UniformToFill" />
+                    </Button.Background>
+                </Button>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" DockPanel.Dock="Right">
+                <Button x:Name="DarkLightMode" Width="48" RenderTransformOrigin="0.535,0.507" Height="48" Margin="0,0,5,0" BorderThickness="0,0,0,0">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/Button - icon_daynight.png" Stretch="UniformToFill" />
+                    </Button.Background>
+                </Button>
+                <Button Foreground="Black" FontSize="14" Padding="5" Margin="0,5,10,5" Height="48" Width="48" BorderThickness="0,0,0,0">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/Button - icon_ring.png" Stretch="UniformToFill" />
+                    </Button.Background>
+                </Button>
+                <Border x:Name="ButtonProfile" Width="272" Height="56" Margin="0,0,5,0" Background="#BAEAFD" MouseLeftButtonDown="OpenProfile" CornerRadius="7">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <!-- Для текста -->
+                            <ColumnDefinition Width="Auto" />
+                            <!-- Для изображения -->
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Текст с фамилией и инициалами -->
+                        <TextBlock Grid.Column="0" Text="Шальнов Ю.Д." Style="{StaticResource RobotoTextStyleTimeText }" 
+                  
+                   Foreground="Black" 
+                   VerticalAlignment="Center" 
+                   HorizontalAlignment="Left" 
+                   Margin="0,0,50,0" Width="208" />
+
+                        <!-- Изображение пользователя -->
+                        <Border Grid.Column="1" BorderBrush="Black" 
+                BorderThickness="1" 
+                Height="44" 
+                Width="44" 
+                CornerRadius="50" 
+                Margin="50,0,0,0">
+                            <Border.Background>
+                                <ImageBrush ImageSource="/Shalnov.jpg" Stretch="UniformToFill" />
+                            </Border.Background>
+                        </Border>
+                    </Grid>
+                </Border>
+            </StackPanel>
+            <Border  Width="48" Height="48" CornerRadius="50">
+                <Border.Background>
+                    <ImageBrush ImageSource="/logo-nn.png" Stretch="UniformToFill" />
+                </Border.Background>
+            </Border>
+
+        </DockPanel>
+
+        <!-- Панель четверти -->
+        <DockPanel x:Name ="TimePeriodPanel" LastChildFill="False" VerticalAlignment="Top" HorizontalAlignment="Stretch" Background="#BAEAFD" Margin="0,64,0,0" Height="64">
+            <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" HorizontalAlignment="Center" Margin="161,0,161,3" Height="63">
+                <Button x:Name="LeftArrow"  Command="{Binding PreviousDayCommand}" Foreground="Black" Width="48" Height="48" FontSize="14" Padding="5" Margin="10,5,10,5" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <Button.Background>
+                        <ImageBrush ImageSource="Left_arrow.jpg" Stretch="UniformToFill" />
+                    </Button.Background>
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="7"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+
+                <TextBlock FontWeight="Bold" Text="{Binding CurrentDateDisplay}" Style="{StaticResource RobotoTextStyleTimeText }"  VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,5,10,5"/>
+                <Button x:Name="RightArrow" Command="{Binding NextDayCommand}" Foreground="Black" Width="48" Height="48"  FontSize="14" Padding="5" Margin="10,5,10,5" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <Button.Background>
+                        <ImageBrush ImageSource="Right_arrow.jpg" Stretch="UniformToFill" />
+                    </Button.Background>
+                    <Button.Resources>
+                        <Style TargetType="Border">
+                            <Setter Property="CornerRadius" Value="7"/>
+                        </Style>
+                    </Button.Resources>
+                </Button>
+            </StackPanel>
+        </DockPanel>
+        <!-- Левая панель режимов -->
+
+        <DockPanel x:Name ="Menu" Background="#7DCCDE" HorizontalAlignment="Left" Margin="0,64,0,0" Width ="216" LastChildFill="False" Panel.ZIndex="1">
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Width="216">
+                <!-- Кнопка "Расписание" -->
+                <Button x:Name="Schedule" Padding="5" Margin="5,16,5,16" Width="184" Height="48"  HorizontalAlignment="Stretch" BorderThickness="0,0,0,0" Click="OpenSchelduleForTheWeek">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/button_menu_schedule_default.png" Stretch="Fill" />
+                    </Button.Background>
+                </Button>
+
+                <!-- Кнопка "Дневник" -->
+                <Button x:Name="Grade" Padding="5" Margin="5,5,5,0" Width="184" Height="48" HorizontalAlignment="Stretch" BorderThickness="0,0,0,0">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/button_menu_mark_default.png" Stretch="Fill" />
+                    </Button.Background>
+                </Button>
+            </StackPanel>
+        </DockPanel>
+        <!-- Основная область с предметами и оценками -->
+        <ScrollViewer x:Name ="MainSheduleField" VerticalScrollBarVisibility="Auto" Margin="80,152,0,0">
+            
+            <ItemsControl ItemsSource="{Binding Subjects}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Margin="0,5">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="1.452248*" />
+                            </Grid.ColumnDefinitions>
+                            <!-- Левый прямоугольник -->
+                            <Border Background="#FBF2EB" CornerRadius="10,10,30,10" Padding="10" Margin="0,0,32,32" Grid.Column="0"
+                            MinWidth="256" MinHeight="168" BorderBrush="#AC7356" BorderThickness="1,1,1,1" MaxHeight="168" MaxWidth="712">
+                                <StackPanel>
+                                    <!-- Название предмета -->
+                                    <TextBlock Text="{Binding Name}" Style="{StaticResource RobotoTextStyle}" FontSize="28" FontWeight="Bold" Foreground="#333333" />
+                                    <!-- Черта -->
+                                    <Separator Margin="0,5" Height="1" FontWeight="Black" Background="Black" />
+                                    <!-- ФИО преподавателя и номер кабинета -->
+                                    <StackPanel Orientation="Horizontal" Margin="0,5">
+                                        <Ellipse Width="16" Height="16" Fill="#AC7356" Margin="0,5,5,0" />
+                                        <TextBlock Text="{Binding TeacherName}" Style="{StaticResource RobotoTextStyleTeacheAruditorium}" VerticalAlignment="Center" />
+                                    </StackPanel>
+                                    <StackPanel Orientation="Horizontal" Margin="0,5">
+                                        <Ellipse Width="16" Height="16" Fill="#AC7356" Margin="0,5,5,0" />
+                                        <TextBlock Text="{Binding RoomNumber}" Style="{StaticResource RobotoTextStyleTeacheAruditorium}" VerticalAlignment="Center" />
+                                    </StackPanel>
+                                    <!-- Время начала и окончания урока -->
+                                    <Grid Margin="0,0,0,10">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="{Binding StartTime}" Style="{StaticResource RobotoTextStyleTimeText }" 
+                                           HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,0,10,0" Panel.ZIndex="1"/>
+                                        <Separator Grid.Column="1" MinWidth="150" Background="Black" VerticalAlignment="Bottom" Margin="0,0,0,5" />
+                                        <TextBlock Grid.Column="2" Text="{Binding EndTime}" Style="{StaticResource RobotoTextStyleTimeText}" 
+                                           HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10,0,0,0" Panel.ZIndex="1" />
+                                    </Grid>
+                                </StackPanel>
+                            </Border>
+                            <!-- Правый прямоугольник -->
+                            <Border Background="#FBF2EB" CornerRadius="40,10,10,10" Padding="10" Margin="0,0,0,32" Grid.Column="1"
+        MinWidth="256" MinHeight="168" BorderBrush="#AC7356" BorderThickness="1,1,1,1" MaxWidth="1034" MaxHeight="168">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="2*" />
+                                        <!-- 2/3 ширины для текста домашнего задания -->
+                                        <ColumnDefinition Width="1*" />
+                                        <!-- 1/3 ширины для оценок -->
+                                    </Grid.ColumnDefinitions>
+                                    <!-- Текст домашнего задания -->
+                                    <TextBlock Text="{Binding Homework}" FontSize="14" Foreground="#333333" TextWrapping="Wrap"
+                   VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,0,10,0" />
+                                    <!-- Оценки -->
+                                    <ItemsControl Grid.Column="1" ItemsSource="{Binding Grades}" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                        <!-- Поменял выравнивание оценок по правому краю, так как они выходили за пределы прямоугольника-->
+                                        <ItemsControl.ItemsPanel>
+                                            <ItemsPanelTemplate>
+                                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" FlowDirection="RightToLeft" />
+                                            </ItemsPanelTemplate>
+                                        </ItemsControl.ItemsPanel>
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <Border Background="{Binding Converter={StaticResource GradeToColorConverter}}" 
+                            BorderBrush="{Binding Converter={StaticResource GradeToColorConverter}, ConverterParameter=BorderBrush}" 
+                            CornerRadius="10" Width="72" Height="72"
+                            Margin="-15,0,0,0" BorderThickness="1,1,1,1">
+                                                    <TextBlock Text="{Binding}" Style="{StaticResource GradeTextStyle}"   />
+
+                                                </Border>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </Grid>
+                            </Border>
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+    </Grid>
+</Window>
