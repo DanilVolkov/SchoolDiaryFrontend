@@ -34,7 +34,7 @@
         </Style>
         <local:IndexToOffsetConverter x:Key="IndexToOffsetConverter" />
         <local:GradeToColorConverter x:Key="GradeToColorConverter" />
-        
+
     </Window.Resources>
 
     <Grid>
@@ -94,6 +94,7 @@
                     <ImageBrush ImageSource="/logo-nn.png" Stretch="UniformToFill" />
                 </Border.Background>
             </Border>
+            <Button x:Name="button" Content="Button" Width="238"/>
 
         </DockPanel>
 
@@ -145,85 +146,9 @@
         </DockPanel>
         <!-- Основная область с предметами и оценками -->
         <ScrollViewer x:Name ="MainSheduleField" VerticalScrollBarVisibility="Auto" Margin="80,152,0,0">
-            
-            <ItemsControl ItemsSource="{Binding Subjects}">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <Grid Margin="0,5">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="1.452248*" />
-                            </Grid.ColumnDefinitions>
-                            <!-- Левый прямоугольник -->
-                            <Border Background="#FBF2EB" CornerRadius="10,10,30,10" Padding="10" Margin="0,0,32,32" Grid.Column="0"
-                            MinWidth="256" MinHeight="168" BorderBrush="#AC7356" BorderThickness="1,1,1,1" MaxHeight="168" MaxWidth="712">
-                                <StackPanel>
-                                    <!-- Название предмета -->
-                                    <TextBlock Text="{Binding Name}" Style="{StaticResource RobotoTextStyle}" FontSize="28" FontWeight="Bold" Foreground="#333333" />
-                                    <!-- Черта -->
-                                    <Separator Margin="0,5" Height="1" FontWeight="Black" Background="Black" />
-                                    <!-- ФИО преподавателя и номер кабинета -->
-                                    <StackPanel Orientation="Horizontal" Margin="0,5">
-                                        <Ellipse Width="16" Height="16" Fill="#AC7356" Margin="0,5,5,0" />
-                                        <TextBlock Text="{Binding TeacherName}" Style="{StaticResource RobotoTextStyleTeacheAruditorium}" VerticalAlignment="Center" />
-                                    </StackPanel>
-                                    <StackPanel Orientation="Horizontal" Margin="0,5">
-                                        <Ellipse Width="16" Height="16" Fill="#AC7356" Margin="0,5,5,0" />
-                                        <TextBlock Text="{Binding RoomNumber}" Style="{StaticResource RobotoTextStyleTeacheAruditorium}" VerticalAlignment="Center" />
-                                    </StackPanel>
-                                    <!-- Время начала и окончания урока -->
-                                    <Grid Margin="0,0,0,10">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*" />
-                                            <ColumnDefinition Width="Auto" />
-                                            <ColumnDefinition Width="*" />
-                                        </Grid.ColumnDefinitions>
-                                        <TextBlock Text="{Binding StartTime}" Style="{StaticResource RobotoTextStyleTimeText }" 
-                                           HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,0,10,0" Panel.ZIndex="1"/>
-                                        <Separator Grid.Column="1" MinWidth="150" Background="Black" VerticalAlignment="Bottom" Margin="0,0,0,5" />
-                                        <TextBlock Grid.Column="2" Text="{Binding EndTime}" Style="{StaticResource RobotoTextStyleTimeText}" 
-                                           HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="10,0,0,0" Panel.ZIndex="1" />
-                                    </Grid>
-                                </StackPanel>
-                            </Border>
-                            <!-- Правый прямоугольник -->
-                            <Border Background="#FBF2EB" CornerRadius="40,10,10,10" Padding="10" Margin="0,0,0,32" Grid.Column="1"
-        MinWidth="256" MinHeight="168" BorderBrush="#AC7356" BorderThickness="1,1,1,1" MaxWidth="1034" MaxHeight="168">
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="2*" />
-                                        <!-- 2/3 ширины для текста домашнего задания -->
-                                        <ColumnDefinition Width="1*" />
-                                        <!-- 1/3 ширины для оценок -->
-                                    </Grid.ColumnDefinitions>
-                                    <!-- Текст домашнего задания -->
-                                    <TextBlock Text="{Binding Homework}" FontSize="14" Foreground="#333333" TextWrapping="Wrap"
-                   VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0,0,10,0" />
-                                    <!-- Оценки -->
-                                    <ItemsControl Grid.Column="1" ItemsSource="{Binding Grades}" VerticalAlignment="Center" HorizontalAlignment="Center">
-                                        <!-- Поменял выравнивание оценок по правому краю, так как они выходили за пределы прямоугольника-->
-                                        <ItemsControl.ItemsPanel>
-                                            <ItemsPanelTemplate>
-                                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" FlowDirection="RightToLeft" />
-                                            </ItemsPanelTemplate>
-                                        </ItemsControl.ItemsPanel>
-                                        <ItemsControl.ItemTemplate>
-                                            <DataTemplate>
-                                                <Border Background="{Binding Converter={StaticResource GradeToColorConverter}}" 
-                            BorderBrush="{Binding Converter={StaticResource GradeToColorConverter}, ConverterParameter=BorderBrush}" 
-                            CornerRadius="10" Width="72" Height="72"
-                            Margin="-15,0,0,0" BorderThickness="1,1,1,1">
-                                                    <TextBlock Text="{Binding}" Style="{StaticResource GradeTextStyle}"   />
 
-                                                </Border>
-                                            </DataTemplate>
-                                        </ItemsControl.ItemTemplate>
-                                    </ItemsControl>
-                                </Grid>
-                            </Border>
-                        </Grid>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
+            <ItemsControl>
+                <RadioButton x:Name="radioButton" Content="RadioButton"/>
             </ItemsControl>
         </ScrollViewer>
     </Grid>
