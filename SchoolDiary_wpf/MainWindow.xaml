@@ -94,8 +94,6 @@
                     <ImageBrush ImageSource="/logo-nn.png" Stretch="UniformToFill" />
                 </Border.Background>
             </Border>
-            <Button x:Name="button" Content="Button" Width="238"/>
-            <Button x:Name="button2" Content="Button" Width="82"/>
 
         </DockPanel>
 
