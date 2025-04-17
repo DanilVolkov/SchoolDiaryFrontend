@@ -28,12 +28,36 @@ namespace SchoolDiary_wpf
             throw new NotImplementedException();
         }
     }
+    public class StringToDateConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is string dateString)
+            {
+                // Добавляем год вручную
+                //dateString += " 2025"; // Указываем нужный год
+
+                DateTime parsedDate;
+                if (DateTime.TryParse(dateString, culture, DateTimeStyles.None, out parsedDate))
+                {
+                    return parsedDate;
+                }
+            }
+            return null;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
 
 
     public partial class SchelduleForTheWeek : Window
     {
         private static Profile profileWindow;
         private static SchelduleForTheWeek schelduleForTheWeekWindow;
+        private static MainWindow mainWindow;
 
         public SchelduleForTheWeek()
         {
@@ -74,7 +98,25 @@ namespace SchoolDiary_wpf
             //    this.Show();
             //};
         }
+        private void OpenSchelduleForTheDate(object sender, RoutedEventArgs e)
+        {
+            this.Hide();
+            if (sender is Button button && button.Tag is DateTime date)
+            {
+                mainWindow = new MainWindow(date);
 
+                if (mainWindow.IsVisible)
+                {
+                    // Если окно уже открыто, активируем его
+                    mainWindow.Activate();
+                }
+                else
+                {
+                    // Если окно скрыто, показываем его
+                    mainWindow.Show();
+                }
+            }
+        }
 
         private void OpenProfile(object sender, RoutedEventArgs e)
         {

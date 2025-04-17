@@ -49,7 +49,7 @@ namespace SchoolDiary_wpf
             _scheduleByDate = new Dictionary<DateTime, ObservableCollection<Subject>>
         {
             {
-                new DateTime(2023, 3, 24), // Пример: 24 марта
+                new DateTime(2025, 3, 24), // Пример: 24 марта
                 new ObservableCollection<Subject>
                 {
                     new Subject
@@ -74,7 +74,7 @@ namespace SchoolDiary_wpf
                     }
                 }
             },
-            {new DateTime(2023, 3, 23),
+            {new DateTime(2025, 3, 23),
                 new ObservableCollection<Subject> {
                     new Subject
                     {
@@ -92,7 +92,7 @@ namespace SchoolDiary_wpf
 
 
             {
-                new DateTime(2023, 3, 25), // Пример: 25 марта
+                new DateTime(2025, 3, 25), // Пример: 25 марта
                 new ObservableCollection<Subject>
                 {
                     new Subject
@@ -162,12 +162,29 @@ namespace SchoolDiary_wpf
         };
 
             // Установка начальной даты
-            _currentDate = new DateTime(2023, 3, 24);
+            _currentDate = new DateTime(2025, 3, 24);
             Subjects = _scheduleByDate[_currentDate];
 
             // Инициализация команд
             PreviousDayCommand = new RelayCommand(PreviousDay);
             NextDayCommand = new RelayCommand(NextDay);
+        }
+
+
+        public void SetupCurrentDate(DateTime currentDate)
+        {
+            if (_scheduleByDate.ContainsKey(currentDate))
+            {
+                _currentDate = currentDate;
+                Subjects = _scheduleByDate[_currentDate];
+                OnPropertyChanged(nameof(CurrentDateDisplay)); // Обновляем отображение даты
+            }
+            else
+            {
+                _currentDate = new DateTime(2025, 3, 24);
+                Subjects = _scheduleByDate[_currentDate];
+                OnPropertyChanged(nameof(CurrentDateDisplay));
+            }
         }
 
         // Метод для перехода к предыдущему дню
