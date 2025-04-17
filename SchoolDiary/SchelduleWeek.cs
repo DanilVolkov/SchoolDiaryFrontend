@@ -44,6 +44,7 @@ namespace SchoolDiary_wpf
         private DateTime _currentDate { get; set; }
 
         public string CurrentDateDisplay_ForTheWeek { get { _currentDate = _currentDate.AddDays(1); return _currentDate.ToString("d MMMM"); } }
+         public string CurrentWeek { get { return _currentDate.ToString("d MMMM") +'-' + _currentDate.AddDays(7).ToString("d MMMM"); } }
 
         //public List<DaySchedule> WeekSchedule { get; set; }
         public ObservableCollection<Lesson> WeekSchedule { get; set; }

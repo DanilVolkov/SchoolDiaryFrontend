@@ -104,14 +104,15 @@ namespace SchoolDiary_wpf
                 Menu.Width = 64;
                 Schedule.Width = 48;
                 Grade.Width = 48;
+                Menu.Opacity = 1;
 
                 //MainSheduleField.Margin = new Thickness(112, 152, 0, 0);  //сделал эти трансформации отступов для сдвига при нажатии расширения кнопок меню, но судя по всему, по дизайну фигмы оно не нужно
                 //TimePeriodPanel.Margin = new Thickness(64, 64, 0, 0);
 
                 ((ImageBrush)Schedule.Background).ImageSource = new System.Windows.Media.Imaging.BitmapImage(
-            new System.Uri("../../ImageButtons/button_manu_close_schedule_default.png", System.UriKind.Relative));
+           new Uri("pack://application:,,,/ImageButtons/button_manu_close_schedule_default.png", UriKind.Absolute));
                 ((ImageBrush)Grade.Background).ImageSource = new System.Windows.Media.Imaging.BitmapImage(
-                    new System.Uri("../../ImageButtons/button_menu_close_mark_defoult.png", System.UriKind.Relative));
+                    new Uri("pack://application:,,,/ImageButtons/button_menu_close_mark_defoult.png", UriKind.Absolute));
 
             }
             else
@@ -119,15 +120,17 @@ namespace SchoolDiary_wpf
                 Menu.Width = 216;
                 Schedule.Width = 184;
                 Grade.Width = 184;
-
+                Menu.Opacity = 0.6;
+                Schedule.Opacity = 1;
+                Grade.Opacity = 1;
                 //MainSheduleField.Margin = new Thickness(264, 152, 0, 0);
                 //TimePeriodPanel.Margin = new Thickness(216, 64, 0, 0);
 
                 // Возвращаем исходные фоновые изображения кнопок
                 ((ImageBrush)Schedule.Background).ImageSource = new System.Windows.Media.Imaging.BitmapImage(
-                    new System.Uri("../../ImageButtons/button_menu_schedule_default.png", System.UriKind.Relative));
+                    new Uri("pack://application:,,,/ImageButtons/button_menu_schedule_default.png", UriKind.Absolute));
                 ((ImageBrush)Grade.Background).ImageSource = new System.Windows.Media.Imaging.BitmapImage(
-                    new System.Uri("../../ImageButtons/button_menu_mark_default.png", System.UriKind.Relative));
+                     new Uri("pack://application:,,,/ImageButtons/button_menu_mark_default.png", UriKind.Absolute));
             }
         }
 
