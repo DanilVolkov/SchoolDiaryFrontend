@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Collections.ObjectModel;
 
-namespace SchoolDiary_wpf
+namespace SchoolDiary
 {
 
     public static class DateTimeExtensions
