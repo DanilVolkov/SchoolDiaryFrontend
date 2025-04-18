@@ -108,7 +108,17 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="APIConnect\APIConnector.cs" />
+    <Compile Include="Objects\Classroom.cs" />
+    <Compile Include="Objects\Content.cs" />
+    <Compile Include="Objects\DaySchedule.cs" />
+    <Compile Include="Objects\Group.cs" />
+    <Compile Include="Objects\Homework.cs" />
+    <Compile Include="Objects\Lesson.cs" />
+    <Compile Include="Objects\Mark.cs" />
     <Compile Include="Objects\Student.cs" />
+    <Compile Include="Objects\Subject.cs" />
+    <Compile Include="Objects\Teacher.cs" />
+    <Compile Include="Objects\Value.cs" />
     <Compile Include="Profile.xaml.cs">
       <DependentUpon>Profile.xaml</DependentUpon>
     </Compile>

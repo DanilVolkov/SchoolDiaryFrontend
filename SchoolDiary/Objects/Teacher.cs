@@ -1,8 +1,9 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace SchoolDiary.Objects
 {
-    public class Student
+    public class Teacher
     {
         [JsonPropertyName("id")]
         public int Id { get; set; }
@@ -31,7 +32,7 @@ namespace SchoolDiary.Objects
         [JsonPropertyName("role")]
         public string Role { get; set; }
 
-        [JsonPropertyName("group")]
-        public string Group { get; set; }
+        [JsonPropertyName("groups")]
+        public List<string> Groups { get; set; }
     }
 }
