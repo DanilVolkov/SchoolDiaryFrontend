@@ -117,11 +117,5 @@ namespace SchoolDiary
 
         }
 
-        private async void TextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            APIConnector connector = new APIConnector();
-            Student stud = await connector.GetStudent(24);
-            NameTextBox.Text = stud.first_name;
-        }
     }
 }
