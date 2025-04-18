@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using SchoolDiary.Objects;
+using SchoolDiary.APIConnect;
+using System;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
-namespace SchoolDiary_wpf
+namespace SchoolDiary
 {
     /// <summary>
     /// Логика взаимодействия для Profile.xaml
@@ -122,5 +117,11 @@ namespace SchoolDiary_wpf
 
         }
 
+        private async void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            APIConnector connector = new APIConnector();
+            Student stud = await connector.GetStudent(24);
+            NameTextBox.Text = stud.first_name;
+        }
     }
 }

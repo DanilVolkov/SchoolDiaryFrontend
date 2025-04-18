@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace SchoolDiary_wpf
+namespace SchoolDiary
 {
     /// <summary>
     /// Логика взаимодействия для App.xaml
