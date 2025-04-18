@@ -70,11 +70,16 @@
                             <!-- Для изображения -->
                         </Grid.ColumnDefinitions>
 
-                        <!-- Текст с фамилией и инициалами -->
-                        <TextBlock Grid.Column="0" Text="Шальнов Ю.Д." Style="{StaticResource RobotoTextStyleTimeText }" 
+                        <TextBlock x:Name="FullNameTextBlock" 
+                           Grid.Column="0" 
+                           Text=" " 
+                           Style="{StaticResource RobotoTextStyleTimeText}" 
                            Foreground="Black" 
                            VerticalAlignment="Center" 
-                           HorizontalAlignment="Left" Width="208" Grid.ColumnSpan="2" Height="34" />
+                           HorizontalAlignment="Left" 
+                           Width="208" 
+                           Grid.ColumnSpan="2" 
+                           Height="34" />
 
                         <!-- Изображение пользователя -->
                         <Border Grid.Column="1" BorderBrush="Black" 

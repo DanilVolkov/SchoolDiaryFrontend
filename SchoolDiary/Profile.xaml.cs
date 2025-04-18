@@ -24,9 +24,73 @@ namespace SchoolDiary
             // Развернуть окно на весь экран
             this.WindowState = WindowState.Maximized;
 
-
             this.Closing += Window_Closing; // Подписываемся на событие закрытия
+
+            // Загрузка данных студента
+            LoadStudentData();
         }
+
+        private async void LoadStudentData()
+        {
+            APIConnector apiConnector = new APIConnector();
+            try
+            {
+                Student student = await apiConnector.GetStudent();
+
+                // Заполнение текстовых полей данными студента
+                FirstNameTextBox.Text = student.FirstName;
+                LastNameTextBox.Text = student.LastName;
+                MiddleNameTextBox.Text = student.MiddleName;
+                UsernameTextBox.Text = student.Username;
+                DateOfBirthTextBox.Text = FormatDateOfBirth(student.DateOfBirth);
+                RoleTextBox.Text = student.Role;
+                GroupTextBox.Text = student.Group;
+
+                // Устанавливаем ФИО в TextBlock кнопки профиля
+                FullNameTextBlock.Text = FormatFullName(student);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Не удалось загрузить данные студента.");
+            }
+        }
+
+        private string FormatFullName(Student student)
+        {
+            string initials = "";
+            if (!string.IsNullOrEmpty(student.FirstName))
+            {
+                initials += $"{student.FirstName[0]}.";
+            }
+            if (!string.IsNullOrEmpty(student.MiddleName))
+            {
+                initials += $"{student.MiddleName[0]}.";
+            }
+
+            return $"{student.LastName} {initials}";
+        }
+
+        private string FormatDateOfBirth(string dateOfBirth)
+        {
+            if (string.IsNullOrEmpty(dateOfBirth))
+            {
+                return "Нет данных"; // Если дата отсутствует
+            }
+
+            try
+            {
+                // Преобразуем строку в DateTime
+                DateTime date = DateTime.Parse(dateOfBirth);
+
+                // Форматируем дату в виде "dd.MM.yyyy"
+                return date.ToString("dd.MM.yyyy");
+            }
+            catch
+            {
+                return "Неверный формат даты"; // Если произошла ошибка при парсинге
+            }
+        }
+
 
         // Метод для получения единственного экземпляра окна
         public static Profile GetInstance()
