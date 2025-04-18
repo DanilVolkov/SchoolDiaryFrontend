@@ -35,13 +35,16 @@ namespace SchoolDiary.APIConnect
             return student;
         }
 
-        public async Task<List<DaySchedule>> GetWeekSchedule()
+        public async Task<List<Objects.DaySchedule>> GetWeekSchedule(DateTime from, DateTime to)
         {
-            List<DaySchedule> schedule = null;
-            HttpResponseMessage response = await client.GetAsync(string.Format("https://api.nkkz.dev/students/{0}/schedule", student_id));
+            List<Objects.DaySchedule> schedule = null;
+            string date_from = from.ToString("yyyy-MM-dd");
+            string date_to = to.ToString("yyyy-MM-dd");
+            string path = string.Format("https://api.nkkz.dev/students/{0}/schedule?from={1}&to={2}", student_id, date_from, date_to);
+            HttpResponseMessage response = await client.GetAsync(path);
             if (response.IsSuccessStatusCode)
             {
-                schedule = JsonSerializer.Deserialize<List<DaySchedule>>(await response.Content.ReadAsStringAsync());
+                schedule = JsonSerializer.Deserialize<List<Objects.DaySchedule>>(await response.Content.ReadAsStringAsync());
             }
             else
             {
