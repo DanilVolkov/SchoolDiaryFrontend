@@ -107,7 +107,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="APIConnect\APIConnector.cs" />
+    <Compile Include="GradeWindow.xaml.cs">
+      <DependentUpon>GradeWindow.xaml</DependentUpon>
+    </Compile>
+     <Compile Include="APIConnect\APIConnector.cs" />
     <Compile Include="Objects\Classroom.cs" />
     <Compile Include="Objects\Content.cs" />
     <Compile Include="Objects\DaySchedule.cs" />
@@ -128,6 +131,10 @@
     <Compile Include="SchelduleWeek.cs" />
     <Compile Include="ViewModel.cs" />
     <Compile Include="RelayCommand.cs" />
+    <Page Include="GradeWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

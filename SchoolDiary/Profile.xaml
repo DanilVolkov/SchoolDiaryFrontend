@@ -63,12 +63,19 @@
             <Setter Property="HorizontalAlignment" Value="Right" />
             <Setter Property="TextAlignment" Value="Right" />
         </Style>
+
+        <Style x:Key="RobotoTextStyleTimeText" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="/Fonts/Roboto-Medium.ttf#Roboto" />
+            <Setter Property="FontWeight" Value="Medium" />
+            <Setter Property="FontSize" Value="28" />
+            <Setter Property="Foreground" Value="Black" />
+        </Style>
     </Window.Resources>
     <Grid>
         <!-- Верхняя панель -->
-        <DockPanel LastChildFill="False" Background="#4EB4D0" Margin="0,0,0,2" VerticalAlignment="Top" HorizontalAlignment="Stretch" Height="64">
+        <DockPanel  LastChildFill="False" Background="#4EB4D0" Margin="0,0,0,2" VerticalAlignment="Top" HorizontalAlignment="Stretch" Height="64">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" DockPanel.Dock="Left">
-                <Button Foreground="Black" FontSize="14" Padding="5" Margin="8,5,10,5" Height="48" Width="48" Click="Button_Click" BorderThickness="0,0,0,0">
+                <Button  Foreground="Black" FontSize="14" Padding="5" Margin="8,5,10,5" Height="48" Width="48" Click="Button_Click" BorderThickness="0,0,0,0">
                     <Button.Background>
                         <ImageBrush ImageSource="/button_openmenu_default.png" Stretch="UniformToFill" />
                     </Button.Background>
@@ -89,13 +96,24 @@
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition />
-                            <ColumnDefinition Width="Auto" MinWidth="86" />
+                            <!-- Для текста -->
+                            <ColumnDefinition Width="72.133" />
+                            <ColumnDefinition Width="4.267"/>
+                            <ColumnDefinition Width="2.6"/>
+                            <!-- Для изображения -->
                         </Grid.ColumnDefinitions>
-                        <TextBlock Grid.Column="0" Text="Шальнов Ю.Д." Style="{StaticResource RobotoTextStyle}" 
-                                   Foreground="Black" 
-                                   VerticalAlignment="Center" 
-                                   HorizontalAlignment="Left" Width="208" Grid.ColumnSpan="2" Height="34" />
-                        <Border Grid.Column="1" BorderBrush="Black" BorderThickness="1" CornerRadius="50" Margin="36,6,6,6">
+
+                        <!-- Текст с фамилией и инициалами -->
+                        <TextBlock Grid.Column="0" Text="Шальнов Ю.Д." Style="{StaticResource RobotoTextStyleTimeText }" 
+                           Foreground="Black" 
+                           VerticalAlignment="Center" 
+                           HorizontalAlignment="Left" Width="208" Grid.ColumnSpan="2" Height="34" />
+
+                        <!-- Изображение пользователя -->
+                        <Border Grid.Column="1" BorderBrush="Black" 
+                            BorderThickness="1" 
+                            CornerRadius="50" 
+                            Margin="29,6,6,6" Grid.ColumnSpan="2">
                             <Border.Background>
                                 <ImageBrush ImageSource="/Shalnov.jpg" Stretch="UniformToFill" />
                             </Border.Background>
@@ -103,11 +121,12 @@
                     </Grid>
                 </Border>
             </StackPanel>
-            <Border Width="48" Height="48" CornerRadius="50">
+            <Border  Width="48" Height="48" CornerRadius="50">
                 <Border.Background>
                     <ImageBrush ImageSource="/logo-nn.png" Stretch="UniformToFill" />
                 </Border.Background>
             </Border>
+
         </DockPanel>
 
         <!-- Левая панель режимов -->
