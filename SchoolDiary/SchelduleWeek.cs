@@ -5,7 +5,7 @@ using System.Collections.ObjectModel;
 using System.Windows.Input;
 using System.ComponentModel;
 
-namespace SchoolDiary_wpf
+namespace SchoolDiary
 {
 
     public static class DateTimeExtensions
