@@ -35,22 +35,22 @@ namespace SchoolDiary.Objects
     public class Lesson
     {
         [JsonPropertyName("id")]
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         [JsonPropertyName("schedule_id")]
-        public int ScheduleId { get; set; }
+        public int? ScheduleId { get; set; }
 
         [JsonPropertyName("group_id")]
-        public int GroupId { get; set; }
+        public int? GroupId { get; set; }
 
         [JsonPropertyName("subject_id")]
-        public int SubjectId { get; set; }
+        public int? SubjectId { get; set; }
 
         [JsonPropertyName("teacher_id")]
-        public int TeacherId { get; set; }
+        public int? TeacherId { get; set; }
 
         [JsonPropertyName("classroom_id")]
-        public int ClassroomId { get; set; }
+        public int? ClassroomId { get; set; }
 
         [JsonPropertyName("date")]
         [JsonConverter(typeof(CustomDateConverter))]
@@ -65,7 +65,7 @@ namespace SchoolDiary.Objects
         public DateTime TimeEnd { get; set; }
 
         [JsonPropertyName("group")]
-        public Group? Group { get; set; }
+        public Group Group { get; set; }
 
         [JsonPropertyName("subject")]
         public Subject Subject { get; set; }
