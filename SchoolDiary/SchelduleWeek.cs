@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Collections.ObjectModel;
+using System.Windows.Input;
+using System.ComponentModel;
 
 namespace SchoolDiary
 {
@@ -28,7 +30,7 @@ namespace SchoolDiary
         public int RowIndex { get; set; } // Индекс строки в таблице
         public int ColumnIndex { get; set; } // Индекс столбца в таблице
     }
-
+   
     public class DaySchedule
     {
         public DateTime Date { get; set; } // Дата дня недели
@@ -37,20 +39,31 @@ namespace SchoolDiary
         public ObservableCollection<Lesson> Lessons { get; set; } = new ObservableCollection<Lesson>(); // Расписание по времени
     }
 
-    public class ScheduleViewModel
+    public class ScheduleViewModel: INotifyPropertyChanged
     {
         private DateTime CurrentWeekStart { get; set; }
 
         private DateTime _currentDate { get; set; }
-
+        
+        public DateTime ButtonDateTag { get { var crdate = _currentDate; return crdate.AddDays(1); } }
         public string CurrentDateDisplay_ForTheWeek { get { _currentDate = _currentDate.AddDays(1); return _currentDate.ToString("d MMMM"); } }
-         public string CurrentWeek { get { return _currentDate.ToString("d MMMM") +'-' + _currentDate.AddDays(7).ToString("d MMMM"); } }
+         public string CurrentWeek { get { var Crdate = CurrentWeekStart; return Crdate.ToString("d MMMM") +'-' + Crdate.AddDays(6).ToString("d MMMM"); } }
 
         //public List<DaySchedule> WeekSchedule { get; set; }
         public ObservableCollection<Lesson> WeekSchedule { get; set; }
+        public ICommand PreviousWeekCommand { get; }
+        public ICommand NextWeekCommand { get; }
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
 
         public ScheduleViewModel()
         {
+            PreviousWeekCommand = new RelayCommand(MoveToPreviousWeek);
+            NextWeekCommand = new RelayCommand(MoveToNextWeek);
             CurrentWeekStart = DateTimeExtensions.StartOfWeek(new DateTime(2025, 3, 24), DayOfWeek.Monday);
 
             _currentDate = CurrentWeekStart.AddDays(-1);
@@ -225,59 +238,26 @@ namespace SchoolDiary
 };
 
 
-            //WeekSchedule = new List<DaySchedule>
-            //{
-            //    new DaySchedule
-            //    {
-            //        Date = new DateTime(2025, 3, 24), // 24 марта (Понедельник) 
-            //        Lessons = new ObservableCollection<Lesson>
-            //        {
-            //            {
-            //                new Lesson
-            //                {
-            //                    Subject = "Геометрия",
-            //                    StartTime = new DateTime(2025, 3, 24, 8, 0, 0),
-            //                    EndTime = new DateTime(2025, 3, 24, 8, 45, 0),
-            //                    Grades = new List<int> { 3, 4, 5 },
-            //                    HasHomework = true
-            //                }
-            //            },
-            //            {
-
-            //                new Lesson
-            //                {
-            //                    Subject = "Алгебра",
-            //                    StartTime = new DateTime(2025, 3, 24, 9, 0, 0),
-            //                    EndTime = new DateTime(2025, 3, 24, 9, 45, 0),
-            //                    Grades = new List<int> { 4, 5 },
-            //                    HasHomework = false
-            //                }
-            //            }
-            //        }
-            //    },
-            //    new DaySchedule
-            //    {
-            //        Date = new DateTime(2025, 3, 25), // 25 марта (Вторник)
-            //        Lessons = new ObservableCollection<Lesson>
-            //        {
-            //            {
-            //                new Lesson
-            //                {
-            //                    Subject = "Физика",
-            //                    StartTime = new DateTime(2025, 3, 25, 8, 0, 0),
-            //                    EndTime = new DateTime(2025, 3, 25, 8, 45, 0),
-            //                    Grades = new List<int> { 5 },
-            //                    HasHomework = true
-            //                }
-            //            }
-            //        }
-            //    }
-            //    // Продолжайте добавлять дни недели...
-            //};
+            
 
 
 
             AssignRowAndColumnIndexes();
+        }
+        private void MoveToPreviousWeek()
+        {
+            CurrentWeekStart = CurrentWeekStart.AddDays(-7);
+            _currentDate = CurrentWeekStart.AddDays(-1);
+            OnPropertyChanged(nameof(CurrentWeek));
+            OnPropertyChanged(nameof(CurrentDateDisplay_ForTheWeek));
+        }
+
+        private void MoveToNextWeek()
+        {
+            CurrentWeekStart = CurrentWeekStart.AddDays(7);
+            _currentDate = CurrentWeekStart.AddDays(-1);
+            OnPropertyChanged(nameof(CurrentWeek));
+            OnPropertyChanged(nameof(CurrentDateDisplay_ForTheWeek));
         }
 
         private void AssignRowAndColumnIndexes()

@@ -30,6 +30,14 @@ namespace SchoolDiary
             DataContext = new ViewModel();
             this.Closing += Window_Closing;
         }
+        public MainWindow(DateTime Currentdate)
+        {
+            InitializeComponent();
+            ViewModel Schedule = new ViewModel();
+            Schedule.SetupCurrentDate(Currentdate);
+            DataContext = Schedule;
+            this.Closing += Window_Closing;
+        }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
