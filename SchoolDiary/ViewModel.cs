@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows.Input;
 
-namespace SchoolDiary_wpf
+namespace SchoolDiary
 {
     public class Subject
     {
