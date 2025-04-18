@@ -119,6 +119,7 @@
     <Compile Include="Objects\Subject.cs" />
     <Compile Include="Objects\Teacher.cs" />
     <Compile Include="Objects\Value.cs" />
+    <Compile Include="Objects\WeekSchedule.cs" />
     <Compile Include="Profile.xaml.cs">
       <DependentUpon>Profile.xaml</DependentUpon>
     </Compile>

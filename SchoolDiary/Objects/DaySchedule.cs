@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
 namespace SchoolDiary.Objects
@@ -12,7 +13,8 @@ namespace SchoolDiary.Objects
         public string DayOfWeekStr { get; set; }
 
         [JsonPropertyName("date")]
-        public string Date { get; set; }
+        [JsonConverter(typeof(CustomDateConverter))]
+        public DateTime Date { get; set; }
 
         [JsonPropertyName("content")]
         public List<Content> Content { get; set; }
