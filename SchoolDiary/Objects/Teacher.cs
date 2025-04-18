@@ -6,7 +6,7 @@ namespace SchoolDiary.Objects
     public class Teacher
     {
         [JsonPropertyName("id")]
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         [JsonPropertyName("username")]
         public string Username { get; set; }
@@ -24,10 +24,10 @@ namespace SchoolDiary.Objects
         public string DateOfBirth { get; set; }
 
         [JsonPropertyName("role_id")]
-        public int RoleId { get; set; }
+        public int? RoleId { get; set; }
 
         [JsonPropertyName("group_id")]
-        public int GroupId { get; set; }
+        public int? GroupId { get; set; }
 
         [JsonPropertyName("role")]
         public string Role { get; set; }

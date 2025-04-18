@@ -5,7 +5,7 @@ namespace SchoolDiary.Objects
     public class Group
     {
         [JsonPropertyName("id")]
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         [JsonPropertyName("name")]
         public string Name { get; set; }

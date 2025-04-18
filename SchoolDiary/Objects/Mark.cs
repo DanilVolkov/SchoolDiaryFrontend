@@ -10,19 +10,19 @@ namespace SchoolDiary.Objects
     public class Mark
     {
         [JsonPropertyName("lesson_id")]
-        public int LessonId { get; set; }
+        public int? LessonId { get; set; }
 
         [JsonPropertyName("student_id")]
-        public int StudentId { get; set; }
+        public int? StudentId { get; set; }
 
         [JsonPropertyName("value_id")]
-        public int ValueId { get; set; }
+        public int? ValueId { get; set; }
 
         [JsonPropertyName("date")]
         public string Date { get; set; }
 
         [JsonPropertyName("id")]
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         [JsonPropertyName("value")]
         public Value Value { get; set; }
