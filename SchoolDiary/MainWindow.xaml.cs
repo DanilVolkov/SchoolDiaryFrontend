@@ -14,7 +14,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace SchoolDiary_wpf
+namespace SchoolDiary
 {
     /// <summary>
     /// Логика взаимодействия для MainWindow.xaml
