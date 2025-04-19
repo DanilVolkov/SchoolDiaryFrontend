@@ -120,7 +120,7 @@
                             CornerRadius="50" 
                             Margin="29,6,6,6" Grid.ColumnSpan="2">
                             <Border.Background>
-                                <ImageBrush ImageSource="/Shalnov.jpg" Stretch="UniformToFill" />
+                                <ImageBrush ImageSource="/ImageButtons/Account.jpg" Stretch="UniformToFill" />
                             </Border.Background>
                         </Border>
                     </Grid>
