@@ -103,11 +103,16 @@
                             <!-- Для изображения -->
                         </Grid.ColumnDefinitions>
 
-                        <!-- Текст с фамилией и инициалами -->
-                        <TextBlock Grid.Column="0" Text="Шальнов Ю.Д." Style="{StaticResource RobotoTextStyleTimeText }" 
+                        <TextBlock x:Name="FullNameTextBlock" 
+                           Grid.Column="0" 
+                           Text=" " 
+                           Style="{StaticResource RobotoTextStyleTimeText}" 
                            Foreground="Black" 
                            VerticalAlignment="Center" 
-                           HorizontalAlignment="Left" Width="208" Grid.ColumnSpan="2" Height="34" />
+                           HorizontalAlignment="Left" 
+                           Width="208" 
+                           Grid.ColumnSpan="2" 
+                           Height="34" />
 
                         <!-- Изображение пользователя -->
                         <Border Grid.Column="1" BorderBrush="Black" 
@@ -151,13 +156,13 @@
                 <!-- Правая колонка с текстовыми полями -->
                 <StackPanel Orientation="Vertical" HorizontalAlignment="Right" Margin="0,72,0,0">
                     <Image HorizontalAlignment="Left" Height="240" Margin="0,0,0,40" VerticalAlignment="Top" Width="240" Source="/Account.jpg" />
-                    <TextBox Text="Юрий" Style="{StaticResource RoundedTextBox}" Width="816" Height="56" Margin="0,0,0,32" />
-                    <TextBox Text="Шальнов" Style="{StaticResource RoundedTextBox}" Width="816" Height="56" Margin="0,0,0,32" />
-                    <TextBox Text="Дмириевич" Style="{StaticResource RoundedTextBox}" Width="816" Height="56" Margin="0,0,0,32" />
-                    <TextBox Text="Jraya931" Style="{StaticResource RoundedTextBox}" Width="816" Height="56" Margin="0,0,0,40" />
-                    <TextBox Text="10.08.2003" Style="{StaticResource RoundedTextBox}" Width="816" Height="56" Margin="0,0,0,32" />
-                    <TextBox Text="Ученик" Style="{StaticResource RoundedTextBox}" Width="816" Height="56" Margin="0,0,0,32" />
-                    <TextBox Text="11Б" Style="{StaticResource RoundedTextBox}" Width="816" Height="56" />
+                    <TextBox x:Name="FirstNameTextBox" Style="{StaticResource RoundedTextBox}" Width="816" Height="56" Margin="0,0,0,32" />
+                    <TextBox x:Name="LastNameTextBox" Style="{StaticResource RoundedTextBox}" Width="816" Height="56" Margin="0,0,0,32" />
+                    <TextBox x:Name="MiddleNameTextBox" Style="{StaticResource RoundedTextBox}" Width="816" Height="56" Margin="0,0,0,32" />
+                    <TextBox x:Name="UsernameTextBox" Style="{StaticResource RoundedTextBox}" Width="816" Height="56" Margin="0,0,0,40" />
+                    <TextBox x:Name="DateOfBirthTextBox" Style="{StaticResource RoundedTextBox}" Width="816" Height="56" Margin="0,0,0,32" />
+                    <TextBox x:Name="RoleTextBox" Style="{StaticResource RoundedTextBox}" Width="816" Height="56" Margin="0,0,0,32" />
+                    <TextBox x:Name="GroupTextBox" Style="{StaticResource RoundedTextBox}" Width="816" Height="56" />
                 </StackPanel>
 
                 <!-- Левая колонка с подписями -->

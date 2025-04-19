@@ -1,4 +1,4 @@
-﻿using SchoolDiary.APIConnect;
+using SchoolDiary.APIConnect;
 using System;
 using System.Globalization;
 using System.Windows;
@@ -55,10 +55,12 @@ namespace SchoolDiary
         public SchelduleForTheWeek()
         {
             InitializeComponent();
+
             this.WindowState = WindowState.Maximized;
             LoadScheduleWeek(new DateTime(2025, 3, 24), new DateTime(2025, 3, 30));
             this.Closing += Window_Closing;
-            
+            DataContext = new ScheduleViewModel();
+            LoadStudentData();
 
         }
         private async void LoadScheduleWeek(DateTime from, DateTime to)
@@ -73,6 +75,36 @@ namespace SchoolDiary
             {
 
             }
+        }
+
+        private async void LoadStudentData()
+        {
+            APIConnector apiConnector = new APIConnector();
+            try
+            {
+                Student student = await apiConnector.GetStudent();
+                // Устанавливаем ФИО в TextBlock кнопки профиля
+                FullNameTextBlock.Text = FormatFullName(student);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Не удалось загрузить данные студента.");
+            }
+        }
+
+        private string FormatFullName(Student student)
+        {
+            string initials = "";
+            if (!string.IsNullOrEmpty(student.FirstName))
+            {
+                initials += $"{student.FirstName[0]}.";
+            }
+            if (!string.IsNullOrEmpty(student.MiddleName))
+            {
+                initials += $"{student.MiddleName[0]}.";
+            }
+
+            return $"{student.LastName} {initials}";
         }
      
 

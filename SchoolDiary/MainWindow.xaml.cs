@@ -1,4 +1,4 @@
-﻿using SchoolDiary.APIConnect;
+using SchoolDiary.APIConnect;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -28,12 +28,49 @@ namespace SchoolDiary
         public MainWindow()
         {
             InitializeComponent();
+            LoadStudentData();
             DataContext = new ViewModel();
+            
+            // Развернуть окно на весь экран
+            this.WindowState = WindowState.Maximized;
+
             this.Closing += Window_Closing;
         }
+
+        private async void LoadStudentData()
+        {
+            APIConnector apiConnector = new APIConnector();
+            try
+            {
+                Student student = await apiConnector.GetStudent();
+                // Устанавливаем ФИО в TextBlock кнопки профиля
+                FullNameTextBlock.Text = FormatFullName(student);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Не удалось загрузить данные студента.");
+            }
+        }
+
+        private string FormatFullName(Student student)
+        {
+            string initials = "";
+            if (!string.IsNullOrEmpty(student.FirstName))
+            {
+                initials += $"{student.FirstName[0]}.";
+            }
+            if (!string.IsNullOrEmpty(student.MiddleName))
+            {
+                initials += $"{student.MiddleName[0]}.";
+            }
+
+            return $"{student.LastName} {initials}";
+        }
+
         public MainWindow(DateTime Currentdate)
         {
             InitializeComponent();
+            this.WindowState = WindowState.Maximized;
             LoadSchedulDay(Currentdate,Currentdate);
             //ViewModel Schedule = new ViewModel();
             //Schedule.SetupCurrentDate(Currentdate);
@@ -74,7 +111,6 @@ namespace SchoolDiary
                 schelduleForTheWeekWindow.Show(); // Показываем, если окно скрыто
             }
         }
-
 
         private void OpenProfile(object sender, RoutedEventArgs e)
         {
