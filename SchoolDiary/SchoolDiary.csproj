@@ -107,35 +107,35 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="GradeWindow.xaml.cs">
+    <Compile Include="Views\GradeWindow.xaml.cs">
       <DependentUpon>GradeWindow.xaml</DependentUpon>
     </Compile>
-     <Compile Include="APIConnect\APIConnector.cs" />
-    <Compile Include="Objects\Classroom.cs" />
-    <Compile Include="Objects\Content.cs" />
-    <Compile Include="Objects\DaySchedule.cs" />
-    <Compile Include="Objects\Group.cs" />
-    <Compile Include="Objects\Homework.cs" />
-    <Compile Include="Objects\Lesson.cs" />
-    <Compile Include="Objects\Mark.cs" />
-    <Compile Include="Objects\Student.cs" />
-    <Compile Include="Objects\Subject.cs" />
-    <Compile Include="Objects\Teacher.cs" />
-    <Compile Include="Objects\Value.cs" />
-    <Compile Include="Profile.xaml.cs">
+    <Compile Include="APIConnect\APIConnector.cs" />
+    <Compile Include="Models\Classroom.cs" />
+    <Compile Include="Models\Content.cs" />
+    <Compile Include="Models\DaySchedule.cs" />
+    <Compile Include="Models\Group.cs" />
+    <Compile Include="Models\Homework.cs" />
+    <Compile Include="Models\Lesson.cs" />
+    <Compile Include="Models\Mark.cs" />
+    <Compile Include="Models\Student.cs" />
+    <Compile Include="Models\Subject.cs" />
+    <Compile Include="Models\Teacher.cs" />
+    <Compile Include="Models\Value.cs" />
+    <Compile Include="Views\Profile.xaml.cs">
       <DependentUpon>Profile.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SchelduleForTheWeek.xaml.cs">
+    <Compile Include="Views\SchelduleForTheWeek.xaml.cs">
       <DependentUpon>SchelduleForTheWeek.xaml</DependentUpon>
     </Compile>
-    <Compile Include="SchelduleWeek.cs" />
-    <Compile Include="ViewModel.cs" />
-    <Compile Include="RelayCommand.cs" />
-    <Page Include="GradeWindow.xaml">
+    <Compile Include="ViewModels\SchelduleWeek.cs" />
+    <Compile Include="ViewModels\ViewModel.cs" />
+    <Compile Include="Commands\RelayCommand.cs" />
+    <Page Include="Views\GradeWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="MainWindow.xaml">
+    <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -143,15 +143,15 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Profile.xaml">
+    <Page Include="Views\Profile.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="SchelduleForTheWeek.xaml">
+    <Page Include="Views\SchelduleForTheWeek.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -173,6 +173,7 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -184,250 +185,194 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="button_menu_mark_default.png">
+    <Resource Include="Assets\ImageButtons\Button - icon_daynight.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="button_menu_schedule_default.png">
+    <Resource Include="Assets\ImageButtons\Button - icon_ring.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="button_openmenu_default.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Button - icon_ring.png">
+    <Resource Include="Assets\ImageButtons\button - TableColumn_Data_active.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Button - icon_daynight.png">
+    <Resource Include="Assets\ImageButtons\button - TableColumn_Data_default.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="ImageButtons\Button - icon_daynight.png">
+    <Resource Include="Assets\ImageButtons\button - TableColumn_Data_hover.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="ImageButtons\Button - icon_ring.png">
+    <Resource Include="Assets\ImageButtons\button_back_active.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="ImageButtons\button - TableColumn_Data_active.png">
+    <Resource Include="Assets\ImageButtons\button_back_defaoult.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="ImageButtons\button - TableColumn_Data_default.png">
+    <Resource Include="Assets\ImageButtons\button_down_active.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="ImageButtons\button - TableColumn_Data_hover.png">
+    <Resource Include="Assets\ImageButtons\button_down_default.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="ImageButtons\button_back_active.png">
+    <Resource Include="Assets\ImageButtons\button_forward_active.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="ImageButtons\button_back_defaoult.png">
+    <Resource Include="Assets\ImageButtons\button_forward_default.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="ImageButtons\button_down_active.png">
+    <Resource Include="Assets\ImageButtons\button_manu_close_schedule_active.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="ImageButtons\button_down_default.png">
+    <Resource Include="Assets\ImageButtons\button_manu_close_schedule_default.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="ImageButtons\button_forward_active.png">
+    <Resource Include="Assets\ImageButtons\button_manu_close_schedule_hover.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="ImageButtons\button_forward_default.png">
+    <Resource Include="Assets\ImageButtons\button_menu_close_mark_active.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="ImageButtons\button_manu_close_schedule_active.png">
+    <Resource Include="Assets\ImageButtons\button_menu_close_mark_defoult.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="ImageButtons\button_manu_close_schedule_default.png">
+    <Resource Include="Assets\ImageButtons\button_menu_close_mark_hover.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="ImageButtons\button_manu_close_schedule_hover.png">
+    <Resource Include="Assets\ImageButtons\button_menu_mark_active.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="ImageButtons\button_menu_close_mark_active.png">
+    <Resource Include="Assets\ImageButtons\button_menu_mark_default.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="ImageButtons\button_menu_close_mark_defoult.png">
+    <Resource Include="Assets\ImageButtons\button_menu_mark_hover.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="ImageButtons\button_menu_close_mark_hover.png">
+    <Resource Include="Assets\ImageButtons\button_menu_schedule_active.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="ImageButtons\button_menu_mark_active.png">
+    <Resource Include="Assets\ImageButtons\button_menu_schedule_default.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="ImageButtons\button_menu_mark_default.png">
+    <Resource Include="Assets\ImageButtons\button_menu_schedule_hover.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="ImageButtons\button_menu_mark_hover.png">
+    <Resource Include="Assets\ImageButtons\button_openmenu_active.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="ImageButtons\button_menu_schedule_active.png">
+    <Resource Include="Assets\ImageButtons\button_openmenu_default.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="ImageButtons\button_menu_schedule_default.png">
+    <Resource Include="Assets\ImageButtons\button_openmenu_hover.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="ImageButtons\button_menu_schedule_hover.png">
+    <Resource Include="Assets\ImageButtons\button_previous_active.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="ImageButtons\button_openmenu_active.png">
+    <Resource Include="Assets\ImageButtons\button_previous_default.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="ImageButtons\button_openmenu_default.png">
+    <Resource Include="Assets\ImageButtons\button_profile_active.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="ImageButtons\button_openmenu_hover.png">
+    <Resource Include="Assets\ImageButtons\button_profile_default.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="ImageButtons\button_previous_active.png">
+    <Resource Include="Assets\ImageButtons\button_profile_hover.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="ImageButtons\button_previous_default.png">
+    <Resource Include="Assets\ImageButtons\button_up_active.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="ImageButtons\button_profile_active.png">
+    <Resource Include="Assets\ImageButtons\button_up_default.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="ImageButtons\button_profile_default.png">
+    <Resource Include="Assets\ImageButtons\logo-nn.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="ImageButtons\button_profile_hover.png">
+    <Resource Include="Assets\ImageButtons\scroll_active.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="ImageButtons\button_up_active.png">
+    <Resource Include="Assets\ImageButtons\scroll_default.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="ImageButtons\button_up_default.png">
+    <Resource Include="Assets\Shalnov.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="ImageButtons\logo-nn.png">
+    <Resource Include="Assets\ImageButtons\Account.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="ImageButtons\scroll_active.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="ImageButtons\scroll_default.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="logo-nn.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Back_arrow.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Left_arrow.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Right_arrow.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Shalnov.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="button_back_active.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="button_back_defaoult.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="ImageButtons\Account.jpg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Resource>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Account.jpg" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.8">
@@ -440,6 +385,15 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\ImageButtons\Left_arrow.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\ImageButtons\Back_arrow.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\ImageButtons\Right_arrow.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
