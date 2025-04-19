@@ -65,8 +65,10 @@ namespace SchoolDiary
             //ViewModel Schedule = new ViewModel();
             //Schedule.SetupCurrentDate(Currentdate);
             //DataContext = Schedule;
+            LoadStudentData();
             this.Closing += Window_Closing;
         }
+
         private async void LoadSchedulDay(DateTime from, DateTime to)
         {
             APIConnector aPIConnector = new APIConnector();
