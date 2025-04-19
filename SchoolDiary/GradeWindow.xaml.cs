@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SchoolDiary.APIConnect;
+using SchoolDiary.Objects;
+using System;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
@@ -17,6 +19,40 @@ namespace SchoolDiary
         {
             InitializeComponent();
 
+            // Развернуть окно на весь экран
+            this.WindowState = WindowState.Maximized;
+            LoadStudentData();
+        }
+
+
+        private async void LoadStudentData()
+        {
+            APIConnector apiConnector = new APIConnector();
+            try
+            {
+                Student student = await apiConnector.GetStudent();
+                // Устанавливаем ФИО в TextBlock кнопки профиля
+                FullNameTextBlock.Text = FormatFullName(student);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show("Не удалось загрузить данные студента.");
+            }
+        }
+
+        private string FormatFullName(Student student)
+        {
+            string initials = "";
+            if (!string.IsNullOrEmpty(student.FirstName))
+            {
+                initials += $"{student.FirstName[0]}.";
+            }
+            if (!string.IsNullOrEmpty(student.MiddleName))
+            {
+                initials += $"{student.MiddleName[0]}.";
+            }
+
+            return $"{student.LastName} {initials}";
         }
 
         private void OpenSchelduleForTheWeek(object sender, RoutedEventArgs e)
@@ -65,9 +101,6 @@ namespace SchoolDiary
                 Grade.Width = 48;
                 Menu.Opacity = 1;
 
-                //MainSheduleField.Margin = new Thickness(112, 152, 0, 0);  //сделал эти трансформации отступов для сдвига при нажатии расширения кнопок меню, но судя по всему, по дизайну фигмы оно не нужно
-                //TimePeriodPanel.Margin = new Thickness(64, 64, 0, 0);
-
                 ((ImageBrush)Schedule.Background).ImageSource = new System.Windows.Media.Imaging.BitmapImage(
            new Uri("pack://application:,,,/ImageButtons/button_manu_close_schedule_default.png", UriKind.Absolute));
                 ((ImageBrush)Grade.Background).ImageSource = new System.Windows.Media.Imaging.BitmapImage(
@@ -82,8 +115,6 @@ namespace SchoolDiary
                 Menu.Opacity = 0.6;
                 Schedule.Opacity = 1;
                 Grade.Opacity = 1;
-                //MainSheduleField.Margin = new Thickness(264, 152, 0, 0);
-                //TimePeriodPanel.Margin = new Thickness(216, 64, 0, 0);
 
                 // Возвращаем исходные фоновые изображения кнопок
                 ((ImageBrush)Schedule.Background).ImageSource = new System.Windows.Media.Imaging.BitmapImage(
@@ -92,9 +123,6 @@ namespace SchoolDiary
                      new Uri("pack://application:,,,/ImageButtons/button_menu_mark_default.png", UriKind.Absolute));
             }
         }
-
-
-
 
         public class IndexToOffsetConverter : IValueConverter
         {
