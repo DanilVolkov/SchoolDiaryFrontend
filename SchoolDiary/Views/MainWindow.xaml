@@ -46,19 +46,19 @@
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" DockPanel.Dock="Left">
                 <Button  Foreground="Black" FontSize="14" Padding="5" Margin="8,5,10,5" Height="48" Width="48" Click="Button_Click" BorderThickness="0,0,0,0">
                     <Button.Background>
-                        <ImageBrush ImageSource="/button_openmenu_default.png" Stretch="UniformToFill" />
+                        <ImageBrush ImageSource="/Assets/ImageButtons/button_openmenu_default.png" Stretch="UniformToFill" />
                     </Button.Background>
                 </Button>
             </StackPanel>
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" DockPanel.Dock="Right">
                 <Button x:Name="DarkLightMode" Width="48" RenderTransformOrigin="0.535,0.507" Height="48" Margin="0,0,5,0" BorderThickness="0,0,0,0">
                     <Button.Background>
-                        <ImageBrush ImageSource="/Button - icon_daynight.png" Stretch="UniformToFill" />
+                        <ImageBrush ImageSource="/Assets/ImageButtons/Button - icon_daynight.png" Stretch="UniformToFill" />
                     </Button.Background>
                 </Button>
                 <Button Foreground="Black" FontSize="14" Padding="5" Margin="0,5,10,5" Height="48" Width="48" BorderThickness="0,0,0,0">
                     <Button.Background>
-                        <ImageBrush ImageSource="/Button - icon_ring.png" Stretch="UniformToFill" />
+                        <ImageBrush ImageSource="/Assets/ImageButtons/Button - icon_ring.png" Stretch="UniformToFill" />
                     </Button.Background>
                 </Button>
                 <Border x:Name="ButtonProfile" Width="272" Height="56" Margin="0,0,5,0" Background="#BAEAFD" MouseLeftButtonDown="OpenProfile" CornerRadius="7">
@@ -85,7 +85,7 @@
                 CornerRadius="50" 
                 Margin="29,6,6,6" Grid.ColumnSpan="2">
                             <Border.Background>
-                                <ImageBrush ImageSource="/ImageButtons/Account.jpg"  Stretch="UniformToFill" />
+                                <ImageBrush ImageSource="/Assets/Shalnov.jpg" Stretch="UniformToFill" />
                             </Border.Background>
                         </Border>
                     </Grid>
@@ -93,7 +93,7 @@
             </StackPanel>
             <Border  Width="48" Height="48" CornerRadius="50">
                 <Border.Background>
-                    <ImageBrush ImageSource="/logo-nn.png" Stretch="UniformToFill" />
+                    <ImageBrush ImageSource="/Assets/ImageButtons/logo-nn.png" Stretch="UniformToFill" />
                 </Border.Background>
             </Border>
 
@@ -104,7 +104,7 @@
             <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" HorizontalAlignment="Center" Margin="161,0,161,3" Height="63">
                 <Button x:Name="LeftArrow"  Command="{Binding PreviousDayCommand}" Foreground="Black" Width="48" Height="48" FontSize="14" Padding="5" Margin="10,5,10,5" VerticalAlignment="Center" HorizontalAlignment="Center">
                     <Button.Background>
-                        <ImageBrush ImageSource="Left_arrow.jpg" Stretch="UniformToFill" />
+                        <ImageBrush ImageSource="/Assets/ImageButtons/Left_arrow.jpg" Stretch="UniformToFill" />
                     </Button.Background>
                     <Button.Resources>
                         <Style TargetType="Border">
@@ -116,7 +116,7 @@
                 <TextBlock FontWeight="Bold" Text="{Binding CurrentDateDisplay}" Style="{StaticResource RobotoTextStyleTimeText }"  VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10,5,10,5"/>
                 <Button x:Name="RightArrow" Command="{Binding NextDayCommand}" Foreground="Black" Width="48" Height="48"  FontSize="14" Padding="5" Margin="10,5,10,5" VerticalAlignment="Center" HorizontalAlignment="Center">
                     <Button.Background>
-                        <ImageBrush ImageSource="Right_arrow.jpg" Stretch="UniformToFill" />
+                        <ImageBrush ImageSource="/Assets/ImageButtons/Right_arrow.jpg" Stretch="UniformToFill" />
                     </Button.Background>
                     <Button.Resources>
                         <Style TargetType="Border">
@@ -133,13 +133,13 @@
                 <!-- Кнопка "Расписание" -->
                 <Button x:Name="Schedule" Padding="5" Margin="5,16,5,16" Width="184" Height="48" HorizontalAlignment="Stretch" BorderThickness="0,0,0,0" Opacity="1" Click="OpenSchelduleForTheWeek">
                     <Button.Background>
-                        <ImageBrush ImageSource="/button_menu_schedule_default.png" Stretch="Fill" />
+                        <ImageBrush ImageSource="/Assets/ImageButtons/button_menu_schedule_default.png" Stretch="Fill" />
                     </Button.Background>
                 </Button>
                 <!-- Кнопка "Дневник" -->
                 <Button x:Name="Grade" Padding="5" Margin="5,5,5,0" Width="184" Height="48" HorizontalAlignment="Stretch" BorderThickness="0,0,0,0" Opacity="1">
                     <Button.Background>
-                        <ImageBrush ImageSource="/button_menu_mark_default.png" Stretch="Fill" />
+                        <ImageBrush ImageSource="/Assets/ImageButtons/button_menu_mark_default.png" Stretch="Fill" />
                     </Button.Background>
                 </Button>
             </StackPanel>

@@ -73,6 +73,16 @@ namespace SchoolDiary.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Back_arrow {
+            get {
+                object obj = ResourceManager.GetObject("Back_arrow", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Button___icon_daynight {
             get {
                 object obj = ResourceManager.GetObject("Button___icon_daynight", resourceCulture);
@@ -403,9 +413,29 @@ namespace SchoolDiary.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Left_arrow {
+            get {
+                object obj = ResourceManager.GetObject("Left_arrow", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap logo_nn {
             get {
                 object obj = ResourceManager.GetObject("logo_nn", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Right_arrow {
+            get {
+                object obj = ResourceManager.GetObject("Right_arrow", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
