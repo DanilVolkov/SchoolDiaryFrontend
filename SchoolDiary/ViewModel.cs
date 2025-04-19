@@ -1,7 +1,11 @@
-﻿using System;
+﻿using SchoolDiary.APIConnect;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace SchoolDiary
@@ -42,7 +46,40 @@ namespace SchoolDiary
         public ICommand NextDayCommand { get; }
 
         public string CurrentDateDisplay => _currentDate.ToString("d MMMM, dddd");
+        public ViewModel(List<Objects.DaySchedule> schedule, DateTime currentDate)
+        {
+            _currentDate = currentDate;
+            // Преобразуем данные из API в словарь
+            _scheduleByDate = new Dictionary<DateTime, ObservableCollection<Subject>>();
 
+            foreach (var day in schedule)
+            {
+                var subjects = new ObservableCollection<Subject>();
+
+                foreach (var content in day.Content)
+                {
+                    subjects.Add(new Subject
+                    {
+                        Name = content.Lesson?.Subject?.Name ?? "Нет предмета",
+                        TeacherName = content.Lesson?.Teacher?.LastName +" "+ content.Lesson?.Teacher?.MiddleName +" " + content.Lesson?.Teacher?.FirstName ?? "Не указано",
+                        RoomNumber = content.Lesson?.Classroom.Name ?? "Не указано",
+                        StartTime = content.Lesson?.TimeStart.ToString("HH:mm") ?? "Не указано",
+                        EndTime = content.Lesson?.TimeEnd.ToString("HH:mm") ?? "Не указано",
+                        Homework = content.Homework?.Description ?? "",
+                        Grades = content.Marks?.Select(m => m.Value.Name.ToString()).ToList() ?? new List<string>()
+                    });
+                }
+
+                _scheduleByDate[day.Date] = subjects;
+            }
+
+            // Установка текущей даты
+            SetupCurrentDate(currentDate);
+
+            // Инициализация команд
+            PreviousDayCommand = new RelayCommand(PreviousDay);
+            NextDayCommand = new RelayCommand(NextDay);
+        }
         public ViewModel()
         {
             // Инициализация словаря с расписанием
@@ -188,29 +225,62 @@ namespace SchoolDiary
         }
 
         // Метод для перехода к предыдущему дню
-        public void PreviousDay()
+        public async void PreviousDay()
         {
             var previousDate = _currentDate.AddDays(-1);
-            if (_scheduleByDate.ContainsKey(previousDate))
-            {
-                _currentDate = previousDate;
-                Subjects = _scheduleByDate[_currentDate];
-                OnPropertyChanged(nameof(CurrentDateDisplay)); // Обновляем отображение даты
-            }
+            await LoadScheduleForDate(previousDate);
+            _currentDate = previousDate;
+            OnPropertyChanged(nameof(_scheduleByDate));
+            OnPropertyChanged(nameof(Subjects));
         }
 
         // Метод для перехода к следующему дню
-        public void NextDay()
+        public  async void NextDay()
         {
             var nextDate = _currentDate.AddDays(1);
-            if (_scheduleByDate.ContainsKey(nextDate))
-            {
-                _currentDate = nextDate;
-                Subjects = _scheduleByDate[_currentDate];
-                OnPropertyChanged(nameof(CurrentDateDisplay)); // Обновляем отображение даты
-            }
+            await LoadScheduleForDate(nextDate);
+            _currentDate = nextDate;
+            OnPropertyChanged(nameof(_scheduleByDate));
+            OnPropertyChanged(nameof(Subjects));
         }
 
+        private async Task LoadScheduleForDate(DateTime date)
+        {
+            try
+            {
+                var apiConnector = new APIConnector();
+                var schedule = await apiConnector.GetWeekSchedule(date, date);
+
+                // Очищаем текущий список уроков
+                _scheduleByDate.Clear();
+
+                // Преобразуем данные из API в формат ObservableCollection<Subject>
+                foreach (var day in schedule)
+                {
+                    var subjects = new ObservableCollection<Subject>();
+
+                    foreach (var content in day.Content)
+                    {
+                        subjects.Add(new Subject
+                        {
+                            Name = content.Lesson?.Subject?.Name ?? "Нет предмета",
+                            TeacherName = content.Lesson?.Teacher?.LastName + " " + content.Lesson?.Teacher?.MiddleName + " " + content.Lesson?.Teacher?.FirstName ?? "Не указано",
+                            RoomNumber = content.Lesson?.Classroom.Name ?? "Не указано",
+                            StartTime = content.Lesson?.TimeStart.ToString("HH:mm") ?? "Не указано",
+                            EndTime = content.Lesson?.TimeEnd.ToString("HH:mm") ?? "Не указано",
+                            Homework = content.Homework?.Description ?? "",
+                            Grades = content.Marks?.Select(m => m.Value.Name.ToString()).ToList() ?? new List<string>()
+                        });
+                    }
+
+                    _scheduleByDate[day.Date] = subjects;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка загрузки расписания: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
         // Реализация INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
 

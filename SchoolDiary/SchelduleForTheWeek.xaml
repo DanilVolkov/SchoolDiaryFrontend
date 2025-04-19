@@ -118,7 +118,7 @@
                    Margin="10,5,10,5" />
 
                 <!-- Кнопка "Вперед" -->
-                <Button x:Name="RightArrowWeek" Command="{Binding NextWeekCommand}" 
+                <Button x:Name="RightArrowWeek"   Command="{Binding NextWeekCommand}" 
                 Foreground="Black" Width="48" Height="48" FontSize="14" Padding="5" Margin="10,5,10,5" 
                 VerticalAlignment="Center" HorizontalAlignment="Center">
                     <Button.Background>
@@ -265,9 +265,9 @@
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
-                                <TextBlock Text="8:00" Style="{StaticResource RobotoTextStyleTimeText}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="0" />
+                                <TextBlock Text="8:30" Style="{StaticResource RobotoTextStyleTimeText}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="0" />
                                 <Rectangle Height="3" Fill="Black" VerticalAlignment="Center" HorizontalAlignment="Stretch" Grid.Row="1" Margin="10,0,10,0" />
-                                <TextBlock Text="8:45" Style="{StaticResource RobotoTextStyleTimeText}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="2" />
+                                <TextBlock Text="9:10" Style="{StaticResource RobotoTextStyleTimeText}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="2" />
                             </Grid>
                         </Border>
 
@@ -279,9 +279,9 @@
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
-                                <TextBlock Text="9:00" Style="{StaticResource RobotoTextStyleTimeText}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="0" />
+                                <TextBlock Text="9:25" Style="{StaticResource RobotoTextStyleTimeText}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="0" />
                                 <Rectangle Height="3" Fill="Black" VerticalAlignment="Center" HorizontalAlignment="Stretch" Grid.Row="1" Margin="10,0,10,0" />
-                                <TextBlock Text="9:45" Style="{StaticResource RobotoTextStyleTimeText}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="2" />
+                                <TextBlock Text="10:05" Style="{StaticResource RobotoTextStyleTimeText}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="2" />
                             </Grid>
                         </Border>
 
@@ -293,9 +293,9 @@
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
-                                <TextBlock Text="10:00" Style="{StaticResource RobotoTextStyleTimeText}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="0" />
+                                <TextBlock Text="10:20" Style="{StaticResource RobotoTextStyleTimeText}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="0" />
                                 <Rectangle Height="3" Fill="Black" VerticalAlignment="Center" HorizontalAlignment="Stretch" Grid.Row="1" Margin="10,0,10,0" />
-                                <TextBlock Text="10:45" Style="{StaticResource RobotoTextStyleTimeText}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="2" />
+                                <TextBlock Text="11:00" Style="{StaticResource RobotoTextStyleTimeText}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="2" />
                             </Grid>
                         </Border>
 
@@ -307,9 +307,9 @@
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
-                                <TextBlock Text="11:00" Style="{StaticResource RobotoTextStyleTimeText}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="0" />
+                                <TextBlock Text="11:15" Style="{StaticResource RobotoTextStyleTimeText}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="0" />
                                 <Rectangle Height="3" Fill="Black" VerticalAlignment="Center" HorizontalAlignment="Stretch" Grid.Row="1" Margin="10,0,10,0" />
-                                <TextBlock Text="11:45" Style="{StaticResource RobotoTextStyleTimeText}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="2" />
+                                <TextBlock Text="11:55" Style="{StaticResource RobotoTextStyleTimeText}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="2" />
                             </Grid>
                         </Border>
 
@@ -321,9 +321,9 @@
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
-                                <TextBlock Text="12:00" Style="{StaticResource RobotoTextStyleTimeText}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="0" />
+                                <TextBlock Text="12:20" Style="{StaticResource RobotoTextStyleTimeText}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="0" />
                                 <Rectangle Height="3" Fill="Black" VerticalAlignment="Center" HorizontalAlignment="Stretch" Grid.Row="1" Margin="10,0,10,0" />
-                                <TextBlock Text="12:45" Style="{StaticResource RobotoTextStyleTimeText}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="2" />
+                                <TextBlock Text="13:00" Style="{StaticResource RobotoTextStyleTimeText}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="2" />
                             </Grid>
                         </Border>
 
@@ -335,9 +335,9 @@
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
-                                <TextBlock Text="13:00" Style="{StaticResource RobotoTextStyleTimeText}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="0" />
+                                <TextBlock Text="13:15" Style="{StaticResource RobotoTextStyleTimeText}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="0" />
                                 <Rectangle Height="3" Fill="Black" VerticalAlignment="Center" HorizontalAlignment="Stretch" Grid.Row="1" Margin="10,0,10,0" />
-                                <TextBlock Text="13:45" Style="{StaticResource RobotoTextStyleTimeText}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="2" />
+                                <TextBlock Text="13:55" Style="{StaticResource RobotoTextStyleTimeText}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="2" />
                             </Grid>
                         </Border>
 
@@ -349,9 +349,9 @@
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
-                                <TextBlock Text="14:00" Style="{StaticResource RobotoTextStyleTimeText}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="0" />
+                                <TextBlock Text="14:10" Style="{StaticResource RobotoTextStyleTimeText}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="0" />
                                 <Rectangle Height="3" Fill="Black" VerticalAlignment="Center" HorizontalAlignment="Stretch" Grid.Row="1" Margin="10,0,10,0" />
-                                <TextBlock Text="14:45" Style="{StaticResource RobotoTextStyleTimeText}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="2" />
+                                <TextBlock Text="14:50" Style="{StaticResource RobotoTextStyleTimeText}" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="2" />
                             </Grid>
                         </Border>
                         <!-- Продолжайте добавлять строки для других временных интервалов -->
@@ -431,8 +431,15 @@
                                     <!-- 13:00 - 13:45 -->
                                     <RowDefinition Height="24" />
                                     <!-- Отступ -->
-                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="248" />
+                                    <!-- -->
+                                    <RowDefinition Height="24" />
                                     <!-- 14:00 - 14:45 -->
+                                    <RowDefinition Height="248" />
+                                    <!-- -->
+                                    <RowDefinition Height="24" />
+                                    <!-- -->
+                                    <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
 
 

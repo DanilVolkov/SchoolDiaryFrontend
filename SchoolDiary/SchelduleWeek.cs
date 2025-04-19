@@ -4,6 +4,9 @@ using System.Linq;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using System.ComponentModel;
+using System.Threading.Tasks;
+using SchoolDiary.APIConnect;
+using System.Windows;
 
 namespace SchoolDiary
 {
@@ -60,6 +63,48 @@ namespace SchoolDiary
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        public ScheduleViewModel(List<Objects.DaySchedule> schedule, DateTime crtday)
+        {
+            if (WeekSchedule != null) { WeekSchedule.Clear(); }
+            CurrentWeekStart = DateTimeExtensions.StartOfWeek(crtday, DayOfWeek.Monday);
+
+            _currentDate = CurrentWeekStart.AddDays(-1);
+            WeekSchedule = new ObservableCollection<Lesson>();
+            // Преобразуем данные из DaySchedule в формат Lesson
+            foreach (var day in schedule)
+            {
+                foreach (var content in day.Content)
+                {
+                    var lesson = new Lesson
+                    {
+                        Subject = content.Lesson?.Subject?.Name ?? "Нет предмета", // Название предмета
+                        StartTime = CombineDateAndTime(day.Date, content.Lesson?.TimeStart), // Время начала урока
+                        EndTime = CombineDateAndTime(day.Date, content.Lesson?.TimeEnd), // Время окончания урока
+                        Grades = content.Marks?.Select(m => m.Value.Name.ToString()).ToList() ?? new List<string>(), // Оценки
+                        HasHomework = content.Homework != null && !string.IsNullOrEmpty(content.Homework.Description), // Есть ли домашнее задание
+                        
+                    };
+
+                    WeekSchedule.Add(lesson);
+                }
+            }
+            PreviousWeekCommand = new RelayCommand(MoveToPreviousWeek);
+            NextWeekCommand = new RelayCommand(MoveToNextWeek);
+            AssignRowAndColumnIndexes();
+        }
+        private DateTime CombineDateAndTime(DateTime date, DateTime? time)
+        {
+            if (time == null) return date;
+
+            return new DateTime(
+                date.Year,
+                date.Month,
+                date.Day,
+                time.Value.Hour,
+                time.Value.Minute,
+                time.Value.Second
+            );
+        }
         public ScheduleViewModel()
         {
             PreviousWeekCommand = new RelayCommand(MoveToPreviousWeek);
@@ -244,34 +289,76 @@ namespace SchoolDiary
 
             AssignRowAndColumnIndexes();
         }
-        private void MoveToPreviousWeek()
+        private async Task LoadWeekSchedule(DateTime from, DateTime to)
+        {
+            try
+            {
+                var apiConnector = new APIConnector();
+                var schedule = await apiConnector.GetWeekSchedule(from, to);
+
+                UpdateWeekSchedule(schedule);
+
+                OnPropertyChanged(nameof(CurrentWeek));
+                OnPropertyChanged(nameof(CurrentDateDisplay_ForTheWeek));
+                OnPropertyChanged(nameof(WeekSchedule));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка загрузки расписания: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void UpdateWeekSchedule(List<Objects.DaySchedule> schedule)
+        {
+            WeekSchedule.Clear();
+
+            foreach (var day in schedule)
+            {
+                foreach (var content in day.Content)
+                {
+                    var lesson = new Lesson
+                    {
+                        Subject = content.Lesson?.Subject?.Name ?? "Нет предмета",
+                        StartTime = CombineDateAndTime(day.Date, content.Lesson?.TimeStart),
+                        EndTime = CombineDateAndTime(day.Date, content.Lesson?.TimeEnd),
+                        Grades = content.Marks?.Select(m => m.Value.Name.ToString()).ToList() ?? new List<string>(),
+                        HasHomework = content.Homework != null && !string.IsNullOrEmpty(content.Homework.Description),
+                       
+                    };
+
+                    WeekSchedule.Add(lesson);
+                }
+            }
+
+            AssignRowAndColumnIndexes();
+          
+        }
+
+        private async void MoveToPreviousWeek()
         {
             CurrentWeekStart = CurrentWeekStart.AddDays(-7);
-            _currentDate = CurrentWeekStart.AddDays(-1);
-            OnPropertyChanged(nameof(CurrentWeek));
-            OnPropertyChanged(nameof(CurrentDateDisplay_ForTheWeek));
+            await LoadWeekSchedule(CurrentWeekStart, CurrentWeekStart.AddDays(6));
+            
         }
 
-        private void MoveToNextWeek()
+        private async void MoveToNextWeek()
         {
             CurrentWeekStart = CurrentWeekStart.AddDays(7);
-            _currentDate = CurrentWeekStart.AddDays(-1);
-            OnPropertyChanged(nameof(CurrentWeek));
-            OnPropertyChanged(nameof(CurrentDateDisplay_ForTheWeek));
+            await LoadWeekSchedule(CurrentWeekStart, CurrentWeekStart.AddDays(6));
         }
-
+            
         private void AssignRowAndColumnIndexes()
         {
             // Список временных интервалов для строк
             var timeSlots = new List<TimeSpan>
             {
-                new TimeSpan(8, 0, 0),  // 8:00 - 8:45
-                new TimeSpan(9, 0, 0),  // 9:00 - 9:45
-                new TimeSpan(10, 0, 0), // 10:00 - 10:45
-                new TimeSpan(11, 0, 0), // 11:00 - 11:45
-                new TimeSpan(12, 0, 0), // 12:00 - 12:45
-                new TimeSpan(13, 0, 0), // 13:00 - 13:45
-                new TimeSpan(14, 0, 0)  // 14:00 - 14:45
+                new TimeSpan(8, 30, 0),  // 8:00 - 8:45
+                new TimeSpan(9, 25, 0),  // 9:00 - 9:45
+                new TimeSpan(10, 20, 0), // 10:00 - 10:45
+                new TimeSpan(11, 15, 0), // 11:00 - 11:45
+                new TimeSpan(12, 20, 0), // 12:00 - 12:45
+                new TimeSpan(13, 15, 0), // 13:00 - 13:45
+                new TimeSpan(14, 10, 0)  // 14:00 - 14:45
             };
 
             // Маппинг дней недели к индексам столбцов

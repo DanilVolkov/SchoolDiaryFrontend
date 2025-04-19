@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 
 namespace SchoolDiary.Objects
 {
-    class DaySchedule
+    public class DaySchedule
     {
         [JsonPropertyName("day_of_week")]
         public int? DayOfWeek { get; set; }

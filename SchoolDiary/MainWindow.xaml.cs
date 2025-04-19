@@ -1,5 +1,4 @@
-﻿using SchoolDiary.APIConnect;
-using SchoolDiary.Objects;
+using SchoolDiary.APIConnect;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -71,15 +70,26 @@ namespace SchoolDiary
         public MainWindow(DateTime Currentdate)
         {
             InitializeComponent();
-            // Развернуть окно на весь экран
             this.WindowState = WindowState.Maximized;
-            LoadStudentData();
-            ViewModel Schedule = new ViewModel();
-            Schedule.SetupCurrentDate(Currentdate);
-            DataContext = Schedule;
+            LoadSchedulDay(Currentdate,Currentdate);
+            //ViewModel Schedule = new ViewModel();
+            //Schedule.SetupCurrentDate(Currentdate);
+            //DataContext = Schedule;
             this.Closing += Window_Closing;
         }
+        private async void LoadSchedulDay(DateTime from, DateTime to)
+        {
+            APIConnector aPIConnector = new APIConnector();
+            try
+            {
+                this.DataContext = new ViewModel(await aPIConnector.GetWeekSchedule(from, to), from);
 
+            }
+            catch (Exception)
+            {
+
+            }
+        }
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             // Завершаем работу приложения при закрытии любого окна
