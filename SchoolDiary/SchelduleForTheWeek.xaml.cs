@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SchoolDiary.APIConnect;
+using System;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
@@ -46,6 +47,7 @@ namespace SchoolDiary
 
     public partial class SchelduleForTheWeek : Window
     {
+        private DateTime _currentWeekStart;
         private static Profile profileWindow;
         private static SchelduleForTheWeek schelduleForTheWeekWindow;
         private static MainWindow mainWindow;
@@ -53,9 +55,26 @@ namespace SchoolDiary
         public SchelduleForTheWeek()
         {
             InitializeComponent();
-            DataContext = new ScheduleViewModel();
+            this.WindowState = WindowState.Maximized;
+            LoadScheduleWeek(new DateTime(2025, 3, 24), new DateTime(2025, 3, 30));
             this.Closing += Window_Closing;
+            
+
         }
+        private async void LoadScheduleWeek(DateTime from, DateTime to)
+        {
+            APIConnector aPIConnector = new APIConnector();
+            try
+            {
+                this.DataContext = new ScheduleViewModel(await aPIConnector.GetWeekSchedule(from,to),from);
+
+            }
+            catch (Exception)
+            {
+
+            }
+        }
+     
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {

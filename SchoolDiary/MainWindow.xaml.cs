@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SchoolDiary.APIConnect;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -33,12 +34,25 @@ namespace SchoolDiary
         public MainWindow(DateTime Currentdate)
         {
             InitializeComponent();
-            ViewModel Schedule = new ViewModel();
-            Schedule.SetupCurrentDate(Currentdate);
-            DataContext = Schedule;
+            LoadSchedulDay(Currentdate,Currentdate);
+            //ViewModel Schedule = new ViewModel();
+            //Schedule.SetupCurrentDate(Currentdate);
+            //DataContext = Schedule;
             this.Closing += Window_Closing;
         }
+        private async void LoadSchedulDay(DateTime from, DateTime to)
+        {
+            APIConnector aPIConnector = new APIConnector();
+            try
+            {
+                this.DataContext = new ViewModel(await aPIConnector.GetWeekSchedule(from, to), from);
 
+            }
+            catch (Exception)
+            {
+
+            }
+        }
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             // Завершаем работу приложения при закрытии любого окна
