@@ -228,7 +228,6 @@ namespace SchoolDiary
         public async void PreviousDay()
         {
             var previousDate = _currentDate.AddDays(-1);
-            if (previousDate.DayOfWeek == DayOfWeek.Sunday) { previousDate = previousDate.AddDays(-1); }
             await LoadScheduleForDate(previousDate);
             _currentDate = previousDate;
             OnPropertyChanged(nameof(_scheduleByDate));
@@ -238,9 +237,8 @@ namespace SchoolDiary
 
         // Метод для перехода к следующему дню
         public  async void NextDay()
-        {   
+        {
             var nextDate = _currentDate.AddDays(1);
-            if (nextDate.DayOfWeek == DayOfWeek.Sunday) { nextDate = nextDate.AddDays(1); }
             await LoadScheduleForDate(nextDate);
             _currentDate = nextDate;
             OnPropertyChanged(nameof(_scheduleByDate));
@@ -279,7 +277,6 @@ namespace SchoolDiary
 
                     _scheduleByDate[day.Date] = subjects;
                 }
-                SetupCurrentDate(date);
             }
             catch (Exception ex)
             {

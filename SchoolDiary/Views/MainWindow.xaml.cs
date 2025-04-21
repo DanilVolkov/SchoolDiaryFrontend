@@ -231,7 +231,7 @@ namespace SchoolDiary
                         borderColor = (Color)ColorConverter.ConvertFromString("#9D0404"); // Красный
                         break;
                     default:
-                        borderColor = (Color)ColorConverter.ConvertFromString("#808080"); // Серый (по умолчанию)
+                        borderColor = (Color)ColorConverter.ConvertFromString("#404040"); // Серый (по умолчанию)
                         break;
                 }
 

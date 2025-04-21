@@ -46,10 +46,10 @@ namespace SchoolDiary
     {
         private DateTime CurrentWeekStart { get; set; }
 
-        private DateTime _currentDate;
-        private DateTime _buttonDateTag;
-        public DateTime ButtonDateTag { get { _buttonDateTag = _buttonDateTag.AddDays(1); return _buttonDateTag; } }
-        public string CurrentDateDisplay_ForTheWeek { get { _currentDate = _currentDate.AddDays(1); OnPropertyChanged(nameof(_currentDate)); return _currentDate.ToString("d MMMM"); } }
+        private DateTime _currentDate { get; set; }
+        
+        public DateTime ButtonDateTag { get { var crdate = _currentDate; return crdate.AddDays(1); } }
+        public string CurrentDateDisplay_ForTheWeek { get { _currentDate = _currentDate.AddDays(1); return _currentDate.ToString("d MMMM"); } }
          public string CurrentWeek { get { var Crdate = CurrentWeekStart; return Crdate.ToString("d MMMM") +'-' + Crdate.AddDays(6).ToString("d MMMM"); } }
 
         //public List<DaySchedule> WeekSchedule { get; set; }
@@ -69,7 +69,6 @@ namespace SchoolDiary
             CurrentWeekStart = DateTimeExtensions.StartOfWeek(crtday, DayOfWeek.Monday);
 
             _currentDate = CurrentWeekStart.AddDays(-1);
-            _buttonDateTag = _currentDate;
             WeekSchedule = new ObservableCollection<Lesson>();
             // Преобразуем данные из DaySchedule в формат Lesson
             foreach (var day in schedule)
@@ -85,8 +84,9 @@ namespace SchoolDiary
                         HasHomework = content.Homework != null && !string.IsNullOrEmpty(content.Homework.Description), // Есть ли домашнее задание
                         
                     };
-
+                    
                     WeekSchedule.Add(lesson);
+                    
                 }
             }
             PreviousWeekCommand = new RelayCommand(MoveToPreviousWeek);
@@ -297,17 +297,19 @@ namespace SchoolDiary
                 var apiConnector = new APIConnector();
                 var schedule = await apiConnector.GetWeekSchedule(from, to);
                 CurrentWeekStart = DateTimeExtensions.StartOfWeek(from, DayOfWeek.Monday);
+
                 _currentDate = CurrentWeekStart.AddDays(-1);
-                _buttonDateTag = _currentDate;
 
                 UpdateWeekSchedule(schedule);
 
-                OnPropertyChanged(nameof(_currentDate));
+                OnPropertyChanged(nameof(CurrentWeekStart));
                 OnPropertyChanged(nameof(CurrentWeek));
-                OnPropertyChanged(nameof(ButtonDateTag));
-                OnPropertyChanged(nameof(_buttonDateTag));
+
+                OnPropertyChanged(nameof(_currentDate));
                 OnPropertyChanged(nameof(CurrentDateDisplay_ForTheWeek));
+                OnPropertyChanged(nameof(ButtonDateTag));
                 OnPropertyChanged(nameof(WeekSchedule));
+
             }
             catch (Exception ex)
             {
@@ -318,7 +320,6 @@ namespace SchoolDiary
         private void UpdateWeekSchedule(List<Objects.DaySchedule> schedule)
         {
             WeekSchedule.Clear();
-            WeekSchedule = new ObservableCollection<Lesson>();
 
             foreach (var day in schedule)
             {
@@ -347,15 +348,12 @@ namespace SchoolDiary
             CurrentWeekStart = CurrentWeekStart.AddDays(-7);
             await LoadWeekSchedule(CurrentWeekStart, CurrentWeekStart.AddDays(6));
             
-
-
         }
 
         private async void MoveToNextWeek()
         {
             CurrentWeekStart = CurrentWeekStart.AddDays(7);
             await LoadWeekSchedule(CurrentWeekStart, CurrentWeekStart.AddDays(6));
-           
         }
             
         private void AssignRowAndColumnIndexes()
@@ -404,6 +402,8 @@ namespace SchoolDiary
                 // Присваиваем индексы
                 lesson.RowIndex = rowIndex;
                 lesson.ColumnIndex = columnIndex;
+                OnPropertyChanged(nameof(lesson.ColumnIndex));
+                OnPropertyChanged(nameof(lesson.RowIndex));
                 // }
             }
         }
