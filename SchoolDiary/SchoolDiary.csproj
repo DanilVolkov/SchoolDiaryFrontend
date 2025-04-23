@@ -107,6 +107,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Views\AuthWindow.xaml.cs">
+      <DependentUpon>AuthWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\GradeWindow.xaml.cs">
       <DependentUpon>GradeWindow.xaml</DependentUpon>
     </Compile>
@@ -131,6 +134,10 @@
     <Compile Include="ViewModels\SchelduleWeek.cs" />
     <Compile Include="ViewModels\ViewModel.cs" />
     <Compile Include="Commands\RelayCommand.cs" />
+    <Page Include="Views\AuthWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\GradeWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
