@@ -402,5 +402,17 @@
   <ItemGroup>
     <Resource Include="Assets\ImageButtons\Right_arrow.jpg" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\ImageButtons\Background_Authorization_Fields.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\ImageButtons\Authentication_ButtonLogin_Inactive.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\ImageButtons\Authentication_ButtonLogin_Active.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\ImageButtons\Authentication_WrongInput.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
