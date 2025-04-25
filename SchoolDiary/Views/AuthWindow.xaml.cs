@@ -83,12 +83,19 @@ namespace SchoolDiary
         private void Login_MouseDown(object sender, RoutedEventArgs e)
         {
             NormalInput(sender, e);
-            if(UsernameTextBox.Text == "Логин") UsernameTextBox.Text = "";
+            if (UsernameTextBox.Text == "Логин") { 
+                UsernameTextBox.Text = "";
+                UsernameTextBox.Foreground = Brushes.Black;
+            }
         }
 
         private void Login_LostCapture(object sender, RoutedEventArgs e)
         {
-            if (UsernameTextBox.Text == "") UsernameTextBox.Text = "Логин";
+            if (UsernameTextBox.Text == "")
+            {
+                UsernameTextBox.Text = "Логин";
+                UsernameTextBox.Foreground = (SolidColorBrush)new BrushConverter().ConvertFrom("#B5AEA9");
+            }
         }
 
         private void Placeholder_MouseDown(object sender, RoutedEventArgs e){
