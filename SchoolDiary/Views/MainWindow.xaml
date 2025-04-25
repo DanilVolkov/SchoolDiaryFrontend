@@ -137,7 +137,7 @@
                     </Button.Background>
                 </Button>
                 <!-- Кнопка "Дневник" -->
-                <Button x:Name="Grade" Padding="5" Margin="5,5,5,0" Width="184" Height="48" HorizontalAlignment="Stretch" BorderThickness="0,0,0,0" Opacity="1">
+                <Button x:Name="Grade" Padding="5" Margin="5,5,5,0" Width="184" Height="48" HorizontalAlignment="Stretch" BorderThickness="0,0,0,0" Opacity="1" Click="Grade_Click">
                     <Button.Background>
                         <ImageBrush ImageSource="/Assets/ImageButtons/button_menu_mark_default.png" Stretch="Fill" />
                     </Button.Background>
