@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
@@ -49,7 +44,6 @@ namespace SchoolDiary
                 //UsernameTextBox.Focus();
             }
         }
-
         private void WrongInput(object sender, RoutedEventArgs e)
         {
             Uri resourceUri = new Uri("Assets/ImageButtons/Authentication_WrongInput.png", UriKind.Relative);
@@ -108,6 +102,5 @@ namespace SchoolDiary
             if(PasswordBox.Password == "") PasswordTextBox.Visibility = Visibility.Visible;
             NormalInput(sender, e);
         }
-
     }
 }

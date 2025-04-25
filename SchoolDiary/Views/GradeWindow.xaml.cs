@@ -1,8 +1,12 @@
 ﻿using SchoolDiary.APIConnect;
 using SchoolDiary.Models;
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
+using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
 
@@ -13,17 +17,188 @@ namespace SchoolDiary
 
         private static Profile profileWindow;
         private static SchelduleForTheWeek schelduleForTheWeekWindow;
-        private static MainWindow mainWindow;
+        private static GradeWindow gradeWindow;
 
         public GradeWindow()
         {
             InitializeComponent();
+            this.Closing += Window_Closing;
 
             // Развернуть окно на весь экран
             this.WindowState = WindowState.Maximized;
             LoadStudentData();
+
+            // Добавляем предметы в первый столбец
+            AddSubjectToColumn("Математика", FirstColumnContainer, 298);
+            AddSubjectToColumn("История", FirstColumnContainer, 298);
+
+            // Добавляем предметы во второй столбец
+            AddFullWidthBorderToSecondColumn(new List<int> {2, 3, 4, 5});
+            AddFullWidthBorderToSecondColumn(new List<int> { 5, 4, 3, 2, 4, 3, 2, 4, 3, 2, 4, 3, 2, 4, 3, 2, 4, 3, 2, 4, 3, 2, 4, 3, 2, 4, 3, 2, 4, 3, 2, 4, 3, 2, 4, 3, 2, 4, 3, 2 });
+
+            // Добавляем предметы в третий столбец - средняя оценка
+            AddSubjectToThirdOrFourthColumn((new List<double> { 3, 3, 4, 4 }.Sum() / new List<double> { 2, 3, 4, 5 }.Count), ThirdColumnContainer, 118);
+            AddSubjectToThirdOrFourthColumn((new List<double> { 2, 3, 4, 5 }.Sum() / new List<double> { 2, 3, 4, 5 }.Count), ThirdColumnContainer, 118);
+
+            // Добавляем предметы в четвёртый столбец - итоговая оценка
+            AddSubjectToThirdOrFourthColumn(Math.Round(new List<double> { 3, 3, 4, 4 }.Sum() / new List<double> { 2, 3, 4, 5 }.Count), FourthColumnContainer, 118);
+            AddSubjectToThirdOrFourthColumn(Math.Round(new List<double> { 2, 3, 4, 5 }.Sum() / new List<double> { 2, 3, 4, 5 }.Count), FourthColumnContainer, 118);
         }
 
+        private void AddSubjectToColumn(string subjectName, StackPanel container, double width)
+        {
+            // Создаем новый Border
+            Border border = new Border
+            {
+                Width = width,
+                Height = 80,
+                Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#E6D3C7")),
+                BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#AC7356")),
+                BorderThickness = new Thickness(1),
+                CornerRadius = new CornerRadius(8, 8, 32, 8), // Закругление углов: ВЛ=8, ВП=8, ПН=32, НЛ=8
+                Margin = new Thickness(0, 0, 0, 17) // Отступ снизу
+            };
+
+
+            // Создаем TextBlock для названия предмета
+            TextBlock textBlock = new TextBlock
+            {
+                Text = subjectName,
+                FontFamily = new FontFamily("/Fonts/Roboto-Medium.ttf#Roboto"), // Указываем шрифт Roboto Medium
+                FontSize = 28, // Размер шрифта
+                FontWeight = FontWeights.Medium, // Жирность шрифта
+                Foreground = Brushes.Black, // Цвет текста
+                VerticalAlignment = VerticalAlignment.Center,
+                HorizontalAlignment = HorizontalAlignment.Center
+            };
+
+            // Добавляем TextBlock внутрь Border
+            border.Child = textBlock;
+
+            // Добавляем Border в контейнер
+            container.Children.Add(border);
+        }
+
+        private void AddFullWidthBorderToSecondColumn(List<int> grades)
+        {
+            // Создаем новый Border
+            Border border = new Border
+            {
+                Width = double.NaN, // Автоматическая ширина
+                Height = 80,
+                Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FBF2EB")),
+                BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#D4AA95")),
+                BorderThickness = new Thickness(1),
+                CornerRadius = new CornerRadius(32, 8, 32, 8), // Закругление углов: ВЛ=32, ВП=8, ПН=32, НЛ=8
+                Margin = new Thickness(0, 0, 0, 17) // Отступ снизу
+            };
+
+            // Создаем контейнер для размещения элементов внутри Border
+            StackPanel container = new StackPanel
+            {
+                Orientation = Orientation.Horizontal,
+                HorizontalAlignment = HorizontalAlignment.Left, // Выравнивание по левому краю
+                VerticalAlignment = VerticalAlignment.Center,
+                Margin = new Thickness(8) // Отступ между квадратами
+            };
+
+            bool isFirstGrade = true; // Флаг для проверки первой оценки
+
+            // Создаем квадраты для каждой оценки
+            foreach (int grade in grades)
+
+            {
+                var gradeConverter = new GradeToColorConverter();
+                Border gradeBorder = new Border
+                {
+                    Width = 48,
+                    Height = 48,
+                    Background = gradeConverter.Convert(grade.ToString(), typeof(Brush), null, CultureInfo.CurrentCulture) as SolidColorBrush, // Цвет фона в зависимости от оценки
+                    BorderBrush = gradeConverter.Convert(grade.ToString(), typeof(Brush), "BorderBrush", CultureInfo.CurrentCulture) as SolidColorBrush,    // Цвет границы в зависимости от оценки
+                    BorderThickness = new Thickness(1),
+                    CornerRadius = new CornerRadius(10),          // Закругление углов
+                    Margin = isFirstGrade ? new Thickness(48, 3, 3, 3) : new Thickness(8, 3,3,3) // Отступ для первой оценки и Отступ между квадратами
+                };
+
+                // Добавляем текст с оценкой внутрь квадрата
+                TextBlock gradeText = new TextBlock
+                {
+                    Text = grade.ToString(),
+                    FontSize = 20,
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    VerticalAlignment = VerticalAlignment.Center,
+                    Foreground = Brushes.Black
+                };
+
+                gradeBorder.Child = gradeText;
+
+                // Добавляем квадрат в контейнер
+                container.Children.Add(gradeBorder);
+
+                // После добавления первой оценки меняем флаг
+                if (isFirstGrade)
+                {
+                    isFirstGrade = false;
+                }
+            }
+
+            // Устанавливаем контейнер как содержимое Border
+            border.Child = container;
+
+            // Добавляем Border в общий контейнер
+            SecondColumnContent.Children.Add(border);
+        }
+
+        private void AddSubjectToThirdOrFourthColumn(double value, StackPanel container, double width)
+        {
+            // Округляем значение для определения цвета
+            int roundedValueForColor = (int)Math.Round(value);
+            var gradeConverter = new GradeToColorConverter();
+            // Создаем новый Border
+            Border border = new Border
+            {
+                Width = width,
+                Height = 80,
+                Background = gradeConverter.Convert(roundedValueForColor.ToString(), typeof(Brush), null, CultureInfo.CurrentCulture) as SolidColorBrush, // Цвет фона в зависимости от округленного значения
+                BorderBrush = gradeConverter.Convert(roundedValueForColor.ToString(), typeof(Brush), "BorderBrush", CultureInfo.CurrentCulture) as SolidColorBrush,    // Цвет границы в зависимости от округленного значения
+                BorderThickness = new Thickness(1),
+                CornerRadius = new CornerRadius(32, 8, 8, 8),               // Закругление углов: ВЛ=32, ВП=8, НЛ=8, ПН=8
+                Margin = new Thickness(0, 0, 0, 17)                        // Отступ снизу
+            };
+
+            // Создаем TextBlock для значения
+            TextBlock textBlock = new TextBlock
+            {
+                Text = value.ToString("0.##"),                             // Отображаем исходное значение
+                FontSize = 16,
+                HorizontalAlignment = HorizontalAlignment.Center,
+                VerticalAlignment = VerticalAlignment.Center,
+                Foreground = Brushes.Black
+            };
+
+            // Добавляем TextBlock внутрь Border
+            border.Child = textBlock;
+
+            // Добавляем Border в контейнер
+            container.Children.Add(border);
+        }
+
+        // Метод для получения цвета фона в зависимости от оценки
+        
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            // Завершаем работу приложения при закрытии любого окна
+            Application.Current.Shutdown();
+        }
+
+        public static GradeWindow GetInstance()
+        {
+            if (gradeWindow == null)
+            {
+                gradeWindow = new GradeWindow(); // Создаём новый экземпляр, если его ещё нет
+            }
+            return gradeWindow;
+        }
 
         private async void LoadStudentData()
         {
@@ -42,17 +217,7 @@ namespace SchoolDiary
 
         private string FormatFullName(Student student)
         {
-            string initials = "";
-            if (!string.IsNullOrEmpty(student.FirstName))
-            {
-                initials += $"{student.FirstName[0]}.";
-            }
-            if (!string.IsNullOrEmpty(student.MiddleName))
-            {
-                initials += $"{student.MiddleName[0]}.";
-            }
-
-            return $"{student.LastName} {initials}";
+            return $"{student.LastName}  {student.FirstName[0]}. {student.MiddleName[0]}.";
         }
 
         private void OpenSchelduleForTheWeek(object sender, RoutedEventArgs e)
@@ -122,31 +287,6 @@ namespace SchoolDiary
                 ((ImageBrush)Grade.Background).ImageSource = new System.Windows.Media.Imaging.BitmapImage(
                      new Uri("pack://application:,,,/Assets/ImageButtons/button_menu_mark_default.png", UriKind.Absolute));
             }
-        }
-
-        public class IndexToOffsetConverter : IValueConverter
-        {
-            public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-            {
-                // Получаем элемент управления
-                if (value is FrameworkElement element && element.DataContext is int index)
-                {
-                    // Максимальное смещение (например, 100 пикселей)
-                    double maxOffset = 100;
-
-                    // Смещение для каждой оценки: каждая оценка сдвигается влево на 13.3 пикселя
-                    double offset = Math.Min(index * 13.3, maxOffset);
-
-                    // Возвращаем отрицательное значение для наложения
-                    return -offset;
-                }
-                return 0;
-            }
-            public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-            {
-                throw new NotImplementedException();
-            }
-
         }
 
         public class GradeToColorConverter : IValueConverter

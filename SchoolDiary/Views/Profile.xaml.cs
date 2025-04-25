@@ -16,6 +16,7 @@ namespace SchoolDiary
     {
         private static Profile profileWindow;
         private SchelduleForTheWeek schelduleForTheWeekWindow;
+        private static GradeWindow gradeWindow;
 
         public Profile()
         {
@@ -57,17 +58,7 @@ namespace SchoolDiary
 
         private string FormatFullName(Student student)
         {
-            string initials = "";
-            if (!string.IsNullOrEmpty(student.FirstName))
-            {
-                initials += $"{student.FirstName[0]}.";
-            }
-            if (!string.IsNullOrEmpty(student.MiddleName))
-            {
-                initials += $"{student.MiddleName[0]}.";
-            }
-
-            return $"{student.LastName} {initials}";
+            return $"{student.LastName}  {student.FirstName[0]}. {student.MiddleName[0]}.";
         }
 
         private string FormatDateOfBirth(string dateOfBirth)
@@ -124,7 +115,6 @@ namespace SchoolDiary
             }
         }
 
-
         private void OpenSchelduleForTheWeek(object sender, RoutedEventArgs e)
         {
             // Скрываем текущее окно
@@ -141,9 +131,20 @@ namespace SchoolDiary
             }
         }
 
-        private void OpenProfile(object sender, RoutedEventArgs e)
+        private void Grade_Click(object sender, RoutedEventArgs e)
         {
+            // Скрываем текущее окно
+            this.Hide();
 
+            gradeWindow = GradeWindow.GetInstance(); // Получаем единственный экземпляр окна
+            if (gradeWindow.IsVisible)
+            {
+                gradeWindow.Activate(); // Активируем, если окно уже открыто
+            }
+            else
+            {
+                gradeWindow.Show(); // Показываем, если окно скрыто
+            }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -176,10 +177,7 @@ namespace SchoolDiary
             }
         }
 
-        private void Grade_Click(object sender, RoutedEventArgs e)
-        {
 
-        }
 
     }
 }
