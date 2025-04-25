@@ -4,7 +4,7 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
-using SchoolDiary.Objects;
+using SchoolDiary.Models;
 namespace SchoolDiary
 {
     /// <summary>
@@ -29,7 +29,7 @@ namespace SchoolDiary
 
         private async void LoadStudentData()
         {
-            APIConnector apiConnector = new APIConnector();
+            APIConnector apiConnector = APIConnector.GetInstance();
             try
             {
                 Student student = await apiConnector.GetStudent();
@@ -71,7 +71,7 @@ namespace SchoolDiary
 
         private async void LoadSchedulDay(DateTime from, DateTime to)
         {
-            APIConnector aPIConnector = new APIConnector();
+            APIConnector aPIConnector = APIConnector.GetInstance();
             try
             {
                 this.DataContext = new ViewModel(await aPIConnector.GetWeekSchedule(from, to), from);

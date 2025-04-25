@@ -46,7 +46,7 @@ namespace SchoolDiary
         public ICommand NextDayCommand { get; }
 
         public string CurrentDateDisplay => _currentDate.ToString("d MMMM, dddd");
-        public ViewModel(List<Objects.DaySchedule> schedule, DateTime currentDate)
+        public ViewModel(List<Models.DaySchedule> schedule, DateTime currentDate)
         {
             _currentDate = currentDate;
             // Преобразуем данные из API в словарь
@@ -252,9 +252,9 @@ namespace SchoolDiary
         {
             try
             {
-                var apiConnector = new APIConnector();
+                var apiConnector = APIConnector.GetInstance();
                 var schedule = await apiConnector.GetWeekSchedule(date, date);
-
+                
                 // Очищаем текущий список уроков
                 _scheduleByDate.Clear();
 

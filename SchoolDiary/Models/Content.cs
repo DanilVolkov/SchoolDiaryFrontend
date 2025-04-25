@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
-namespace SchoolDiary.Objects
+namespace SchoolDiary.Models
 {
     public class Content
     {

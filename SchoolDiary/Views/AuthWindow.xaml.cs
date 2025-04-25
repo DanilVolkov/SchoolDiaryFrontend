@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Resources;
+using SchoolDiary.APIConnect;
 
 namespace SchoolDiary
 {
@@ -21,23 +22,20 @@ namespace SchoolDiary
     /// </summary>
     public partial class AuthWindow : Window
     {
-        private const string ValidUsername = "pupalupa337";
-        private const string ValidPassword = "password123";
         public AuthWindow()
         {
             InitializeComponent();
             this.WindowState = WindowState.Maximized;
         }
 
-        private void LoginButton_Click(object sender, RoutedEventArgs e)
+        private async void LoginButton_Click(object sender, RoutedEventArgs e)
         {
             string username = UsernameTextBox.Text.Trim();
             string password = PasswordBox.Password.Trim();
-
-            if (username == ValidUsername && password == ValidPassword)
+            APIConnector connector = APIConnector.GetInstance();
+            if (await connector.AuthUser(username, password))
             {
                 ErrorTextBlock.Visibility = Visibility.Collapsed;
-
                 SchelduleForTheWeek mainWindow = new SchelduleForTheWeek();
                 mainWindow.Show();
                 this.Close();
