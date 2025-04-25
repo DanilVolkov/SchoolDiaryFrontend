@@ -9,6 +9,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Resources;
 using SchoolDiary.APIConnect;
+using System;
 
 namespace SchoolDiary
 {
