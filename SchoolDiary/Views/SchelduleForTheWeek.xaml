@@ -84,18 +84,18 @@
         </DockPanel>
 
         <!-- Левая панель режимов -->
-        <DockPanel x:Name="Menu" Background="#7DCCDE" HorizontalAlignment="Left" Margin="0,64,0,0" Width="216" LastChildFill="False" Panel.ZIndex="1" Opacity="0.6">
+        <DockPanel x:Name="Menu" Background="#7DCCDE" HorizontalAlignment="Left" Margin="0,64,0,0" Width="64" LastChildFill="False" Panel.ZIndex="1" Opacity="1">
             <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Width="216">
                 <!-- Кнопка "Расписание" -->
-                <Button x:Name="Schedule" Padding="5" Margin="5,16,5,16" Width="184" Height="48" HorizontalAlignment="Stretch" BorderThickness="0,0,0,0" Opacity="1">
+                <Button x:Name="Schedule" Padding="5" Margin="5,16,5,16" Width="48" Height="48" HorizontalAlignment="Stretch" BorderThickness="0,0,0,0" Opacity="1" >
                     <Button.Background>
-                        <ImageBrush ImageSource="/Assets/ImageButtons/button_menu_schedule_default.png" Stretch="Fill" />
+                        <ImageBrush ImageSource="/Assets/ImageButtons/button_manu_close_schedule_default.png" Stretch="Fill" />
                     </Button.Background>
                 </Button>
                 <!-- Кнопка "Дневник" -->
-                <Button x:Name="Grade" Padding="5" Margin="5,5,5,0" Width="184" Height="48" HorizontalAlignment="Stretch" BorderThickness="0,0,0,0" Opacity="1" Click="Grade_Click">
+                <Button x:Name="Grade" Padding="5" Margin="5,5,5,0" Width="48" Height="48" HorizontalAlignment="Stretch" BorderThickness="0,0,0,0" Opacity="1" Click="Grade_Click">
                     <Button.Background>
-                        <ImageBrush ImageSource="/Assets/ImageButtons/button_menu_mark_default.png" Stretch="Fill" />
+                        <ImageBrush ImageSource="/Assets/ImageButtons/button_menu_close_mark_defoult.png" Stretch="Fill" />
                     </Button.Background>
                 </Button>
             </StackPanel>

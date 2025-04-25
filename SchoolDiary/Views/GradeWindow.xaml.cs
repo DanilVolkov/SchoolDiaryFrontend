@@ -2,6 +2,7 @@
 using SchoolDiary.Objects;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Windows;
@@ -99,15 +100,17 @@ namespace SchoolDiary
 
             // Создаем квадраты для каждой оценки
             foreach (int grade in grades)
+
             {
+                var gradeConverter = new GradeToColorConverter();
                 Border gradeBorder = new Border
                 {
                     Width = 48,
                     Height = 48,
-                    Background = GetGradeBackgroundColor(grade), // Цвет фона в зависимости от оценки
-                    BorderBrush = GetGradeBorderColor(grade),    // Цвет границы в зависимости от оценки
+                    Background = gradeConverter.Convert(grade.ToString(), typeof(Brush), null, CultureInfo.CurrentCulture) as SolidColorBrush, // Цвет фона в зависимости от оценки
+                    BorderBrush = gradeConverter.Convert(grade.ToString(), typeof(Brush), "BorderBrush", CultureInfo.CurrentCulture) as SolidColorBrush,    // Цвет границы в зависимости от оценки
                     BorderThickness = new Thickness(1),
-                    CornerRadius = new CornerRadius(8),          // Закругление углов
+                    CornerRadius = new CornerRadius(10),          // Закругление углов
                     Margin = new Thickness(3)                   // Отступ между квадратами
                 };
 
@@ -138,14 +141,14 @@ namespace SchoolDiary
         {
             // Округляем значение для определения цвета
             int roundedValueForColor = (int)Math.Round(value);
-
+            var gradeConverter = new GradeToColorConverter();
             // Создаем новый Border
             Border border = new Border
             {
                 Width = width,
                 Height = 80,
-                Background = GetGradeBackgroundColor(roundedValueForColor), // Цвет фона в зависимости от округленного значения
-                BorderBrush = GetGradeBorderColor(roundedValueForColor),    // Цвет границы в зависимости от округленного значения
+                Background = gradeConverter.Convert(roundedValueForColor.ToString(), typeof(Brush), null, CultureInfo.CurrentCulture) as SolidColorBrush, // Цвет фона в зависимости от округленного значения
+                BorderBrush = gradeConverter.Convert(roundedValueForColor.ToString(), typeof(Brush), "BorderBrush", CultureInfo.CurrentCulture) as SolidColorBrush,    // Цвет границы в зависимости от округленного значения
                 BorderThickness = new Thickness(1),
                 CornerRadius = new CornerRadius(32, 8, 8, 8),               // Закругление углов: ВЛ=32, ВП=8, НЛ=8, ПН=8
                 Margin = new Thickness(0, 0, 0, 17)                        // Отступ снизу
@@ -169,41 +172,7 @@ namespace SchoolDiary
         }
 
         // Метод для получения цвета фона в зависимости от оценки
-        private SolidColorBrush GetGradeBackgroundColor(int grade)
-        {
-            switch (grade)
-            {
-                case 5:
-                    return new SolidColorBrush((Color)ColorConverter.ConvertFromString("#81DF81"));
-                case 4:
-                    return new SolidColorBrush((Color)ColorConverter.ConvertFromString("#C5E477"));
-                case 3:
-                    return new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FBC351"));
-                case 2:
-                    return new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FE7472"));
-                default:
-                    return new SolidColorBrush((Color)ColorConverter.ConvertFromString("#808080"));
-            }
-        }
-
-        // Метод для получения цвета границы в зависимости от оценки
-        private SolidColorBrush GetGradeBorderColor(int grade)
-        {
-            switch (grade)
-            {
-                case 5:
-                    return new SolidColorBrush((Color)ColorConverter.ConvertFromString("#027513"));
-                case 4:
-                    return new SolidColorBrush((Color)ColorConverter.ConvertFromString("#49AB49"));
-                case 3:
-                    return new SolidColorBrush((Color)ColorConverter.ConvertFromString("#A76E04"));
-                case 2:
-                    return new SolidColorBrush((Color)ColorConverter.ConvertFromString("#9D0404"));
-                default:
-                    return new SolidColorBrush((Color)ColorConverter.ConvertFromString("#808080"));
-            }
-        }
-
+        
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             // Завершаем работу приложения при закрытии любого окна
