@@ -14,6 +14,7 @@
     <WarningLevel>4</WarningLevel>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -26,7 +27,6 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
@@ -107,6 +107,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="APIConnect\HashPassword.cs" />
+    <Compile Include="Models\SubjectMarks.cs" />
+    <Compile Include="Models\Token.cs" />
     <Compile Include="Views\AuthWindow.xaml.cs">
       <DependentUpon>AuthWindow.xaml</DependentUpon>
     </Compile>
@@ -401,6 +404,18 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\ImageButtons\Right_arrow.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\ImageButtons\Background_Authorization_Fields.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\ImageButtons\Authentication_ButtonLogin_Inactive.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\ImageButtons\Authentication_ButtonLogin_Active.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\ImageButtons\Authentication_WrongInput.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

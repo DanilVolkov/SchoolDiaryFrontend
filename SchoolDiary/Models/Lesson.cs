@@ -3,7 +3,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 
 
-namespace SchoolDiary.Objects
+namespace SchoolDiary.Models
 {
 
     public class CustomDateConverter : JsonConverter<DateTime>

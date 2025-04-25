@@ -1,5 +1,5 @@
 ﻿using SchoolDiary.APIConnect;
-using SchoolDiary.Objects;
+using SchoolDiary.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -202,7 +202,7 @@ namespace SchoolDiary
 
         private async void LoadStudentData()
         {
-            APIConnector apiConnector = new APIConnector();
+            APIConnector apiConnector = APIConnector.GetInstance();
             try
             {
                 Student student = await apiConnector.GetStudent();
