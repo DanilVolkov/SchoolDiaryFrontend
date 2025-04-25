@@ -101,32 +101,36 @@
 
         </DockPanel>
 
-        <DockPanel x:Name="AcademicQuarterPanel" LastChildFill="False" VerticalAlignment="Top" HorizontalAlignment="Stretch" Background="#BAEAFD" Margin="0,64,0,0" Height="64" >
+        <DockPanel x:Name="AcademicQuarterPanel" LastChildFill="False" VerticalAlignment="Top" HorizontalAlignment="Stretch" Background="#BAEAFD" Margin="0,64,0,0" Height="64">
             <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" HorizontalAlignment="Center" Margin="161,0,161,3" Height="63">
                 <!-- Кнопка "Назад" -->
                 <Button x:Name="LeftArrowWeek" Command="{Binding PreviousAcademicQuarter}" 
-                    Foreground="Black" Width="48" Height="48" FontSize="14" Padding="5" Margin="10,5,10,5" 
-                    VerticalAlignment="Center" HorizontalAlignment="Center" >
+            Foreground="Black" Width="48" Height="48" FontSize="14" Padding="5" Margin="10,5,10,5" 
+            VerticalAlignment="Center" HorizontalAlignment="Center">
                     <Button.Background>
                         <ImageBrush ImageSource="/Assets/ImageButtons/button_back_defaoult.png" Stretch="UniformToFill" />
                     </Button.Background>
                 </Button>
 
-                <!-- Текст нужной четверти -->
-                <TextBlock Text="{Binding CurrentAcademicQuarter }" 
-                   FontWeight="Bold" Foreground="Black" FontSize="28" 
-                   VerticalAlignment="Center" HorizontalAlignment="Center" 
-                   Margin="10,5,10,5" />
+                <!-- Текст "I четверть" -->
+                <TextBlock Text="I четверть"
+                   FontFamily="/Fonts/Roboto-Medium.ttf#Roboto" 
+                   FontSize="28" 
+                   FontWeight="Medium" 
+                   Foreground="Black"
+                   VerticalAlignment="Center" 
+                   HorizontalAlignment="Center"
+                   Margin="10,5,10,5" /> 
 
-                <!-- Кнопка "Вперед" -->
-                <Button x:Name="RightArrowWeek" Command="{Binding NextAcademicQuarter}" 
-                    Foreground="Black" Width="48" Height="48" FontSize="14" Padding="5" Margin="10,5,10,5" 
-                    VerticalAlignment="Center" HorizontalAlignment="Center">
-                    <Button.Background>
-                        <ImageBrush ImageSource="/Assets/ImageButtons/button_back_active.png" Stretch="UniformToFill" />
-                    </Button.Background>
-                </Button>
-            </StackPanel>
+        <!-- Кнопка "Вперед" -->
+        <Button x:Name="RightArrowWeek" Command="{Binding NextAcademicQuarter}" 
+            Foreground="Black" Width="48" Height="48" FontSize="14" Padding="5" Margin="10,5,10,5" 
+            VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Button.Background>
+                <ImageBrush ImageSource="/Assets/ImageButtons/button_back_active.png" Stretch="UniformToFill" />
+            </Button.Background>
+        </Button>
+    </StackPanel>
         </DockPanel>
 
         <!-- Левая панель режимов -->

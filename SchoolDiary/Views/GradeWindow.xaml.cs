@@ -59,13 +59,17 @@ namespace SchoolDiary
                 Margin = new Thickness(0, 0, 0, 17) // Отступ снизу
             };
 
+
             // Создаем TextBlock для названия предмета
             TextBlock textBlock = new TextBlock
             {
                 Text = subjectName,
-                FontSize = 16,
-                HorizontalAlignment = HorizontalAlignment.Center,
-                VerticalAlignment = VerticalAlignment.Center
+                FontFamily = new FontFamily("/Fonts/Roboto-Medium.ttf#Roboto"), // Указываем шрифт Roboto Medium
+                FontSize = 28, // Размер шрифта
+                FontWeight = FontWeights.Medium, // Жирность шрифта
+                Foreground = Brushes.Black, // Цвет текста
+                VerticalAlignment = VerticalAlignment.Center,
+                HorizontalAlignment = HorizontalAlignment.Center
             };
 
             // Добавляем TextBlock внутрь Border
@@ -98,6 +102,8 @@ namespace SchoolDiary
                 Margin = new Thickness(8) // Отступ между квадратами
             };
 
+            bool isFirstGrade = true; // Флаг для проверки первой оценки
+
             // Создаем квадраты для каждой оценки
             foreach (int grade in grades)
 
@@ -111,7 +117,7 @@ namespace SchoolDiary
                     BorderBrush = gradeConverter.Convert(grade.ToString(), typeof(Brush), "BorderBrush", CultureInfo.CurrentCulture) as SolidColorBrush,    // Цвет границы в зависимости от оценки
                     BorderThickness = new Thickness(1),
                     CornerRadius = new CornerRadius(10),          // Закругление углов
-                    Margin = new Thickness(3)                   // Отступ между квадратами
+                    Margin = isFirstGrade ? new Thickness(48, 3, 3, 3) : new Thickness(8, 3,3,3) // Отступ для первой оценки и Отступ между квадратами
                 };
 
                 // Добавляем текст с оценкой внутрь квадрата
@@ -128,6 +134,12 @@ namespace SchoolDiary
 
                 // Добавляем квадрат в контейнер
                 container.Children.Add(gradeBorder);
+
+                // После добавления первой оценки меняем флаг
+                if (isFirstGrade)
+                {
+                    isFirstGrade = false;
+                }
             }
 
             // Устанавливаем контейнер как содержимое Border
