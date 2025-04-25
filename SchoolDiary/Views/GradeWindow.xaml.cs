@@ -32,20 +32,16 @@ namespace SchoolDiary
             AddSubjectToColumn("История", FirstColumnContainer, 298);
 
             // Добавляем предметы во второй столбец
-            AddFullWidthBorderToSecondColumn("Предмет 1", new List<int> {2, 3, 4, 5});
-            AddFullWidthBorderToSecondColumn("Очень длинное название предмета, которое требует горизонтального скролла " +
-                "Очень длинное название предмета, которое требует горизонтального скролла " +
-                "Очень длинное название предмета, которое требует горизонтального скролла", new List<int> { 5, 4, 3, 2 });
+            AddFullWidthBorderToSecondColumn(new List<int> {2, 3, 4, 5});
+            AddFullWidthBorderToSecondColumn(new List<int> { 5, 4, 3, 2, 4, 3, 2, 4, 3, 2, 4, 3, 2, 4, 3, 2, 4, 3, 2, 4, 3, 2, 4, 3, 2, 4, 3, 2, 4, 3, 2, 4, 3, 2, 4, 3, 2, 4, 3, 2 });
 
             // Добавляем предметы в третий столбец - средняя оценка
-            AddSubjectToColumn((new List<double> { 3, 3, 4, 4 }.Sum() / new List<double> { 2, 3, 4, 5 }.Count).ToString(), ThirdColumnContainer, 118);
-            AddSubjectToColumn((new List<double> { 2, 3, 4, 5 }.Sum() / new List<double> { 2, 3, 4, 5 }.Count).ToString(), ThirdColumnContainer, 118);
+            AddSubjectToThirdOrFourthColumn((new List<double> { 3, 3, 4, 4 }.Sum() / new List<double> { 2, 3, 4, 5 }.Count), ThirdColumnContainer, 118);
+            AddSubjectToThirdOrFourthColumn((new List<double> { 2, 3, 4, 5 }.Sum() / new List<double> { 2, 3, 4, 5 }.Count), ThirdColumnContainer, 118);
 
             // Добавляем предметы в четвёртый столбец - итоговая оценка
-            AddSubjectToColumn(Math.Round(new List<double> { 3, 3, 4, 4 }.Sum() / new List<double> { 2, 3, 4, 5 }.Count).ToString(), FourthColumnContainer, 118);
-            AddSubjectToColumn(Math.Round(new List<double> { 2, 3, 4, 5 }.Sum() / new List<double> { 2, 3, 4, 5 }.Count).ToString(), FourthColumnContainer, 118);
-
-
+            AddSubjectToThirdOrFourthColumn(Math.Round(new List<double> { 3, 3, 4, 4 }.Sum() / new List<double> { 2, 3, 4, 5 }.Count), FourthColumnContainer, 118);
+            AddSubjectToThirdOrFourthColumn(Math.Round(new List<double> { 2, 3, 4, 5 }.Sum() / new List<double> { 2, 3, 4, 5 }.Count), FourthColumnContainer, 118);
         }
 
         private void AddSubjectToColumn(string subjectName, StackPanel container, double width)
@@ -55,10 +51,10 @@ namespace SchoolDiary
             {
                 Width = width,
                 Height = 80,
-                Background = Brushes.LightGray,
-                BorderBrush = Brushes.Black,
+                Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#E6D3C7")),
+                BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#AC7356")),
                 BorderThickness = new Thickness(1),
-                CornerRadius = new CornerRadius(5), // Закругление углов
+                CornerRadius = new CornerRadius(8, 8, 32, 8), // Закругление углов: ВЛ=8, ВП=8, ПН=32, НЛ=8
                 Margin = new Thickness(0, 0, 0, 17) // Отступ снизу
             };
 
@@ -78,37 +74,134 @@ namespace SchoolDiary
             container.Children.Add(border);
         }
 
-        //Расчёты для средней и итоговой оценки сделать отдльными функциями для удобства
-        // Сделать возможность добавления оценок во второй столбец и располагать их
-        private void AddFullWidthBorderToSecondColumn(string subjectName, List<int> ints)
+        private void AddFullWidthBorderToSecondColumn(List<int> grades)
         {
             // Создаем новый Border
             Border border = new Border
             {
                 Width = double.NaN, // Автоматическая ширина
                 Height = 80,
-                Background = Brushes.LightGray,
-                BorderBrush = Brushes.Black,
+                Background = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FBF2EB")),
+                BorderBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#D4AA95")),
                 BorderThickness = new Thickness(1),
-                CornerRadius = new CornerRadius(5), // Закругление углов
+                CornerRadius = new CornerRadius(32, 8, 32, 8), // Закругление углов: ВЛ=32, ВП=8, ПН=32, НЛ=8
                 Margin = new Thickness(0, 0, 0, 17) // Отступ снизу
             };
 
-            // Создаем TextBlock для названия предмета
+            // Создаем контейнер для размещения элементов внутри Border
+            StackPanel container = new StackPanel
+            {
+                Orientation = Orientation.Horizontal,
+                HorizontalAlignment = HorizontalAlignment.Left, // Выравнивание по левому краю
+                VerticalAlignment = VerticalAlignment.Center,
+                Margin = new Thickness(8) // Отступ между квадратами
+            };
+
+            // Создаем квадраты для каждой оценки
+            foreach (int grade in grades)
+            {
+                Border gradeBorder = new Border
+                {
+                    Width = 48,
+                    Height = 48,
+                    Background = GetGradeBackgroundColor(grade), // Цвет фона в зависимости от оценки
+                    BorderBrush = GetGradeBorderColor(grade),    // Цвет границы в зависимости от оценки
+                    BorderThickness = new Thickness(1),
+                    CornerRadius = new CornerRadius(8),          // Закругление углов
+                    Margin = new Thickness(3)                   // Отступ между квадратами
+                };
+
+                // Добавляем текст с оценкой внутрь квадрата
+                TextBlock gradeText = new TextBlock
+                {
+                    Text = grade.ToString(),
+                    FontSize = 20,
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    VerticalAlignment = VerticalAlignment.Center,
+                    Foreground = Brushes.Black
+                };
+
+                gradeBorder.Child = gradeText;
+
+                // Добавляем квадрат в контейнер
+                container.Children.Add(gradeBorder);
+            }
+
+            // Устанавливаем контейнер как содержимое Border
+            border.Child = container;
+
+            // Добавляем Border в общий контейнер
+            SecondColumnContent.Children.Add(border);
+        }
+
+        private void AddSubjectToThirdOrFourthColumn(double value, StackPanel container, double width)
+        {
+            // Округляем значение для определения цвета
+            int roundedValueForColor = (int)Math.Round(value);
+
+            // Создаем новый Border
+            Border border = new Border
+            {
+                Width = width,
+                Height = 80,
+                Background = GetGradeBackgroundColor(roundedValueForColor), // Цвет фона в зависимости от округленного значения
+                BorderBrush = GetGradeBorderColor(roundedValueForColor),    // Цвет границы в зависимости от округленного значения
+                BorderThickness = new Thickness(1),
+                CornerRadius = new CornerRadius(32, 8, 8, 8),               // Закругление углов: ВЛ=32, ВП=8, НЛ=8, ПН=8
+                Margin = new Thickness(0, 0, 0, 17)                        // Отступ снизу
+            };
+
+            // Создаем TextBlock для значения
             TextBlock textBlock = new TextBlock
             {
-                Text = subjectName,
+                Text = value.ToString("0.##"),                             // Отображаем исходное значение
                 FontSize = 16,
-                HorizontalAlignment = HorizontalAlignment.Left,
+                HorizontalAlignment = HorizontalAlignment.Center,
                 VerticalAlignment = VerticalAlignment.Center,
-                TextWrapping = TextWrapping.NoWrap // Не переносить текст
+                Foreground = Brushes.Black
             };
 
             // Добавляем TextBlock внутрь Border
             border.Child = textBlock;
 
-            // Добавляем Border в общий контейнер
-            SecondColumnContent.Children.Add(border);
+            // Добавляем Border в контейнер
+            container.Children.Add(border);
+        }
+
+        // Метод для получения цвета фона в зависимости от оценки
+        private SolidColorBrush GetGradeBackgroundColor(int grade)
+        {
+            switch (grade)
+            {
+                case 5:
+                    return new SolidColorBrush((Color)ColorConverter.ConvertFromString("#81DF81"));
+                case 4:
+                    return new SolidColorBrush((Color)ColorConverter.ConvertFromString("#C5E477"));
+                case 3:
+                    return new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FBC351"));
+                case 2:
+                    return new SolidColorBrush((Color)ColorConverter.ConvertFromString("#FE7472"));
+                default:
+                    return new SolidColorBrush((Color)ColorConverter.ConvertFromString("#808080"));
+            }
+        }
+
+        // Метод для получения цвета границы в зависимости от оценки
+        private SolidColorBrush GetGradeBorderColor(int grade)
+        {
+            switch (grade)
+            {
+                case 5:
+                    return new SolidColorBrush((Color)ColorConverter.ConvertFromString("#027513"));
+                case 4:
+                    return new SolidColorBrush((Color)ColorConverter.ConvertFromString("#49AB49"));
+                case 3:
+                    return new SolidColorBrush((Color)ColorConverter.ConvertFromString("#A76E04"));
+                case 2:
+                    return new SolidColorBrush((Color)ColorConverter.ConvertFromString("#9D0404"));
+                default:
+                    return new SolidColorBrush((Color)ColorConverter.ConvertFromString("#808080"));
+            }
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
