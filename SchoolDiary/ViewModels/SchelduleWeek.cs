@@ -63,7 +63,7 @@ namespace SchoolDiary
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public ScheduleViewModel(List<Objects.DaySchedule> schedule, DateTime crtday)
+        public ScheduleViewModel(List<Models.DaySchedule> schedule, DateTime crtday)
         {
             if (WeekSchedule != null) { WeekSchedule.Clear(); }
             CurrentWeekStart = DateTimeExtensions.StartOfWeek(crtday, DayOfWeek.Monday);
@@ -294,7 +294,9 @@ namespace SchoolDiary
         {
             try
             {
-                var apiConnector = new APIConnector();
+                var apiConnector = APIConnector.GetInstance();
+
+                
                 var schedule = await apiConnector.GetWeekSchedule(from, to);
                 CurrentWeekStart = DateTimeExtensions.StartOfWeek(from, DayOfWeek.Monday);
                 _currentDate = CurrentWeekStart.AddDays(-1);
@@ -315,7 +317,7 @@ namespace SchoolDiary
             }
         }
 
-        private void UpdateWeekSchedule(List<Objects.DaySchedule> schedule)
+        private void UpdateWeekSchedule(List<Models.DaySchedule> schedule)
         {
             WeekSchedule.Clear();
             WeekSchedule = new ObservableCollection<Lesson>();
