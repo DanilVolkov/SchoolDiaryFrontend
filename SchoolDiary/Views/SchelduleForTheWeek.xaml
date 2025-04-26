@@ -3,7 +3,8 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:SchoolDiary" 
+        xmlns:local="clr-namespace:SchoolDiary.Converters" 
+        xmlns:local1="clr-namespace:SchoolDiary"
         mc:Ignorable="d"
         Title="SchelduleForTheWeek" Height="450" Width="800" >
 
@@ -22,9 +23,9 @@
             <Setter Property="FontWeight" Value="Bold" />
             <!--<Setter Property="Bold" Value="true"/>-->
         </Style>
-        <local:ScheduleViewModel x:Key="ScheduleViewModel" />
-        <local:GradeToColorConverter x:Key="GradeToColorConverter" />
+        <local1:GradeToColorConverter x:Key="GradeToColorConverter" />
         <local:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <local:StringConvertHasHomework x:Key="StringConvertHasHomework"/>
     </Window.Resources>
     <Grid>
         <!-- Верхняя панель -->
@@ -103,16 +104,17 @@
         <DockPanel x:Name="WeekPanel" LastChildFill="False" VerticalAlignment="Top" HorizontalAlignment="Stretch" Background="#BAEAFD" Margin="0,64,0,0" Height="64" >
             <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom" HorizontalAlignment="Center" Margin="161,0,161,3" Height="63">
                 <!-- Кнопка "Назад" -->
+
+                <!-- Текст с диапазоном дат -->
                 <Button x:Name="LeftArrowWeek" Command="{Binding PreviousWeekCommand}" 
-                Foreground="Black" Width="48" Height="48" FontSize="14" Padding="5" Margin="10,5,10,5" 
-                VerticalAlignment="Center" HorizontalAlignment="Center" >
+                Foreground="Black" Width="48" Height="48" FontSize="14" Padding="5" >
                     <Button.Background>
                         <ImageBrush ImageSource="/Assets/ImageButtons/button_back_defaoult.png" Stretch="UniformToFill" />
                     </Button.Background>
                 </Button>
 
                 <!-- Текст с диапазоном дат -->
-                <TextBlock Text="{Binding CurrentWeek }" 
+                <TextBlock Text="{Binding CurrentWeek}" 
                    FontWeight="Bold" Foreground="Black" FontSize="28" 
                    VerticalAlignment="Center" HorizontalAlignment="Center" 
                    Margin="10,5,10,5" />
@@ -454,9 +456,9 @@
                     <ItemsControl.ItemContainerStyle>
                         <Style>
                             <Setter Property="Grid.Column"
-                    Value="{Binding ColumnIndex}" />
+                    Value="{Binding Lesson.ColumnIndex}" />
                             <Setter Property="Grid.Row"
-                    Value="{Binding RowIndex}" />
+                    Value="{Binding Lesson.RowIndex}" />
                         </Style>
                     </ItemsControl.ItemContainerStyle>
 
@@ -467,23 +469,23 @@
                                 <Grid>
 
                                     <!-- Название предмета -->
-                                    <TextBlock Text="{Binding Subject}" 
+                                    <TextBlock Text="{Binding Lesson.Subject.Name}" 
                            Style="{StaticResource RobotoTextStyleTimeText}" 
                            VerticalAlignment="Center" 
                            HorizontalAlignment="Center" Margin="0,0,0,44" />
-                                    <Border Background="#E6D3C7"   BorderBrush="#C28D71" Visibility="{Binding HasHomework, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                    <Border Background="#E6D3C7"   BorderBrush="#C28D71" Visibility="{Binding Homework, Converter={StaticResource BooleanToVisibilityConverter}}"
                             CornerRadius="10" 
                             Width="48" 
                             Height="48" 
                             Margin="16,184,0,0" 
                             BorderThickness="1,1,1,1" HorizontalAlignment="Left">
-                                        <TextBlock Text="{Binding Homework_Marking}"  Style="{StaticResource Montestrat-Bold}" 
+                                        <TextBlock Text="{Binding Homework.Description, Converter= { StaticResource StringConvertHasHomework}}"  Style="{StaticResource Montestrat-Bold}" 
                                
                                VerticalAlignment="Center" 
                                HorizontalAlignment="Center" />
                                     </Border>
                                     <!-- Оценка -->
-                                    <ItemsControl ItemsSource="{Binding Grades}">
+                                    <ItemsControl ItemsSource="{Binding Marks}">
                                         <ItemsControl.ItemsPanel>
                                             <ItemsPanelTemplate>
                                                 <StackPanel Orientation="Horizontal" Margin="148,184,16,0" FlowDirection="RightToLeft" HorizontalAlignment="Right" />
@@ -491,8 +493,8 @@
                                         </ItemsControl.ItemsPanel>
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate>
-                                                <Border Background="{Binding Converter={StaticResource GradeToColorConverter}}" BorderBrush="{Binding Converter={StaticResource GradeToColorConverter}, ConverterParameter=BorderBrush}"  CornerRadius="10" Width="48" Height="48" BorderThickness="1,1,1,1" Margin="0,0,-33,0"  >
-                                                    <TextBlock Text="{Binding}" Style="{StaticResource Montestrat-Bold}" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                                <Border Background="{Binding Value.Name, Converter={StaticResource GradeToColorConverter}}" BorderBrush="{Binding  Value.Name, Converter={StaticResource GradeToColorConverter}, ConverterParameter=BorderBrush}"  CornerRadius="10" Width="48" Height="48" BorderThickness="1,1,1,1" Margin="0,0,-33,0"  >
+                                                    <TextBlock Text="{Binding Value.Name}" Style="{StaticResource Montestrat-Bold}" VerticalAlignment="Center" HorizontalAlignment="Center" />
                                                 </Border>
                                             </DataTemplate>
                                         </ItemsControl.ItemTemplate>

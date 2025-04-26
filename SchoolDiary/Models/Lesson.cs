@@ -75,5 +75,8 @@ namespace SchoolDiary.Models
 
         [JsonPropertyName("classroom")]
         public Classroom Classroom { get; set; }
+
+        public int RowIndex { get; set; } 
+        public int ColumnIndex { get; set; }
     }
 }

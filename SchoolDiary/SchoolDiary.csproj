@@ -111,6 +111,9 @@
     <Compile Include="Converters\LessonStringTimeConverter.cs" />
     <Compile Include="Converters\MarksListConverter.cs" />
     <Compile Include="Converters\TeacherStringConverter.cs" />
+    <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
+    <Compile Include="Converters\StringConvertHasHomework.cs" />
+    <Compile Include="Helper\MenuHelper.cs" />
     <Compile Include="Models\SubjectMarks.cs" />
     <Compile Include="Models\Token.cs" />
     <Compile Include="Views\AuthWindow.xaml.cs">
@@ -148,7 +151,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\MainWindow.xaml">
+    <Page Include="Views\SheduleForTheDate.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -156,8 +159,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Views\MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
+    <Compile Include="Views\SheduleForTheDate.xaml.cs">
+      <DependentUpon>SheduleForTheDate.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\Profile.xaml">
@@ -420,5 +423,6 @@
   <ItemGroup>
     <Resource Include="Assets\ImageButtons\Authentication_WrongInput.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
