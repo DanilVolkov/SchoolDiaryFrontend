@@ -50,7 +50,7 @@ namespace SchoolDiary
 
             // Развернуть окно на весь экран
             this.WindowState = WindowState.Maximized;
-            
+
             LoadStudentData();
 
             UpdateQuarter();
@@ -251,7 +251,7 @@ namespace SchoolDiary
 
         private void UpdateQuarter()
         {
-            if (isQuarterUpdated) 
+            if (isQuarterUpdated)
                 return; // Выходим, если метод уже вызывался
             Quarter currentQuarter = quarters[currentQuarterIndex];
             QuarterTextBlock.Text = $"{currentQuarter.Name} четверть";
@@ -349,35 +349,7 @@ namespace SchoolDiary
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            // Действие при клике
-            if (Menu.Width == 216)
-            {
-                Menu.Width = 64;
-                Schedule.Width = 48;
-                Grade.Width = 48;
-                Menu.Opacity = 1;
-
-                ((ImageBrush)Schedule.Background).ImageSource = new System.Windows.Media.Imaging.BitmapImage(
-           new Uri("pack://application:,,,/Assets/ImageButtons/button_manu_close_schedule_default.png", UriKind.Absolute));
-                ((ImageBrush)Grade.Background).ImageSource = new System.Windows.Media.Imaging.BitmapImage(
-                    new Uri("pack://application:,,,/Assets/ImageButtons/button_menu_close_mark_defoult.png", UriKind.Absolute));
-
-            }
-            else
-            {
-                Menu.Width = 216;
-                Schedule.Width = 184;
-                Grade.Width = 184;
-                Menu.Opacity = 0.6;
-                Schedule.Opacity = 1;
-                Grade.Opacity = 1;
-
-                // Возвращаем исходные фоновые изображения кнопок
-                ((ImageBrush)Schedule.Background).ImageSource = new System.Windows.Media.Imaging.BitmapImage(
-                    new Uri("pack://application:,,,/Assets/ImageButtons/button_menu_schedule_default.png", UriKind.Absolute));
-                ((ImageBrush)Grade.Background).ImageSource = new System.Windows.Media.Imaging.BitmapImage(
-                     new Uri("pack://application:,,,/Assets/ImageButtons/button_menu_mark_default.png", UriKind.Absolute));
-            }
+            MenuHelper.ToggleMenu(this);
         }
     }
 }
