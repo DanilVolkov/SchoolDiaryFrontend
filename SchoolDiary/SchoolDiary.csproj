@@ -108,6 +108,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="APIConnect\HashPassword.cs" />
+    <Compile Include="Converters\LessonStringTimeConverter.cs" />
+    <Compile Include="Converters\MarksListConverter.cs" />
+    <Compile Include="Converters\TeacherStringConverter.cs" />
     <Compile Include="Models\SubjectMarks.cs" />
     <Compile Include="Models\Token.cs" />
     <Compile Include="Views\AuthWindow.xaml.cs">
