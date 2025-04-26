@@ -36,8 +36,8 @@
             <Setter Property="VerticalAlignment" Value="Center" />
             <Setter Property="HorizontalAlignment" Value="Center" />
         </Style>
-        <local:IndexToOffsetConverter x:Key="IndexToOffsetConverter" />
-        <local:GradeToColorConverter x:Key="GradeToColorConverter" />
+        
+        <local1:GradeToColorConverter x:Key="GradeToColorConverter" />
 
         <local1:LessonStringTimeConverter x:Key="LessonStringTimeConverter"/>
         <local1:TeacherStringConverter x:Key="TeacherStringConverter"/>

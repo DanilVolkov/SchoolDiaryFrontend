@@ -23,7 +23,7 @@
             <Setter Property="FontWeight" Value="Bold" />
             <!--<Setter Property="Bold" Value="true"/>-->
         </Style>
-        <local1:GradeToColorConverter x:Key="GradeToColorConverter" />
+        <local:GradeToColorConverter x:Key="GradeToColorConverter" />
         <local:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
         <local:StringConvertHasHomework x:Key="StringConvertHasHomework"/>
     </Window.Resources>

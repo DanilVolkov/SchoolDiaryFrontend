@@ -117,7 +117,7 @@ namespace SchoolDiary
 
             foreach (string grade in grades)
             {
-                var gradeConverter = new GradeToColorConverter();
+                var gradeConverter = new Converters.GradeToColorConverter();
                 Border gradeBorder = new Border
                 {
                     Width = 48,
@@ -163,7 +163,7 @@ namespace SchoolDiary
         {
             // Округляем значение для определения цвета
             int roundedValueForColor = (int)Math.Round(value);
-            var gradeConverter = new GradeToColorConverter();
+            var gradeConverter = new Converters.GradeToColorConverter();
 
             // Создаем новый Border
             Border border = new Border
