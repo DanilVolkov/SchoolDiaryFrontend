@@ -7,32 +7,22 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using SchoolDiary.Models;
 
 namespace SchoolDiary
 {
-    public class Subject
-    {
-        public string Name { get; set; }
-        public string TeacherName { get; set; }
-        public string RoomNumber { get; set; }
-        public string StartTime { get; set; }
-        public string EndTime { get; set; }
-        public string Homework { get; set; }
-        public List<string> Grades { get; set; }
-    }
-
     public class ViewModel: INotifyPropertyChanged
     {
         // Словарь для хранения расписания по дням
-        private Dictionary<DateTime, ObservableCollection<Subject>> _scheduleByDate;
+        private Dictionary<DateTime, ObservableCollection<Models.Content>> _scheduleByDate;
         
         // Текущая дата
         private DateTime _currentDate;
 
         // Свойство для привязки к интерфейсу
-        private ObservableCollection<Subject> _subjects;
+        private ObservableCollection<Models.Content> _subjects;
 
-        public ObservableCollection<Subject> Subjects
+        public ObservableCollection<Models.Content> Subjects
         {
             get => _subjects;
             set
@@ -50,163 +40,64 @@ namespace SchoolDiary
         {
             _currentDate = currentDate;
             // Преобразуем данные из API в словарь
-            _scheduleByDate = new Dictionary<DateTime, ObservableCollection<Subject>>();
+            _scheduleByDate = new Dictionary<DateTime, ObservableCollection<Models.Content>>();
 
+            ContentToObservable(schedule, currentDate);
+
+            // Инициализация команд
+            PreviousDayCommand = new RelayCommand(PreviousDay);
+            NextDayCommand = new RelayCommand(NextDay);
+        }
+
+        public ViewModel() {
+            _currentDate = DateTime.Now;
+            _scheduleByDate = new Dictionary<DateTime, ObservableCollection<Models.Content>>();
+
+            PreviousDayCommand = new RelayCommand(PreviousDay);
+            NextDayCommand = new RelayCommand(NextDay);
+        }
+
+        //refactoring addition 1 - prevented code copying
+        private void ContentToObservable(List<Models.DaySchedule> schedule, DateTime Date)
+        {
             foreach (var day in schedule)
             {
-                var subjects = new ObservableCollection<Subject>();
+                var subjects = new ObservableCollection<Models.Content>();
 
                 foreach (var content in day.Content)
                 {
-                    subjects.Add(new Subject
+                    subjects.Add(new Content
                     {
-                        Name = content.Lesson?.Subject?.Name ?? "Нет предмета",
-                        TeacherName = content.Lesson?.Teacher?.LastName +" "+ content.Lesson?.Teacher?.MiddleName +" " + content.Lesson?.Teacher?.FirstName ?? "Не указано",
-                        RoomNumber = content.Lesson?.Classroom.Name ?? "Не указано",
-                        StartTime = content.Lesson?.TimeStart.ToString("HH:mm") ?? "Не указано",
-                        EndTime = content.Lesson?.TimeEnd.ToString("HH:mm") ?? "Не указано",
-                        Homework = content.Homework?.Description ?? "",
-                        Grades = content.Marks?.Select(m => m.Value.Name.ToString()).ToList() ?? new List<string>()
-                    });
+                        Lesson = new Models.Lesson()
+                        {
+                            Subject = new Subject() { Name = content.Lesson?.Subject?.Name ?? "Нет предмета" },
+                            Teacher = new Teacher()
+                            {
+                                FirstName = content.Lesson?.Teacher?.FirstName ?? "Не указано",
+                                MiddleName = content.Lesson?.Teacher?.MiddleName ?? "Не указано",
+                                LastName = content.Lesson?.Teacher?.LastName ?? "Не указано"
+                            },
+                            Classroom = new Classroom()
+                            {
+                                Name = content.Lesson?.Classroom.Name ?? "Не указано"
+                            },
+                            TimeStart = content.Lesson?.TimeStart ?? DateTime.MinValue,
+                            TimeEnd = content.Lesson?.TimeEnd ?? DateTime.MaxValue
+                        },
+                        Homework = new Homework()
+                        {
+                            Description = content.Homework?.Description ?? ""
+                        },
+                        Marks = content.Marks ?? new List<Mark>()
+                    }) ;
                 }
 
                 _scheduleByDate[day.Date] = subjects;
             }
 
             // Установка текущей даты
-            SetupCurrentDate(currentDate);
-
-            // Инициализация команд
-            PreviousDayCommand = new RelayCommand(PreviousDay);
-            NextDayCommand = new RelayCommand(NextDay);
+            SetupCurrentDate(Date);
         }
-        public ViewModel()
-        {
-            // Инициализация словаря с расписанием
-            _scheduleByDate = new Dictionary<DateTime, ObservableCollection<Subject>>
-        {
-            {
-                new DateTime(2025, 3, 24), // Пример: 24 марта
-                new ObservableCollection<Subject>
-                {
-                    new Subject
-                    {
-                        Name = "Математика",
-                        TeacherName = "Иванов И.И.",
-                        RoomNumber = "101",
-                        StartTime = "08:00",
-                        EndTime = "09:30",
-                        Homework = "Решить задачи №1-5",
-                        Grades = new List<string> { "5", "3", "5" }
-                    },
-                    new Subject
-                    {
-                        Name = "Геометрия",
-                        TeacherName = "Петров П.П.",
-                        RoomNumber = "202",
-                        StartTime = "09:40",
-                        EndTime = "11:10",
-                        Homework = "Пересказ параграфов 1-2",
-                        Grades = new List<string> { "4", "4", "2" }
-                    }
-                }
-            },
-            {new DateTime(2025, 3, 23),
-                new ObservableCollection<Subject> {
-                    new Subject
-                    {
-                        Name = "Алгебра и геометрия",
-                        TeacherName = "Чирков А.Ю.",
-                        RoomNumber = "511(Корпус № 6)",
-                        StartTime = "10:00",
-                        EndTime = "16:00",
-                        Homework = "Подготовить доклад",
-                        Grades = new List<string> { "2", "2", "2" }
-                    },
-                }
-            },
-
-
-
-            {
-                new DateTime(2025, 3, 25), // Пример: 25 марта
-                new ObservableCollection<Subject>
-                {
-                    new Subject
-                    {
-                        Name = "История",
-                        TeacherName = "Сидоров С.С.",
-                        RoomNumber = "303",
-                        StartTime = "10:00",
-                        EndTime = "11:30",
-                        Homework = "Подготовить доклад",
-                        Grades = new List<string> { "5", "4", "5" }
-                    },
-                     new Subject
-                    {
-                        Name = "Геометрия",
-                        TeacherName = "Васнецова В.С.",
-                        RoomNumber = "303",
-                        StartTime = "10:00",
-                        EndTime = "11:30",
-                        Homework = "Подготовить доклад",
-                        Grades = new List<string> { "2", "3" }
-                    },
-                     new Subject
-                    {
-                        Name = "Геометрия",
-                        TeacherName = "Васнецова В.С.",
-                        RoomNumber = "303",
-                        StartTime = "10:00",
-                        EndTime = "11:30",
-                        Homework = "Подготовить доклад",
-                        Grades = new List<string> { "2", "3" }
-                    },
-                     new Subject
-                    {
-                        Name = "Геометрия",
-                        TeacherName = "Васнецова В.С.",
-                        RoomNumber = "303",
-                        StartTime = "10:00",
-                        EndTime = "11:30",
-                        Homework = "Подготовить доклад",
-                        Grades = new List<string> { "2", "3" }
-                    },
-                     new Subject
-                    {
-                        Name = "Геометрия",
-                        TeacherName = "Васнецова В.С.",
-                        RoomNumber = "303",
-                        StartTime = "10:00",
-                        EndTime = "11:30",
-                        Homework = "Подготовить доклад",
-                        Grades = new List<string> { "2", "3" }
-                    },
-                     new Subject
-                    {
-                        Name = "Геометрия",
-                        TeacherName = "Васнецова В.С.",
-                        RoomNumber = "303",
-                        StartTime = "10:00",
-                        EndTime = "11:30",
-                        Homework = "Подготовить доклад",
-                        Grades = new List<string> { "2", "3" }
-                    }
-
-                }
-            }
-
-        };
-
-            // Установка начальной даты
-            _currentDate = new DateTime(2025, 3, 24);
-            Subjects = _scheduleByDate[_currentDate];
-
-            // Инициализация команд
-            PreviousDayCommand = new RelayCommand(PreviousDay);
-            NextDayCommand = new RelayCommand(NextDay);
-        }
-
 
         public void SetupCurrentDate(DateTime currentDate)
         {
@@ -259,27 +150,7 @@ namespace SchoolDiary
                 _scheduleByDate.Clear();
 
                 // Преобразуем данные из API в формат ObservableCollection<Subject>
-                foreach (var day in schedule)
-                {
-                    var subjects = new ObservableCollection<Subject>();
-
-                    foreach (var content in day.Content)
-                    {
-                        subjects.Add(new Subject
-                        {
-                            Name = content.Lesson?.Subject?.Name ?? "Нет предмета",
-                            TeacherName = content.Lesson?.Teacher?.LastName + " " + content.Lesson?.Teacher?.MiddleName + " " + content.Lesson?.Teacher?.FirstName ?? "Не указано",
-                            RoomNumber = content.Lesson?.Classroom.Name ?? "Не указано",
-                            StartTime = content.Lesson?.TimeStart.ToString("HH:mm") ?? "Не указано",
-                            EndTime = content.Lesson?.TimeEnd.ToString("HH:mm") ?? "Не указано",
-                            Homework = content.Homework?.Description ?? "",
-                            Grades = content.Marks?.Select(m => m.Value.Name.ToString()).ToList() ?? new List<string>()
-                        });
-                    }
-
-                    _scheduleByDate[day.Date] = subjects;
-                }
-                SetupCurrentDate(date);
+                ContentToObservable(schedule, date);
             }
             catch (Exception ex)
             {
