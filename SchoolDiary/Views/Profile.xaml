@@ -1,0 +1,183 @@
+﻿<Window x:Class="SchoolDiary.Profile"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SchoolDiary"
+        mc:Ignorable="d"
+        Title="Profile" Height="1080" Width="1920">
+    <Window.Resources>
+        <!-- Стиль для TextBox с закругленными углами -->
+        <Style x:Key="RoundedTextBox" TargetType="TextBox">
+            <Setter Property="Background" Value="#E6D3C7" />
+            <Setter Property="BorderBrush" Value="#C28D71" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Padding" Value="8,0,0,0" />
+            <Setter Property="FontFamily" Value="/Fonts/Roboto-Regular.ttf#Roboto" />
+            <Setter Property="FontSize" Value="28" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="TextWrapping" Value="Wrap" />
+            <Setter Property="IsReadOnly" Value="True" />
+            <!-- Запрет редактирования -->
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border 
+                            CornerRadius="10" 
+                            Background="{TemplateBinding Background}" 
+                            BorderBrush="{TemplateBinding BorderBrush}" 
+                            BorderThickness="{TemplateBinding BorderThickness}">
+                            <ScrollViewer x:Name="PART_ContentHost" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#C28D71" />
+                </Trigger>
+                <Trigger Property="IsFocused" Value="True">
+                    <Setter Property="Background" Value="#FFE6D5" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- Стиль для текста с шрифтом Roboto -->
+        <Style x:Key="RobotoTextStyle" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="/Fonts/Roboto-Regular.ttf#Roboto" />
+            <Setter Property="FontSize" Value="28" />
+            <Setter Property="FontWeight" Value="Regular" />
+            <Setter Property="Foreground" Value="Black" />
+        </Style>
+
+        <!-- Стиль для подписей (TextBlock) -->
+        <Style x:Key="LabelTextStyle" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="/Fonts/Roboto-Regular.ttf#Roboto" />
+            <Setter Property="FontSize" Value="28" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="TextWrapping" Value="Wrap" />
+            <Setter Property="Width" Value="296" />
+            <Setter Property="Height" Value="56" />
+            <Setter Property="Padding" Value="0,11,0,0" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="HorizontalAlignment" Value="Right" />
+            <Setter Property="TextAlignment" Value="Right" />
+        </Style>
+
+        <Style x:Key="RobotoTextStyleTimeText" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="/Fonts/Roboto-Medium.ttf#Roboto" />
+            <Setter Property="FontWeight" Value="Medium" />
+            <Setter Property="FontSize" Value="28" />
+            <Setter Property="Foreground" Value="Black" />
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <!-- Верхняя панель -->
+        <DockPanel  LastChildFill="False" Background="#4EB4D0" Margin="0,0,0,2" VerticalAlignment="Top" HorizontalAlignment="Stretch" Height="64">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" DockPanel.Dock="Left">
+                <Button  Foreground="Black" FontSize="14" Padding="5" Margin="8,5,10,5" Height="48" Width="48" Click="Button_Click" BorderThickness="0,0,0,0">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/Assets/ImageButtons/button_openmenu_default.png" Stretch="UniformToFill" />
+                    </Button.Background>
+                </Button>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" DockPanel.Dock="Right">
+                <Button x:Name="DarkLightMode" Width="48" RenderTransformOrigin="0.535,0.507" Height="48" Margin="0,0,5,0" BorderThickness="0,0,0,0">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/Assets/ImageButtons/Button - icon_daynight.png" Stretch="UniformToFill" />
+                    </Button.Background>
+                </Button>
+                <Button Foreground="Black" FontSize="14" Padding="5" Margin="0,5,10,5" Height="48" Width="48" BorderThickness="0,0,0,0">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/Assets/ImageButtons/Button - icon_ring.png" Stretch="UniformToFill" />
+                    </Button.Background>
+                </Button>
+                <Border x:Name="ButtonProfile" Width="272" Height="56" Margin="0,0,5,0" Background="#BAEAFD" CornerRadius="7">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <!-- Для текста -->
+                            <ColumnDefinition Width="72.133" />
+                            <ColumnDefinition Width="4.267"/>
+                            <ColumnDefinition Width="2.6"/>
+                            <!-- Для изображения -->
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock x:Name="FullNameTextBlock" 
+                           Grid.Column="0" 
+                           Text=" " 
+                           Style="{StaticResource RobotoTextStyleTimeText}" 
+                           Foreground="Black" 
+                           VerticalAlignment="Center" 
+                           HorizontalAlignment="Left" 
+                           Width="208" 
+                           Grid.ColumnSpan="2" 
+                           Height="34" />
+
+                        <!-- Изображение пользователя -->
+                        <Border Grid.Column="1" BorderBrush="Black" 
+                            BorderThickness="1" 
+                            CornerRadius="50" 
+                            Margin="29,6,6,6" Grid.ColumnSpan="2">
+                            <Border.Background>
+                                <ImageBrush ImageSource="/Assets/ImageButtons/Account.jpg" Stretch="UniformToFill" />
+                            </Border.Background>
+                        </Border>
+                    </Grid>
+                </Border>
+            </StackPanel>
+            <Border  Width="48" Height="48" CornerRadius="50">
+                <Border.Background>
+                    <ImageBrush ImageSource="/Assets/ImageButtons/logo-nn.png" Stretch="UniformToFill" />
+                </Border.Background>
+            </Border>
+
+        </DockPanel>
+
+        <!-- Левая панель режимов -->
+        <DockPanel x:Name="Menu" Background="#7DCCDE" HorizontalAlignment="Left" Margin="0,64,0,0" Width="64" LastChildFill="False" Panel.ZIndex="1" Opacity="1">
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Width="216">
+                <!-- Кнопка "Расписание" -->
+                <Button x:Name="Schedule" Padding="5" Margin="5,16,5,16" Width="48" Height="48" HorizontalAlignment="Stretch" BorderThickness="0,0,0,0" Opacity="1" Click="OpenSchelduleForTheWeek">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/Assets/ImageButtons/button_manu_close_schedule_default.png" Stretch="Fill" />
+                    </Button.Background>
+                </Button>
+                <!-- Кнопка "Дневник" -->
+                <Button x:Name="Grade" Padding="5" Margin="5,5,5,0" Width="48" Height="48" HorizontalAlignment="Stretch" BorderThickness="0,0,0,0" Opacity="1" Click="Grade_Click">
+                    <Button.Background>
+                        <ImageBrush ImageSource="/Assets/ImageButtons/button_menu_close_mark_defoult.png" Stretch="Fill" />
+                    </Button.Background>
+                </Button>
+            </StackPanel>
+        </DockPanel>
+
+        <!-- Основное содержимое -->
+        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Margin="0,64,0,0">
+           <Grid HorizontalAlignment="Center" Width="1200">
+                <!-- Правая колонка с текстовыми полями -->
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Right" Margin="0,72,0,0">
+                    <Image HorizontalAlignment="Left" Height="240" Margin="0,0,0,40" VerticalAlignment="Top" Width="240" Source="/Assets/ImageButtons/Account.jpg" />
+                    <TextBox x:Name="FirstNameTextBox" Style="{StaticResource RoundedTextBox}" Width="816" Height="56" Margin="0,0,0,32" />
+                    <TextBox x:Name="LastNameTextBox" Style="{StaticResource RoundedTextBox}" Width="816" Height="56" Margin="0,0,0,32" />
+                    <TextBox x:Name="MiddleNameTextBox" Style="{StaticResource RoundedTextBox}" Width="816" Height="56" Margin="0,0,0,32" />
+                    <TextBox x:Name="UsernameTextBox" Style="{StaticResource RoundedTextBox}" Width="816" Height="56" Margin="0,0,0,40" />
+                    <TextBox x:Name="DateOfBirthTextBox" Style="{StaticResource RoundedTextBox}" Width="816" Height="56" Margin="0,0,0,32" />
+                    <TextBox x:Name="RoleTextBox" Style="{StaticResource RoundedTextBox}" Width="816" Height="56" Margin="0,0,0,32" />
+                    <TextBox x:Name="GroupTextBox" Style="{StaticResource RoundedTextBox}" Width="816" Height="56" />
+                </StackPanel>
+
+                <!-- Левая колонка с подписями -->
+                <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Margin="0,350,0,0" Width="296">
+                    <TextBlock Text="Имя" Style="{StaticResource LabelTextStyle}" Margin="0,0,0,32" />
+                    <TextBlock Text="Фамилия" Style="{StaticResource LabelTextStyle}" Margin="0,0,0,32" />
+                    <TextBlock Text="Отчество" Style="{StaticResource LabelTextStyle}" Margin="0,0,0,32" />
+                    <TextBlock Text="Логин" Style="{StaticResource LabelTextStyle}" Margin="0,0,0,40" />
+                    <TextBlock Text="Дата рождения" Style="{StaticResource LabelTextStyle}" Margin="0,0,0,32" />
+                    <TextBlock Text="Статус" Style="{StaticResource LabelTextStyle}" Margin="0,0,0,32" />
+                    <TextBlock Text="Класс" Style="{StaticResource LabelTextStyle}" />
+                </StackPanel>
+            </Grid>
+        </ScrollViewer>
+    </Grid>
+</Window>

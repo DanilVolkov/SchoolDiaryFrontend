@@ -1,0 +1,172 @@
+﻿<Window x:Class="SchoolDiary.AuthWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SchoolDiary"
+        mc:Ignorable="d"
+        Title="Окно авторизации" 
+        Height="1080" 
+        Width="1920"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize">
+
+    <Window.Resources>
+        <Style x:Key="MontserratTextStyle" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="/Fonts/Montserrat-Bold.ttf#Montserrat" />
+            <Setter Property="FontSize" Value="96" />
+            <Setter Property="FontWeight" Value="Bold" />
+            <Setter Property="Foreground" Value="Black" />
+        </Style>
+        <Style x:Key="RobotoTextStyle" TargetType="TextBox">
+            <Setter Property="FontFamily" Value="/Fonts/Roboto-Medium.ttf#Roboto" />
+            <Setter Property="FontSize" Value="48" />
+            <Setter Property="FontWeight" Value="Medium" />
+            <Setter Property="Foreground" Value="#B5AEA9" />
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="40,0,0,0" />
+            <Setter Property="Background">
+                <Setter.Value>
+                    <ImageBrush ImageSource="/SchoolDiary;component/Assets/ImageButtons/Background_Authorization_Fields.png"/>
+                </Setter.Value>
+            </Setter>
+            <Style.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="10" />
+                </Style>
+            </Style.Resources>
+        </Style>
+        
+        
+        <Style x:Key="RobotoErrorTextStyle" TargetType="TextBlock">
+            <Setter Property="FontFamily" Value="/Fonts/Roboto-Medium.ttf#Roboto" />
+            <Setter Property="FontSize" Value="32" />
+            <Setter Property="FontWeight" Value="Medium" />
+            <Setter Property="Foreground" Value="#E64F4D" />
+            <Setter Property="VerticalAlignment" Value="Top"/>
+        </Style>
+        
+        <Style x:Key="MontserratButtonStyle" TargetType="Button">
+            <Setter Property="FontFamily" Value="/Fonts/Montserrat-SemiBold.ttf#Montserrat" />
+            <Setter Property="FontSize" Value="80" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Foreground" Value="Black" />
+
+            <Setter Property="Background">
+                <Setter.Value>
+                    <ImageBrush ImageSource="/SchoolDiary;component/Assets/ImageButtons/Authentication_ButtonLogin_Inactive.png"/>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="25" />
+                </Style>
+            </Style.Resources>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <ImageBrush ImageSource="/SchoolDiary;component/Assets/ImageButtons/Authentication_ButtonLogin_Active.png"/>
+                        </Setter.Value>
+                    </Setter> 
+                </Trigger>
+            </Style.Triggers>
+
+        </Style>
+
+        <Style x:Key="PasswordBoxStyle" TargetType="{x:Type PasswordBox}">
+            <Setter Property="Background">
+                <Setter.Value>
+                    <ImageBrush ImageSource="/SchoolDiary;component/Assets/ImageButtons/Background_Authorization_Fields.png"/>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="FontSize" Value="48"/>
+            <Setter Property="Height" Value="88"/>
+            <Setter Property="BorderBrush" Value="White"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Padding" Value="40,0,0,0"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type PasswordBox}">
+                        <Border x:Name="border" CornerRadius="10"
+                                Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" 
+                                SnapsToDevicePixels="True"
+                                Height="{TemplateBinding Height}">
+                            <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+                        </Border>
+
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
+        </Style>
+    </Window.Resources>
+
+
+    <Grid Background="#FFFFFF">
+        <Border BorderBrush="#FFFFFF" 
+                BorderThickness="1" 
+                CornerRadius="5" 
+                Background="White"
+                Width="784"
+                Height="610"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center">
+
+            <StackPanel>
+                <TextBlock Style="{StaticResource MontserratTextStyle}" Text="Авторизация" 
+                           HorizontalAlignment="Center" Height="106"/>
+
+                <TextBox x:Name="UsernameTextBox" 
+                         Style="{StaticResource RobotoTextStyle}"
+                         Text="Логин"
+                         Margin="0,88,0,0" BorderBrush="White" Height="88"
+                         GotFocus="Login_MouseDown"
+                         LostFocus="Login_LostCapture">
+                </TextBox>
+                
+                <TextBlock x:Name="ErrorTextBlock" 
+                           Text="Неправильный логин или пароль!" 
+                           Style="{StaticResource RobotoErrorTextStyle}"
+                           Visibility="Hidden"
+                           Height="40"
+                           Margin="0,0,0,0"/>
+
+                <PasswordBox x:Name="PasswordBox" 
+                         Style="{StaticResource PasswordBoxStyle}"
+                         Margin="0,16,0,0"
+                         LostFocus="Placeholder_LostCapture">
+                </PasswordBox>
+
+                <TextBox x:Name="PasswordTextBox" 
+                         Style="{StaticResource RobotoTextStyle}"
+                         Text="Пароль"
+                         Margin="0,-88,0,0" BorderBrush="White" Height="88"
+                         Visibility="Visible"
+                         PreviewMouseDown="Placeholder_MouseDown"/>
+
+                <Button x:Name="LoginButton" 
+                        Style="{StaticResource MontserratButtonStyle}"
+                        Content="Вход" 
+                        Padding="10,5"
+                        Width="568"
+                        Height="120"
+                        Margin="0,64,0,0"
+                        HorizontalAlignment="Center"
+                        
+                        Click="LoginButton_Click" BorderBrush="White">
+                </Button>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>
